@@ -625,6 +625,11 @@ section[id] { scroll-margin-top: 30px; }
   transition: transform 0.3s var(--ease);
 }
 .tool:hover .tool-go { transform: translateX(4px); }
+.tools-sub {
+  font-family: var(--display); font-weight: 700; font-size: 21px;
+  margin: 44px 0 18px;
+}
+.tools-sub span { font-family: var(--sans); font-weight: 400; font-size: 15px; color: var(--muted); }
 
 /* ============================================================
    SERVICES

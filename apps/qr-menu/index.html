@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Menu Maker — QR-Ready Restaurant Menu, Free</title>
+<meta name="description" content="Build a beautiful digital menu for your restaurant or café in minutes. Get a shareable link customers open from a QR code — no app, no account, no monthly fee.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #d4574e; --accent-soft: #e88a83;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(880px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(25px, 5.4vw, 35px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 24px; max-width: 58ch; }
+  .layout { display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .panel h2 { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); margin: 14px 0 10px; font-weight: 500; }
+  .panel h2:first-child { margin-top: 0; }
+  input, textarea { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 9px; padding: 9px 11px; font-size: 14px; margin-bottom: 8px; font-family: inherit; }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); }
+  .item-row { display: grid; grid-template-columns: 2fr 1fr 76px 28px; gap: 6px; align-items: center; }
+  .item-row button, .cat-head button { background: none; border: 0; color: #e0524f; cursor: pointer; font-size: 15px; }
+  .cat { border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+  .cat-head { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .cat-head input { margin: 0; font-weight: 700; }
+  .btn { border: 0; cursor: pointer; background: var(--accent); color: #fff; font-weight: 700; font-size: 14.5px; padding: 12px 20px; border-radius: 10px; }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); font-weight: 500; }
+  .btn.small { padding: 8px 14px; font-size: 13px; }
+  .actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .sharebox { margin-top: 14px; padding: 13px; border: 1px dashed rgba(212,87,78,.5); border-radius: 12px; font-size: 13px; color: var(--dim); }
+  .sharebox b { color: var(--ink); }
+  .sharebox .link { font-family: var(--mono); font-size: 11px; word-break: break-all; color: var(--accent-soft); margin: 8px 0; display: block; }
+
+  /* ---- customer menu preview ---- */
+  .menu {
+    background: #fbf7ef; color: #221f19; border-radius: 16px;
+    padding: 26px 22px; min-height: 420px;
+    box-shadow: 0 24px 70px rgba(0,0,0,.5);
+  }
+  .menu .rname { font-size: 24px; font-weight: 800; text-align: center; letter-spacing: -.01em; }
+  .menu .rtag { text-align: center; font-size: 13px; color: #8a8272; margin: 4px 0 20px; }
+  .menu .mcat { margin-bottom: 20px; }
+  .menu .mcat h3 {
+    font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: #b0543f; border-bottom: 1px solid #e8e0d0; padding-bottom: 6px; margin-bottom: 10px;
+  }
+  .menu .mi { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; }
+  .menu .mi .n { font-weight: 600; font-size: 15px; }
+  .menu .mi .d { font-size: 12.5px; color: #8a8272; }
+  .menu .mi .p { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .menu .powered { text-align: center; font-size: 11px; color: #b3ab99; margin-top: 22px; }
+  .menu .powered a { color: #b0543f; text-decoration: none; }
+  .empty-menu { text-align: center; color: #8a8272; padding: 60px 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 70px); background: var(--ink); color: var(--bg); font-size: 14px; padding: 11px 20px; border-radius: 999px; opacity: 0; transition: all .35s; z-index: 50; }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+  .viewer-only main > .top, .viewer-only main > h1, .viewer-only main > .lead, .viewer-only .editor-col, .viewer-only footer { display: none; }
+  .viewer-only .layout { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+  .viewer-only main { padding-top: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🍽️ For restaurants &amp; cafés</span>
+  </div>
+  <h1>Digital Menu <em>Maker</em></h1>
+  <p class="lead">Type your menu once, get a link your customers open from a QR code on the table. Edits are saved on this device — reshare anytime. No app, no account, no monthly fee.</p>
+
+  <div class="layout">
+    <div class="editor-col">
+      <div class="panel">
+        <h2>Restaurant</h2>
+        <input id="rName" placeholder="Restaurant name — e.g. Spice Garden">
+        <input id="rTag" placeholder="Tagline — e.g. Authentic Bangladeshi cuisine · Halal">
+        <input id="rCur" placeholder="Currency symbol" value="$" maxlength="4">
+        <h2>Menu sections</h2>
+        <div id="cats"></div>
+        <button class="btn ghost small" id="addCat" type="button">+ Add section</button>
+        <div class="actions">
+          <button class="btn" id="share" type="button">Copy menu link</button>
+          <button class="btn ghost" id="clear" type="button">Start over</button>
+        </div>
+        <div class="sharebox">
+          <b>How the QR works:</b> copy your menu link, paste it into any free QR generator
+          (search “QR code generator”), print the code and put it on your tables.
+          Customers scan → see this menu. Update the menu → copy the new link → reprint.
+          <span class="link" id="linkOut"></span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="menu" id="preview"></div>
+    </div>
+  </div>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — want this with your own domain, photos and online ordering? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const KEY = "qr-menu-data";
+const enc = (o) => btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+const dec = (s) => JSON.parse(decodeURIComponent(escape(atob(s))));
+
+let data = { name: "", tag: "", cur: "$", cats: [{ name: "Mains", items: [{ n: "", d: "", p: "" }] }] };
+
+/* viewer mode: menu encoded in the URL hash */
+const hash = location.hash.slice(1);
+let viewer = false;
+if (hash.startsWith("m=")) {
+  try { data = dec(hash.slice(2)); viewer = true; document.body.classList.add("viewer-only"); } catch {}
+} else {
+  try { data = JSON.parse(localStorage.getItem(KEY)) || data; } catch {}
+}
+
+const save = () => !viewer && localStorage.setItem(KEY, JSON.stringify(data));
+
+function buildEditor() {
+  if (viewer) return;
+  $("rName").value = data.name;
+  $("rTag").value = data.tag;
+  $("rCur").value = data.cur;
+  const box = $("cats");
+  box.innerHTML = "";
+  data.cats.forEach((cat, ci) => {
+    const el = document.createElement("div");
+    el.className = "cat";
+    el.innerHTML = `<div class="cat-head"><input value="${esc(cat.name)}" placeholder="Section name — e.g. Starters"><button type="button" aria-label="Remove section">✕</button></div><div class="items"></div><button class="btn ghost small" type="button">+ Add item</button>`;
+    const [nameIn] = el.querySelectorAll("input");
+    nameIn.oninput = () => { cat.name = nameIn.value; save(); renderMenu(); };
+    el.querySelector(".cat-head button").onclick = () => { data.cats.splice(ci, 1); save(); buildEditor(); renderMenu(); };
+    const itemsBox = el.querySelector(".items");
+    cat.items.forEach((it, ii) => {
+      const row = document.createElement("div");
+      row.className = "item-row";
+      row.innerHTML = `<input value="${esc(it.n)}" placeholder="Dish name"><input value="${esc(it.d)}" placeholder="Description"><input value="${esc(it.p)}" placeholder="Price"><button type="button" aria-label="Remove item">✕</button>`;
+      const [n, d, p] = row.querySelectorAll("input");
+      n.oninput = () => { it.n = n.value; save(); renderMenu(); };
+      d.oninput = () => { it.d = d.value; save(); renderMenu(); };
+      p.oninput = () => { it.p = p.value; save(); renderMenu(); };
+      row.querySelector("button").onclick = () => { cat.items.splice(ii, 1); save(); buildEditor(); renderMenu(); };
+      itemsBox.appendChild(row);
+    });
+    el.querySelector(".btn.small").onclick = () => { cat.items.push({ n: "", d: "", p: "" }); save(); buildEditor(); renderMenu(); };
+    box.appendChild(el);
+  });
+}
+
+function esc(s) { return String(s || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+function renderMenu() {
+  const m = $("preview");
+  const cats = data.cats.filter((c) => c.items.some((i) => i.n));
+  if (!data.name && !cats.length) {
+    m.innerHTML = `<div class="empty-menu">Your menu preview appears here.<br>Start typing on the left.</div>`;
+    return;
+  }
+  m.innerHTML = `
+    <div class="rname">${esc(data.name) || "Your Restaurant"}</div>
+    <div class="rtag">${esc(data.tag)}</div>
+    ${cats.map((c) => `
+      <div class="mcat">
+        <h3>${esc(c.name)}</h3>
+        ${c.items.filter((i) => i.n).map((i) => `
+          <div class="mi">
+            <div><div class="n">${esc(i.n)}</div>${i.d ? `<div class="d">${esc(i.d)}</div>` : ""}</div>
+            <div class="p">${i.p ? esc(data.cur) + esc(i.p) : ""}</div>
+          </div>`).join("")}
+      </div>`).join("")}
+    <div class="powered">Menu by <a href="../../">Ateeq Morshed</a></div>`;
+}
+
+let toastTimer;
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2400);
+}
+
+if (!viewer) {
+  ["rName", "rTag", "rCur"].forEach((id, i) => {
+    $(id).addEventListener("input", () => {
+      data[["name", "tag", "cur"][i]] = $(id).value;
+      save(); renderMenu();
+    });
+  });
+  $("addCat").onclick = () => { data.cats.push({ name: "", items: [{ n: "", d: "", p: "" }] }); save(); buildEditor(); };
+  $("clear").onclick = () => {
+    if (!confirm("Clear the whole menu?")) return;
+    data = { name: "", tag: "", cur: "$", cats: [{ name: "Mains", items: [{ n: "", d: "", p: "" }] }] };
+    save(); buildEditor(); renderMenu();
+  };
+  $("share").onclick = async () => {
+    const url = location.origin + location.pathname + "#m=" + enc(data);
+    $("linkOut").textContent = url;
+    try { await navigator.clipboard.writeText(url); toast("Menu link copied — paste it into a QR generator"); }
+    catch { toast("Link shown below — copy it manually"); }
+  };
+  buildEditor();
+}
+renderMenu();
+})();
+</script>
+</body>
+</html>

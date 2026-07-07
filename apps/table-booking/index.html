@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table Booking Widget — Reservations Straight to WhatsApp</title>
+<meta name="description" content="A free table reservation widget for restaurants — customers pick a date, time and party size, and the booking arrives on your WhatsApp. No backend, no monthly fee.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪑</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #2ba05f; --accent-soft: #6cc794;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(640px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(25px, 5.6vw, 35px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 24px; max-width: 54ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 14px; font-weight: 500; }
+  label { display: block; font-size: 13.5px; color: var(--dim); margin-bottom: 5px; }
+  input, select { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; font-size: 15px; color-scheme: dark; }
+  input:focus, select:focus { outline: 2px solid var(--accent); }
+  .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 520px) { .r2 { grid-template-columns: 1fr; } }
+  .party { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .party button {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+    font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .party button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn { border: 0; cursor: pointer; background: var(--accent); color: #fff; font-weight: 700; font-size: 15.5px; padding: 14px 24px; border-radius: 12px; width: 100%; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .hint { font-size: 12.5px; color: var(--dim); margin-top: 10px; opacity: .85; }
+  .setup-note { font-size: 13px; color: var(--dim); border: 1px dashed rgba(43,160,95,.5); border-radius: 12px; padding: 13px; margin-top: 14px; }
+  .setup-note b { color: var(--ink); }
+  .setup-note .link { font-family: var(--mono); font-size: 11px; word-break: break-all; color: var(--accent-soft); display: block; margin-top: 8px; }
+  details { margin-bottom: 16px; }
+  summary { cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🪑 Bookings → your WhatsApp</span>
+  </div>
+  <h1>Table <em>Booking</em> Widget</h1>
+  <p class="lead">Your customers pick a date, time and party size — the reservation lands in your WhatsApp as a ready-to-confirm message. No backend, no monthly fee, works today.</p>
+
+  <details id="setupBox">
+    <summary>⚙️ Restaurant setup (owners open this)</summary>
+    <div class="card" style="margin-top:12px">
+      <h2>Your restaurant</h2>
+      <div class="r2">
+        <div><label for="oName">Restaurant name</label><input id="oName" placeholder="e.g. Spice Garden"></div>
+        <div><label for="oPhone">WhatsApp number (with country code)</label><input id="oPhone" inputmode="tel" placeholder="e.g. 15871234567"></div>
+      </div>
+      <p class="hint">Digits only, no + or spaces. Then copy your customer link below and put it on your website, Instagram bio or Google profile.</p>
+      <div class="setup-note">
+        <b>Your customer link:</b> updates as you type — customers who open it see your restaurant's name and their bookings go to your WhatsApp.
+        <span class="link" id="ownerLink">—</span>
+      </div>
+    </div>
+  </details>
+
+  <div class="card">
+    <h2 id="formTitle">Reserve a table</h2>
+    <div class="r2">
+      <div><label for="bDate">Date</label><input type="date" id="bDate"></div>
+      <div><label for="bTime">Time</label><select id="bTime"></select></div>
+    </div>
+    <label>Party size</label>
+    <div class="party" id="party"></div>
+    <div class="r2">
+      <div><label for="bName">Your name</label><input id="bName" placeholder="Full name"></div>
+      <div><label for="bNote">Note (optional)</label><input id="bNote" placeholder="Birthday, window seat, allergies…"></div>
+    </div>
+    <button class="btn" id="send" type="button">Send reservation on WhatsApp</button>
+    <p class="hint" id="sendHint"></p>
+  </div>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — want this styled for your restaurant with your own domain? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const KEY = "table-booking-owner";
+
+/* owner config from URL (?r=Name&w=15871234567) or localStorage */
+const params = new URLSearchParams(location.search);
+let owner = { name: params.get("r") || "", phone: params.get("w") || "" };
+const fromUrl = Boolean(owner.name || owner.phone);
+if (!fromUrl) {
+  try { owner = { ...owner, ...(JSON.parse(localStorage.getItem(KEY)) || {}) }; } catch {}
+}
+
+$("oName").value = owner.name;
+$("oPhone").value = owner.phone;
+if (owner.name) $("formTitle").textContent = `Reserve a table at ${owner.name}`;
+if (fromUrl) $("setupBox").style.display = "none"; // customers see a clean widget
+
+/* time slots 11:00–22:00 every 30 min */
+const timeSel = $("bTime");
+for (let h = 11; h <= 22; h++) {
+  for (const m of ["00", "30"]) {
+    if (h === 22 && m === "30") continue;
+    const label = `${((h + 11) % 12) + 1}:${m} ${h < 12 ? "AM" : "PM"}`;
+    const o = document.createElement("option");
+    o.value = label; o.textContent = label;
+    timeSel.appendChild(o);
+  }
+}
+timeSel.value = "7:00 PM";
+
+/* party size buttons */
+let party = 2;
+const partyBox = $("party");
+for (let n = 1; n <= 8; n++) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = n === 8 ? "8+" : n;
+  b.classList.toggle("on", n === party);
+  b.onclick = () => {
+    party = n;
+    [...partyBox.children].forEach((c, i) => c.classList.toggle("on", i === n - 1));
+  };
+  partyBox.appendChild(b);
+}
+
+/* default date = today */
+const now = new Date();
+$("bDate").value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+
+function ownerLink() {
+  const u = new URL(location.origin + location.pathname);
+  if ($("oName").value) u.searchParams.set("r", $("oName").value);
+  if ($("oPhone").value) u.searchParams.set("w", $("oPhone").value.replace(/\D/g, ""));
+  return u.toString();
+}
+
+function syncOwner() {
+  owner = { name: $("oName").value, phone: $("oPhone").value.replace(/\D/g, "") };
+  localStorage.setItem(KEY, JSON.stringify(owner));
+  $("ownerLink").textContent = owner.name || owner.phone ? ownerLink() : "—";
+  $("formTitle").textContent = owner.name ? `Reserve a table at ${owner.name}` : "Reserve a table";
+}
+$("oName").addEventListener("input", syncOwner);
+$("oPhone").addEventListener("input", syncOwner);
+syncOwner();
+
+$("send").onclick = () => {
+  const phone = (fromUrl ? params.get("w") : owner.phone || "").replace(/\D/g, "");
+  const rname = fromUrl ? params.get("r") || "your restaurant" : owner.name || "your restaurant";
+  if (!phone) {
+    $("sendHint").textContent = "⚠️ No WhatsApp number set — open “Restaurant setup” above and add one first.";
+    return;
+  }
+  if (!$("bName").value.trim()) {
+    $("sendHint").textContent = "Please add your name so the restaurant knows who's booking.";
+    return;
+  }
+  const msg =
+`🪑 Table reservation — ${rname}
+👤 ${$("bName").value.trim()}
+📅 ${$("bDate").value} at ${$("bTime").value}
+👥 Party of ${party === 8 ? "8+" : party}${$("bNote").value.trim() ? `
+📝 ${$("bNote").value.trim()}` : ""}
+
+(Sent via the booking widget)`;
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+  $("sendHint").textContent = "Opening WhatsApp… send the message to confirm your booking.";
+};
+})();
+</script>
+</body>
+</html>

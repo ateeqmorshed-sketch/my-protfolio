@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Food Cost Calculator — Price Your Menu Properly</title>
+<meta name="description" content="Free food cost calculator for restaurants and home food businesses. Cost each dish from its ingredients, see your true margin, and get a menu price for your target food-cost percentage.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥘</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #d48a2b; --accent-soft: #e8ae62;
+    --ok: #58c47a; --warn: #e0b13f; --bad: #e0524f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(700px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(25px, 5.6vw, 35px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 24px; max-width: 56ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 14px; font-weight: 500; }
+  label { display: block; font-size: 13px; color: var(--dim); margin-bottom: 4px; }
+  input { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 9px; padding: 10px 11px; font-size: 14.5px; }
+  input:focus { outline: 2px solid var(--accent); }
+  .ing-row { display: grid; grid-template-columns: 2fr 1fr 1fr 28px; gap: 6px; align-items: end; margin-bottom: 8px; }
+  .ing-row button { background: none; border: 0; color: var(--bad); cursor: pointer; font-size: 15px; padding-bottom: 10px; }
+  .btn { border: 0; cursor: pointer; background: var(--accent); color: #1b1206; font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 10px; }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--dim); font-weight: 500; }
+  .r3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 560px) { .r3 { grid-template-columns: 1fr; } .ing-row { grid-template-columns: 1.6fr 1fr 1fr 28px; } }
+  .out { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 4px; }
+  @media (max-width: 560px) { .out { grid-template-columns: 1fr; } }
+  .stat { border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; }
+  .stat b { display: block; font-size: 27px; font-weight: 700; color: var(--accent-soft); font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 12px; color: var(--dim); }
+  .stat.good b { color: var(--ok); } .stat.tight b { color: var(--warn); } .stat.loss b { color: var(--bad); }
+  .verdict { margin-top: 14px; padding: 13px 16px; border-left: 3px solid var(--accent-soft); background: rgba(212,138,43,.07); border-radius: 0 10px 10px 0; font-size: 14.5px; color: var(--dim); }
+  .verdict b { color: var(--ink); }
+  .hint { font-size: 12.5px; color: var(--dim); margin-top: 8px; opacity: .85; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🥘 For restaurants &amp; home kitchens</span>
+  </div>
+  <h1>Food Cost <em>Calculator</em></h1>
+  <p class="lead">Most restaurants aim to keep ingredients at 28–35% of the menu price. Cost your dish honestly — including packaging and waste — and see what you should charge.</p>
+
+  <div class="card">
+    <h2>Dish ingredients (cost per serving)</h2>
+    <div id="ings"></div>
+    <button class="btn ghost" id="addIng" type="button">+ Add ingredient</button>
+    <p class="hint">Tip: cost per serving = (pack price ÷ pack size) × amount used. E.g. chicken at 12.00/kg, 250g used → 3.00.</p>
+  </div>
+
+  <div class="card">
+    <h2>Pricing</h2>
+    <div class="r3">
+      <div><label for="extras">Packaging / extras per serving</label><input id="extras" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></div>
+      <div><label for="waste">Waste allowance %</label><input id="waste" type="number" min="0" max="50" step="0.5" value="5"></div>
+      <div><label for="target">Target food-cost %</label><input id="target" type="number" min="10" max="80" step="1" value="30"></div>
+    </div>
+    <div style="margin-top:12px"><label for="price">Your current menu price (optional)</label><input id="price" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 15.99"></div>
+  </div>
+
+  <div class="out">
+    <div class="stat"><b id="cost">0.00</b><span>true cost per serving</span></div>
+    <div class="stat"><b id="suggest">0.00</b><span id="suggestLabel">suggested price @30%</span></div>
+    <div class="stat" id="marginBox"><b id="margin">—</b><span>your food-cost % at current price</span></div>
+  </div>
+  <div class="verdict" id="verdict">Add ingredients to see your numbers.</div>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — want a full costing &amp; inventory system for your restaurant? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const KEY = "food-cost-data";
+let ings = [{ n: "", c: "" }, { n: "", c: "" }, { n: "", c: "" }];
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (Array.isArray(s) && s.length) ings = s; } catch {}
+
+const save = () => localStorage.setItem(KEY, JSON.stringify(ings));
+
+function build() {
+  const box = $("ings");
+  box.innerHTML = "";
+  ings.forEach((ing, i) => {
+    const row = document.createElement("div");
+    row.className = "ing-row";
+    row.innerHTML = `
+      <div><label>${i === 0 ? "Ingredient" : ""}</label><input value="${String(ing.n).replace(/"/g, "&quot;")}" placeholder="e.g. Chicken 250g"></div>
+      <div><label>${i === 0 ? "Cost/serving" : ""}</label><input type="number" min="0" step="0.01" inputmode="decimal" value="${ing.c}" placeholder="0.00"></div>
+      <div><label>${i === 0 ? "% of dish cost" : ""}</label><input disabled data-share></div>
+      <button type="button" aria-label="Remove">✕</button>`;
+    const [n, c] = row.querySelectorAll("input:not([disabled])");
+    n.oninput = () => { ing.n = n.value; save(); calc(); };
+    c.oninput = () => { ing.c = c.value; save(); calc(); };
+    row.querySelector("button").onclick = () => {
+      ings.splice(i, 1);
+      if (!ings.length) ings.push({ n: "", c: "" });
+      save(); build(); calc();
+    };
+    box.appendChild(row);
+  });
+}
+
+const fmt = (n) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+function calc() {
+  const base = ings.reduce((t, i) => t + (Number(i.c) || 0), 0);
+  const extras = Number($("extras").value) || 0;
+  const waste = (Number($("waste").value) || 0) / 100;
+  const target = Math.min(Math.max(Number($("target").value) || 30, 10), 80) / 100;
+  const cost = (base + extras) * (1 + waste);
+
+  /* per-ingredient share */
+  const shares = document.querySelectorAll("[data-share]");
+  ings.forEach((ing, i) => {
+    const v = Number(ing.c) || 0;
+    shares[i].value = base > 0 && v > 0 ? `${((v / base) * 100).toFixed(0)}%` : "";
+  });
+
+  $("cost").textContent = fmt(cost);
+  $("suggest").textContent = cost > 0 ? fmt(cost / target) : "0.00";
+  $("suggestLabel").textContent = `suggested price @${Math.round(target * 100)}%`;
+
+  const price = Number($("price").value) || 0;
+  const box = $("marginBox");
+  if (price > 0 && cost > 0) {
+    const pct = (cost / price) * 100;
+    $("margin").textContent = `${pct.toFixed(1)}%`;
+    box.className = `stat ${pct <= 35 ? "good" : pct <= 45 ? "tight" : "loss"}`;
+    $("verdict").innerHTML =
+      pct <= 35 ? `<b>Healthy.</b> At ${fmt(price)}, ingredients take ${pct.toFixed(1)}% — inside the 28–35% zone. Gross margin per plate: <b>${fmt(price - cost)}</b>.`
+      : pct <= 45 ? `<b>Tight.</b> ${pct.toFixed(1)}% food cost leaves little for rent, staff and profit. Consider ${fmt(cost / target)} (at ${Math.round(target * 100)}%) or trim the recipe cost.`
+      : `<b>You may be losing money.</b> ${pct.toFixed(1)}% food cost is far above target — after labour and overhead this dish likely costs you money. Reprice toward ${fmt(cost / target)}.`;
+  } else {
+    $("margin").textContent = "—";
+    box.className = "stat";
+    $("verdict").innerHTML = cost > 0
+      ? `True cost <b>${fmt(cost)}</b> per serving. At a ${Math.round(target * 100)}% food-cost target, charge about <b>${fmt(cost / target)}</b>.`
+      : "Add ingredients to see your numbers.";
+  }
+}
+
+$("addIng").onclick = () => { ings.push({ n: "", c: "" }); save(); build(); calc(); };
+["extras", "waste", "target", "price"].forEach((id) => $(id).addEventListener("input", calc));
+build();
+calc();
+})();
+</script>
+</body>
+</html>
