@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Express Entry CRS Calculator — Free &amp; Up to Date</title>
+<meta name="description" content="Free Comprehensive Ranking System (CRS) calculator for Canada Express Entry. Live score breakdown — core, spouse, skill transferability and additional points. Reflects the 2025 removal of job-offer points.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #4f8fe0; --accent-soft: #7fb0ec;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(880px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(26px, 5vw, 36px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 28px; max-width: 60ch; }
+  .layout { display: grid; grid-template-columns: 1fr 280px; gap: 22px; align-items: start; }
+  @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } .scorebox { position: static !important; } }
+  fieldset { border: 1px solid var(--line); border-radius: 16px; background: var(--card); padding: 20px; margin-bottom: 18px; }
+  legend { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); padding: 0 8px; }
+  label { display: block; font-size: 14px; color: var(--dim); margin: 14px 0 6px; }
+  label:first-of-type { margin-top: 0; }
+  select, input[type="number"] {
+    width: 100%; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 11px 12px; font-size: 15px;
+  }
+  select:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  @media (max-width: 560px) { .row4 { grid-template-columns: repeat(2, 1fr); } }
+  .check { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 14.5px; color: var(--ink); cursor: pointer; }
+  .check input { width: 18px; height: 18px; accent-color: var(--accent); }
+  .hint { font-size: 12.5px; color: var(--dim); margin-top: 6px; opacity: .85; }
+  .scorebox { position: sticky; top: 20px; background: linear-gradient(160deg, rgba(79,143,224,.12), transparent 60%), var(--card); border: 1px solid rgba(79,143,224,.35); border-radius: 18px; padding: 24px; }
+  .score { font-size: 58px; font-weight: 700; line-height: 1; color: var(--accent-soft); font-variant-numeric: tabular-nums; }
+  .score-label { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+  .bars { margin-top: 18px; display: grid; gap: 12px; }
+  .bar b { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; color: var(--dim); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+  .bar i { display: block; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+  .bar i s { display: block; height: 100%; background: var(--accent); border-radius: 3px; transition: width .4s; text-decoration: none; }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 26px; opacity: .8; max-width: 70ch; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .hide { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">Updated for 2025 rules</span>
+  </div>
+  <h1>Express Entry <em>CRS Calculator</em></h1>
+  <p class="lead">Estimate your Comprehensive Ranking System score for Canadian Express Entry. Everything updates live — including the 2025 rule change that removed job-offer points.</p>
+
+  <div class="layout">
+    <div>
+      <fieldset>
+        <legend>Profile</legend>
+        <label for="age">Your age</label>
+        <input type="number" id="age" min="17" max="60" value="29">
+        <label class="check"><input type="checkbox" id="spouse"> I'm applying with a spouse or common-law partner</label>
+        <label for="edu">Highest level of education</label>
+        <select id="edu">
+          <option value="0">Less than secondary school</option>
+          <option value="1">Secondary school (high school)</option>
+          <option value="2">One-year post-secondary credential</option>
+          <option value="3">Two-year post-secondary credential</option>
+          <option value="4" selected>Bachelor's degree (3+ years)</option>
+          <option value="5">Two or more credentials (one 3+ years)</option>
+          <option value="6">Master's degree (or professional degree)</option>
+          <option value="7">Doctoral degree (PhD)</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>First official language (CLB level)</legend>
+        <div class="row4">
+          <div><label>Speaking</label><select class="clb" id="l1s"></select></div>
+          <div><label>Listening</label><select class="clb" id="l1l"></select></div>
+          <div><label>Reading</label><select class="clb" id="l1r"></select></div>
+          <div><label>Writing</label><select class="clb" id="l1w"></select></div>
+        </div>
+        <p class="hint">IELTS General → CLB quick guide: 6.0 across ≈ CLB 7 · 6.5 (L 7.5) ≈ CLB 8 · 7.0 (L 8.0) ≈ CLB 9. Check your exact conversion on the IRCC site.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Second official language (optional)</legend>
+        <div class="row4">
+          <div><label>Speaking</label><select class="clb2" id="l2s"></select></div>
+          <div><label>Listening</label><select class="clb2" id="l2l"></select></div>
+          <div><label>Reading</label><select class="clb2" id="l2r"></select></div>
+          <div><label>Writing</label><select class="clb2" id="l2w"></select></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Work experience</legend>
+        <div class="row2">
+          <div>
+            <label for="cdnExp">Canadian skilled work (years)</label>
+            <select id="cdnExp"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option value="5">5 or more</option></select>
+          </div>
+          <div>
+            <label for="forExp">Foreign skilled work (years)</label>
+            <select id="forExp"><option>0</option><option>1</option><option>2</option><option value="3">3 or more</option></select>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="cert"> I have a certificate of qualification in a trade (Canadian)</label>
+      </fieldset>
+
+      <fieldset id="spouseBox" class="hide">
+        <legend>Spouse / partner</legend>
+        <label for="sEdu">Spouse's education</label>
+        <select id="sEdu">
+          <option value="0">Less than secondary</option>
+          <option value="1">Secondary school</option>
+          <option value="2">One-year post-secondary</option>
+          <option value="3">Two-year post-secondary</option>
+          <option value="4">Bachelor's degree</option>
+          <option value="5">Two or more credentials</option>
+          <option value="6">Master's / professional degree</option>
+          <option value="7">Doctoral degree</option>
+        </select>
+        <label>Spouse's language (CLB, all four abilities)</label>
+        <div class="row4">
+          <div><label>Speak</label><select class="sclb" id="ss"></select></div>
+          <div><label>Listen</label><select class="sclb" id="sl"></select></div>
+          <div><label>Read</label><select class="sclb" id="sr"></select></div>
+          <div><label>Write</label><select class="sclb" id="sw"></select></div>
+        </div>
+        <label for="sExp">Spouse's Canadian work experience (years)</label>
+        <select id="sExp"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option value="5">5 or more</option></select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Additional points</legend>
+        <label class="check"><input type="checkbox" id="pnp"> Provincial nomination (+600)</label>
+        <label class="check"><input type="checkbox" id="sibling"> Brother or sister in Canada (citizen/PR) (+15)</label>
+        <label class="check"><input type="checkbox" id="cdnEdu1"> 1–2 year post-secondary credential earned in Canada (+15)</label>
+        <label class="check"><input type="checkbox" id="cdnEdu2"> 3+ year credential or degree earned in Canada (+30)</label>
+        <label class="check"><input type="checkbox" id="frStrong"> French NCLC 7+ in all four abilities</label>
+        <p class="hint">French bonus: +50 if your English is CLB 5+, or +25 if CLB 4 or less. Job-offer points were removed by IRCC in March 2025.</p>
+      </fieldset>
+    </div>
+
+    <aside class="scorebox">
+      <div class="score-label">Your estimated CRS</div>
+      <div class="score" id="total">0</div>
+      <div class="bars">
+        <div class="bar"><b><span>Core / human capital</span><span id="vA">0</span></b><i><s id="bA"></s></i></div>
+        <div class="bar"><b><span>Spouse factors</span><span id="vB">0</span></b><i><s id="bB"></s></i></div>
+        <div class="bar"><b><span>Skill transferability</span><span id="vC">0</span></b><i><s id="bC"></s></i></div>
+        <div class="bar"><b><span>Additional points</span><span id="vD">0</span></b><i><s id="bD"></s></i></div>
+      </div>
+    </aside>
+  </div>
+
+  <p class="disclaimer">Estimate only, based on IRCC's published CRS criteria. Verify with the official IRCC CRS tool before making decisions — rules and cut-off scores change. Not immigration advice.</p>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — need a calculator or app for your business? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+
+/* populate CLB selects */
+const fill = (sel, from) => {
+  for (let c = from; c <= 10; c++) {
+    const o = document.createElement("option");
+    o.value = c;
+    o.textContent = c === from ? `CLB ${c} or less` : c === 10 ? "CLB 10+" : `CLB ${c}`;
+    sel.appendChild(o);
+  }
+};
+document.querySelectorAll(".clb").forEach((s) => { fill(s, 3); s.value = 7; });
+document.querySelectorAll(".clb2").forEach((s) => { fill(s, 4); s.value = 4; });
+document.querySelectorAll(".sclb").forEach((s) => { fill(s, 4); s.value = 4; });
+
+/* ---- CRS tables (IRCC) ---- */
+const AGE = { // age: [with spouse, without]
+  18: [90, 99], 19: [95, 105], 30: [95, 105], 31: [90, 99], 32: [85, 94],
+  33: [80, 88], 34: [75, 83], 35: [70, 77], 36: [65, 72], 37: [60, 66],
+  38: [55, 61], 39: [50, 55], 40: [45, 50], 41: [35, 39], 42: [25, 28],
+  43: [15, 17], 44: [5, 6],
+};
+const agePts = (age, w) => {
+  if (age < 18 || age >= 45) return 0;
+  if (age >= 20 && age <= 29) return w ? 100 : 110;
+  return AGE[age] ? AGE[age][w ? 0 : 1] : 0;
+};
+const EDU = [[0,0],[28,30],[84,90],[91,98],[112,120],[119,128],[126,135],[140,150]];
+const lang1Pts = (clb, w) => {
+  if (clb <= 3) return 0;
+  if (clb <= 5) return 6;
+  if (clb === 6) return w ? 8 : 9;
+  if (clb === 7) return w ? 16 : 17;
+  if (clb === 8) return w ? 22 : 23;
+  if (clb === 9) return w ? 29 : 31;
+  return w ? 32 : 34;
+};
+const lang2Pts = (clb) => (clb <= 4 ? 0 : clb <= 6 ? 1 : clb <= 8 ? 3 : 6);
+const CDN_EXP = [[0,0],[35,40],[46,53],[56,64],[63,72],[70,80]];
+const S_EDU = [0, 2, 6, 7, 8, 9, 10, 10];
+const sLangPts = (clb) => (clb <= 4 ? 0 : clb <= 6 ? 1 : clb <= 8 ? 3 : 5);
+const S_EXP = [0, 5, 7, 8, 9, 10];
+
+function calc() {
+  const w = $("spouse").checked;
+  $("spouseBox").classList.toggle("hide", !w);
+
+  const age = Number($("age").value) || 0;
+  const edu = Number($("edu").value);
+  const clb1 = ["l1s","l1l","l1r","l1w"].map((i) => Number($(i).value));
+  const clb2 = ["l2s","l2l","l2r","l2w"].map((i) => Number($(i).value));
+  const cdn = Number($("cdnExp").value);
+  const for_ = Number($("forExp").value);
+
+  /* A — core */
+  let A = agePts(age, w) + EDU[edu][w ? 0 : 1];
+  A += clb1.reduce((t, c) => t + lang1Pts(c, w), 0);
+  A += Math.min(clb2.reduce((t, c) => t + lang2Pts(c), 0), w ? 22 : 24);
+  A += CDN_EXP[cdn][w ? 0 : 1];
+
+  /* B — spouse */
+  let B = 0;
+  if (w) {
+    B = S_EDU[Number($("sEdu").value)];
+    B += ["ss","sl","sr","sw"].map((i) => Number($(i).value)).reduce((t, c) => t + sLangPts(c), 0);
+    B += S_EXP[Number($("sExp").value)];
+    B = Math.min(B, 40);
+  }
+
+  /* C — skill transferability */
+  const minClb1 = Math.min(...clb1);
+  const eduTier = edu >= 5 ? 2 : edu >= 2 ? 1 : 0; // 2 = two+ credentials or higher-equivalent path
+  const hasDegree = edu >= 2;
+  let cEduLang = 0, cEduExp = 0;
+  if (hasDegree && minClb1 >= 7) {
+    if (minClb1 >= 9) cEduLang = eduTier === 2 || edu >= 6 ? 50 : 25;
+    else cEduLang = eduTier === 2 || edu >= 6 ? 25 : 13;
+  }
+  if (hasDegree && cdn >= 1) {
+    if (cdn >= 2) cEduExp = eduTier === 2 || edu >= 6 ? 50 : 25;
+    else cEduExp = eduTier === 2 || edu >= 6 ? 25 : 13;
+  }
+  const cEdu = Math.min(cEduLang + cEduExp, 50);
+
+  let cForLang = 0, cForExp = 0;
+  if (for_ >= 1 && minClb1 >= 7) {
+    if (for_ >= 3) cForLang = minClb1 >= 9 ? 50 : 25;
+    else cForLang = minClb1 >= 9 ? 25 : 13;
+  }
+  if (for_ >= 1 && cdn >= 1) {
+    if (for_ >= 3) cForExp = cdn >= 2 ? 50 : 25;
+    else cForExp = cdn >= 2 ? 25 : 13;
+  }
+  const cFor = Math.min(cForLang + cForExp, 50);
+
+  let cCert = 0;
+  if ($("cert").checked && minClb1 >= 5) cCert = minClb1 >= 7 ? 50 : 25;
+
+  const C = Math.min(cEdu + cFor + cCert, 100);
+
+  /* D — additional */
+  let D = 0;
+  if ($("pnp").checked) D += 600;
+  if ($("sibling").checked) D += 15;
+  if ($("cdnEdu2").checked) D += 30;
+  else if ($("cdnEdu1").checked) D += 15;
+  if ($("frStrong").checked) {
+    const engMax = Math.max(...clb1, ...clb2); // whichever test is English
+    D += engMax >= 5 ? 50 : 25;
+  }
+  D = Math.min(D, 600 + 15 + 30 + 50);
+
+  const total = A + B + C + D;
+  $("total").textContent = total;
+  const set = (id, v, max) => {
+    $("v" + id).textContent = v;
+    $("b" + id).style.width = `${Math.min((v / max) * 100, 100)}%`;
+  };
+  set("A", A, w ? 460 : 500);
+  set("B", B, 40);
+  set("C", C, 100);
+  set("D", D, 695);
+}
+
+document.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", calc));
+calc();
+})();
+</script>
+</body>
+</html>

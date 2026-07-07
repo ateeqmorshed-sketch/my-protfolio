@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Invoice Generator — No Sign-up, Print to PDF</title>
+<meta name="description" content="Make a clean professional invoice in your browser and save it as PDF. Line items, tax, discount, any currency. Free, no account, your data never leaves your device.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #e0a13f; --accent-soft: #eebd6e;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  main { width: min(1020px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(24px, 5vw, 34px); margin-bottom: 8px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 24px; max-width: 60ch; }
+  .layout { display: grid; grid-template-columns: 420px 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .panel h2 { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); margin: 16px 0 10px; font-weight: 500; }
+  .panel h2:first-child { margin-top: 0; }
+  input, textarea {
+    width: 100%; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 9px;
+    padding: 9px 11px; font-size: 14px; margin-bottom: 8px;
+    font-family: inherit;
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .r3 { display: grid; grid-template-columns: 2fr 62px 90px 28px; gap: 6px; align-items: center; }
+  .r3 button { background: none; border: 0; color: #e0524f; cursor: pointer; font-size: 15px; }
+  .btn { border: 0; cursor: pointer; background: var(--accent); color: #17110a; font-weight: 700; font-size: 14.5px; padding: 12px 20px; border-radius: 10px; }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); font-weight: 500; }
+  .actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+  /* ------- invoice preview (also the print layout) ------- */
+  .sheet {
+    background: #fff; color: #1a1a1a; border-radius: 12px;
+    padding: clamp(24px, 4vw, 44px);
+    min-height: 640px;
+    font-size: 14px;
+    box-shadow: 0 24px 70px rgba(0,0,0,.5);
+  }
+  .sheet header { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 34px; }
+  .sheet .from { white-space: pre-line; }
+  .sheet .from b { font-size: 17px; }
+  .inv-title { text-align: right; }
+  .inv-title h3 { font-size: 26px; letter-spacing: .08em; color: #b07514; }
+  .inv-title div { color: #666; font-size: 13px; margin-top: 4px; }
+  .sheet .to { margin-bottom: 28px; white-space: pre-line; }
+  .sheet .to em { display: block; font-style: normal; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #999; margin-bottom: 4px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 22px; }
+  th { text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #999; padding: 8px 6px; border-bottom: 2px solid #eee; }
+  th:last-child, td:last-child, th.n, td.n { text-align: right; }
+  td { padding: 10px 6px; border-bottom: 1px solid #f2f2f2; font-variant-numeric: tabular-nums; }
+  .totals { margin-left: auto; width: 250px; }
+  .totals div { display: flex; justify-content: space-between; padding: 5px 6px; font-variant-numeric: tabular-nums; }
+  .totals .grand { border-top: 2px solid #1a1a1a; font-weight: 700; font-size: 17px; margin-top: 6px; padding-top: 10px; }
+  .sheet .notes { margin-top: 30px; color: #666; font-size: 13px; white-space: pre-line; }
+  .sheet footer { margin-top: 34px; font-size: 11.5px; color: #aaa; }
+
+  footer.site { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer.site a { color: var(--accent-soft); text-decoration: none; }
+
+  @media print {
+    body { background: #fff; }
+    main > .top, main > h1, main > .lead, .layout > .panel:first-child, footer.site, .actions { display: none !important; }
+    main { padding: 0; width: 100%; }
+    .layout { display: block; }
+    .sheet { box-shadow: none; border-radius: 0; min-height: 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🧾 No account · data stays on device</span>
+  </div>
+  <h1>Invoice <em>Generator</em></h1>
+  <p class="lead">Fill in the left, get a clean invoice on the right, hit <b>Save as PDF</b>. Your business details are remembered on this device for next time.</p>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>Your business</h2>
+      <textarea id="from" rows="3" placeholder="Your Name / Business
+Street, City
+email · phone"></textarea>
+      <h2>Bill to</h2>
+      <textarea id="to" rows="3" placeholder="Client name
+Client address"></textarea>
+      <h2>Invoice details</h2>
+      <div class="r2">
+        <input id="num" placeholder="Invoice # e.g. INV-001">
+        <input id="date" type="date">
+      </div>
+      <div class="r2">
+        <input id="due" type="date" title="Due date">
+        <input id="cur" placeholder="Currency symbol e.g. $" value="$" maxlength="4">
+      </div>
+      <h2>Line items</h2>
+      <div id="items"></div>
+      <button class="btn ghost" id="addItem" type="button">+ Add line</button>
+      <h2>Adjustments</h2>
+      <div class="r2">
+        <input id="tax" type="number" min="0" step="0.01" placeholder="Tax %">
+        <input id="disc" type="number" min="0" step="0.01" placeholder="Discount %">
+      </div>
+      <h2>Notes</h2>
+      <textarea id="notes" rows="2" placeholder="Payment terms, bank details, thank-you note…"></textarea>
+      <div class="actions">
+        <button class="btn" onclick="window.print()">Save as PDF / Print</button>
+        <button class="btn ghost" id="reset" type="button">New invoice</button>
+      </div>
+    </div>
+
+    <div class="sheet" id="sheet">
+      <header>
+        <div class="from" id="pFrom"><b>Your Name / Business</b></div>
+        <div class="inv-title">
+          <h3>INVOICE</h3>
+          <div id="pNum">INV-001</div>
+          <div id="pDate"></div>
+          <div id="pDue"></div>
+        </div>
+      </header>
+      <div class="to"><em>Billed to</em><span id="pTo">Client name</span></div>
+      <table>
+        <thead><tr><th>Description</th><th class="n">Qty</th><th class="n">Rate</th><th class="n">Amount</th></tr></thead>
+        <tbody id="pRows"></tbody>
+      </table>
+      <div class="totals" id="pTotals"></div>
+      <div class="notes" id="pNotes"></div>
+      <footer>Generated with the free invoice tool by Ateeq Morshed</footer>
+    </div>
+  </div>
+</main>
+<footer class="site">Built by <a href="../../">Ateeq Morshed</a> — need invoicing built into your business app? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const KEY = "invoice-your-details";
+let lines = [{ d: "", q: 1, r: 0 }];
+
+function lineRow(l, i) {
+  const row = document.createElement("div");
+  row.className = "r3";
+  row.innerHTML = `
+    <input placeholder="Description" value="${l.d.replace(/"/g, "&quot;")}">
+    <input type="number" min="0" step="0.01" value="${l.q}" title="Qty">
+    <input type="number" min="0" step="0.01" value="${l.r || ""}" placeholder="0.00" title="Rate">
+    <button type="button" aria-label="Remove line">✕</button>`;
+  const [d, q, r] = row.querySelectorAll("input");
+  d.oninput = () => { lines[i].d = d.value; render(); };
+  q.oninput = () => { lines[i].q = Number(q.value); render(); };
+  r.oninput = () => { lines[i].r = Number(r.value); render(); };
+  row.querySelector("button").onclick = () => {
+    lines.splice(i, 1);
+    if (!lines.length) lines.push({ d: "", q: 1, r: 0 });
+    buildLines(); render();
+  };
+  return row;
+}
+
+function buildLines() {
+  const box = $("items");
+  box.innerHTML = "";
+  lines.forEach((l, i) => box.appendChild(lineRow(l, i)));
+}
+
+const money = (n) => `${$("cur").value || ""}${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+function render() {
+  $("pFrom").innerHTML = ($("from").value || "Your Name / Business")
+    .split("\n").map((l, i) => (i === 0 ? `<b>${l}</b>` : l)).join("\n");
+  $("pTo").textContent = $("to").value || "Client name";
+  $("pNum").textContent = $("num").value || "INV-001";
+  $("pDate").textContent = $("date").value ? `Issued ${$("date").value}` : "";
+  $("pDue").textContent = $("due").value ? `Due ${$("due").value}` : "";
+  $("pNotes").textContent = $("notes").value;
+
+  const rows = lines.filter((l) => l.d || l.r);
+  let sub = 0;
+  $("pRows").innerHTML = (rows.length ? rows : [{ d: "—", q: 0, r: 0 }])
+    .map((l) => {
+      const amt = (l.q || 0) * (l.r || 0);
+      sub += amt;
+      return `<tr><td>${l.d || "—"}</td><td class="n">${l.q || ""}</td><td class="n">${l.r ? money(l.r) : ""}</td><td class="n">${amt ? money(amt) : ""}</td></tr>`;
+    }).join("");
+
+  const disc = sub * ((Number($("disc").value) || 0) / 100);
+  const taxed = (sub - disc) * ((Number($("tax").value) || 0) / 100);
+  const grand = sub - disc + taxed;
+  let t = `<div><span>Subtotal</span><span>${money(sub)}</span></div>`;
+  if (disc) t += `<div><span>Discount</span><span>−${money(disc)}</span></div>`;
+  if (taxed) t += `<div><span>Tax</span><span>${money(taxed)}</span></div>`;
+  t += `<div class="grand"><span>Total</span><span>${money(grand)}</span></div>`;
+  $("pTotals").innerHTML = t;
+
+  localStorage.setItem(KEY, $("from").value);
+}
+
+$("addItem").onclick = () => { lines.push({ d: "", q: 1, r: 0 }); buildLines(); render(); };
+$("reset").onclick = () => {
+  ["to", "num", "date", "due", "notes", "tax", "disc"].forEach((id) => ($(id).value = ""));
+  lines = [{ d: "", q: 1, r: 0 }];
+  buildLines(); render();
+};
+document.querySelectorAll("#from,#to,#num,#date,#due,#cur,#tax,#disc,#notes")
+  .forEach((el) => el.addEventListener("input", render));
+
+$("from").value = localStorage.getItem(KEY) || "";
+$("date").value = new Date().toISOString().slice(0, 10);
+buildLines();
+render();
+})();
+</script>
+</body>
+</html>

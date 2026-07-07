@@ -12,6 +12,12 @@ Personal portfolio site. Hand-built with plain HTML, CSS and JavaScript — no f
 | Doctor Ase | [doctor-ase-app.vercel.app](https://doctor-ase-app.vercel.app) |
 | Green World Block | In development |
 
+## Free tools (in `/apps/`)
+
+Six self-contained public utilities, each a single HTML file with no dependencies:
+citizenship test practice, Express Entry CRS calculator, Schengen 90/180 calculator,
+unit price comparator, invoice generator, zakat calculator.
+
 ## Run locally
 
 ```sh

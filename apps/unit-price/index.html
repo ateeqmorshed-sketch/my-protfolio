@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit Price Comparator — Which Is Actually Cheaper?</title>
+<meta name="description" content="Compare grocery prices per 100g, per litre or per item in the store aisle. Free, instant, works with any currency. Find the real best deal.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #58c47a; --accent-soft: #8ada9f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(640px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(26px, 6vw, 36px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 24px; max-width: 52ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr auto; gap: 8px; align-items: end; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } .grid .btn { grid-column: span 2; } }
+  label { display: block; font-size: 12.5px; color: var(--dim); margin-bottom: 4px; }
+  input, select {
+    width: 100%; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 11px; font-size: 15px;
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn { border: 0; cursor: pointer; background: var(--accent); color: #08120b; font-weight: 700; font-size: 14.5px; padding: 11px 18px; border-radius: 10px; }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--dim); font-weight: 500; }
+  .results { display: grid; gap: 8px; }
+  .item {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px;
+  }
+  .item.best { border-color: rgba(88,196,122,.6); background: rgba(88,196,122,.07); }
+  .item .name { font-weight: 600; font-size: 15px; }
+  .item .sub { font-size: 12.5px; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .item .unit { font-family: var(--mono); font-size: 14px; color: var(--accent-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .item .diff { font-size: 11.5px; color: var(--dim); }
+  .item.best .diff { color: var(--accent-soft); font-weight: 600; }
+  .item button { background: none; border: 0; color: #e0524f; cursor: pointer; font-size: 15px; }
+  .empty { color: var(--dim); font-size: 14px; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .rowtop { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .rowtop h2 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); font-weight: 500; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🛒 Works with any currency</span>
+  </div>
+  <h1>Which is <em>actually cheaper?</em></h1>
+  <p class="lead">Big box vs. small pack, brand vs. brand — enter price and size, and see the true cost per 100g / 100ml / item. The best deal gets highlighted.</p>
+
+  <div class="card">
+    <div class="grid">
+      <div><label for="name">Item</label><input id="name" placeholder="e.g. Rice 8kg"></div>
+      <div><label for="price">Price</label><input id="price" type="number" min="0" step="0.01" inputmode="decimal" placeholder="12.99"></div>
+      <div><label for="qty">Amount</label><input id="qty" type="number" min="0" step="0.01" inputmode="decimal" placeholder="8"></div>
+      <div><label for="unit">Unit</label>
+        <select id="unit">
+          <option value="kg">kg</option><option value="g">g</option>
+          <option value="L">L</option><option value="ml">ml</option>
+          <option value="item">items</option>
+        </select>
+      </div>
+      <button class="btn" id="add">Add</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="rowtop">
+      <h2>Comparison</h2>
+      <button class="btn ghost" id="clear">Clear all</button>
+    </div>
+    <div class="results" id="results"><div class="empty">Add two or more items to compare.</div></div>
+  </div>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — need an app for your shop? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const KEY = "unit-price-items";
+let items = [];
+try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch { items = []; }
+const save = () => localStorage.setItem(KEY, JSON.stringify(items));
+
+/* normalize to base units: g, ml, item */
+const BASE = { kg: ["g", 1000], g: ["g", 1], L: ["ml", 1000], ml: ["ml", 1], item: ["item", 1] };
+const LABEL = { g: "per 100g", ml: "per 100ml", item: "per item" };
+
+function unitCost(it) {
+  const [base, mult] = BASE[it.unit];
+  const totalBase = it.qty * mult;
+  const per = base === "item" ? it.price / totalBase : (it.price / totalBase) * 100;
+  return { base, per };
+}
+
+function render() {
+  const box = $("results");
+  if (!items.length) {
+    box.innerHTML = `<div class="empty">Add two or more items to compare.</div>`;
+    return;
+  }
+  const rows = items.map((it, i) => ({ it, i, ...unitCost(it) }));
+  /* only compare within same base unit; find best per base group */
+  const best = {};
+  rows.forEach((r) => {
+    if (!(r.base in best) || r.per < best[r.base]) best[r.base] = r.per;
+  });
+  rows.sort((a, b) => (a.base === b.base ? a.per - b.per : a.base.localeCompare(b.base)));
+  box.innerHTML = rows.map((r) => {
+    const isBest = r.per === best[r.base];
+    const diff = isBest ? "BEST DEAL" : `+${(((r.per - best[r.base]) / best[r.base]) * 100).toFixed(0)}% more`;
+    return `<div class="item ${isBest ? "best" : ""}">
+      <div><div class="name">${r.it.name}</div><div class="sub">${r.it.price.toFixed(2)} for ${r.it.qty}${r.it.unit === "item" ? " items" : r.it.unit}</div></div>
+      <div style="text-align:right"><div class="unit">${r.per.toFixed(2)} ${LABEL[r.base]}</div><div class="diff">${diff}</div></div>
+      <button aria-label="Remove ${r.it.name}" data-i="${r.i}">✕</button>
+    </div>`;
+  }).join("");
+  box.querySelectorAll("button").forEach((b) => {
+    b.onclick = () => { items.splice(Number(b.dataset.i), 1); save(); render(); };
+  });
+}
+
+$("add").onclick = () => {
+  const name = $("name").value.trim() || `Item ${items.length + 1}`;
+  const price = Number($("price").value);
+  const qty = Number($("qty").value);
+  if (!price || !qty) return alert("Enter a price and an amount.");
+  items.push({ name, price, qty, unit: $("unit").value });
+  save();
+  $("name").value = ""; $("price").value = ""; $("qty").value = "";
+  $("name").focus();
+  render();
+};
+$("clear").onclick = () => { items = []; save(); render(); };
+render();
+})();
+</script>
+</body>
+</html>

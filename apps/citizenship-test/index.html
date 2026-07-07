@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canadian Citizenship Test Practice — Free Mock Exam</title>
+<meta name="description" content="Free Canadian citizenship practice test based on Discover Canada. 20-question mock exam with instant feedback, explanations and score tracking. No sign-up.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #e0524f; --accent-soft: #f2807d;
+    --ok: #58c47a; --bad: #e0524f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55; min-height: 100svh;
+    display: flex; flex-direction: column;
+  }
+  main { width: min(680px, 100%); margin: 0 auto; padding: 28px 20px 60px; flex: 1; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 34px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(26px, 6vw, 38px); line-height: 1.12; letter-spacing: -.01em; margin-bottom: 12px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 52ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .btn {
+    display: inline-block; border: 0; cursor: pointer; text-decoration: none;
+    background: var(--accent); color: #fff; font-weight: 600; font-size: 15.5px;
+    padding: 14px 26px; border-radius: 12px;
+    transition: transform .2s, opacity .2s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:disabled { opacity: .4; cursor: default; transform: none; }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+  .meta { display: flex; gap: 18px; flex-wrap: wrap; margin: 22px 0; }
+  .meta div { font-size: 13.5px; color: var(--dim); }
+  .meta b { display: block; color: var(--ink); font-size: 19px; }
+  .qbar { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 10px; letter-spacing: .08em; }
+  .track { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; margin-bottom: 22px; }
+  .track i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); transition: width .3s; }
+  .qtext { font-size: 19px; font-weight: 600; margin-bottom: 18px; text-wrap: balance; }
+  .opts { display: grid; gap: 10px; }
+  .opt {
+    text-align: left; background: var(--bg); border: 1px solid var(--line);
+    color: var(--ink); font-size: 15.5px; padding: 13px 16px; border-radius: 12px;
+    cursor: pointer; transition: border-color .2s, background .2s;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent-soft); }
+  .opt.correct { border-color: var(--ok); background: rgba(88,196,122,.1); }
+  .opt.wrong { border-color: var(--bad); background: rgba(224,82,79,.1); }
+  .opt:disabled { cursor: default; }
+  .explain { margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--accent-soft); background: rgba(224,82,79,.05); border-radius: 0 10px 10px 0; color: var(--dim); font-size: 14.5px; }
+  .explain b { color: var(--ink); }
+  .next-row { margin-top: 20px; display: flex; justify-content: flex-end; }
+  .score-big { font-size: 56px; font-weight: 700; line-height: 1; }
+  .score-big.pass { color: var(--ok); } .score-big.fail { color: var(--bad); }
+  .verdict { font-size: 17px; margin: 8px 0 20px; color: var(--dim); }
+  .review { margin-top: 22px; display: grid; gap: 12px; }
+  .review .item { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 14.5px; }
+  .review .q { font-weight: 600; margin-bottom: 6px; }
+  .review .a { color: var(--ok); } .review .w { color: var(--bad); }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 22px; opacity: .8; }
+  .hide { display: none !important; }
+  @media (prefers-reduced-motion: reduce) { .btn, .track i { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🍁 Free · No sign-up</span>
+  </div>
+
+  <!-- START -->
+  <section id="start">
+    <h1>Canadian Citizenship Test <em>Practice</em></h1>
+    <p class="lead">A realistic 20-question mock exam drawn from the official <i>Discover Canada</i> study guide. You need 15 correct to pass — just like the real thing.</p>
+    <div class="card">
+      <div class="meta">
+        <div><b id="bankCount">—</b> questions in bank</div>
+        <div><b>20</b> per mock test</div>
+        <div><b>75%</b> to pass</div>
+        <div><b id="best">—</b> your best score</div>
+      </div>
+      <button class="btn" id="beginBtn">Start mock test</button>
+    </div>
+    <p class="disclaimer">Unofficial study aid. Always study the official <b>Discover Canada</b> guide from IRCC — it is the sole source for the real test.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="hide">
+    <div class="qbar"><span id="qNum">Question 1 / 20</span><span id="qScore">0 correct</span></div>
+    <div class="track"><i id="qTrack"></i></div>
+    <div class="card">
+      <p class="qtext" id="qText"></p>
+      <div class="opts" id="qOpts"></div>
+      <div class="explain hide" id="qExplain"></div>
+      <div class="next-row"><button class="btn hide" id="nextBtn">Next question →</button></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="hide">
+    <div class="card" style="text-align:center">
+      <div class="score-big" id="rScore"></div>
+      <div class="verdict" id="rVerdict"></div>
+      <button class="btn" id="againBtn">Try another test</button>
+      <button class="btn ghost" id="reviewBtn" style="margin-left:8px">Review mistakes</button>
+    </div>
+    <div class="review hide" id="reviewList"></div>
+  </section>
+</main>
+
+<footer>Built by <a href="../../">Ateeq Morshed</a> — need an app like this for your business? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+/* Question bank — facts from the official Discover Canada study guide (IRCC). */
+const BANK = [
+  ["What are the two official languages of Canada?", ["English and French", "English and Inuktitut", "French and Cree", "English and Spanish"], 0, "Canada's two official languages are English and French."],
+  ["What is the capital city of Canada?", ["Ottawa", "Toronto", "Montreal", "Vancouver"], 0, "Ottawa, in Ontario, is Canada's capital."],
+  ["Who is Canada's Head of State?", ["The reigning Sovereign (King or Queen)", "The Prime Minister", "The Governor General", "The Chief Justice"], 0, "Canada is a constitutional monarchy — the Sovereign is Head of State, represented in Canada by the Governor General."],
+  ["Who represents the Sovereign in Canada at the federal level?", ["The Governor General", "The Prime Minister", "The Speaker of the House", "The Premier"], 0, "The Governor General is the Sovereign's federal representative."],
+  ["What is the name of Canada's national anthem?", ["O Canada", "God Save the King", "The Maple Leaf Forever", "True North Strong"], 0, "O Canada is the national anthem; God Save the King is the royal anthem."],
+  ["What do you call the Sovereign's representative in each province?", ["Lieutenant Governor", "Premier", "Senator", "Commissioner"], 0, "Each province has a Lieutenant Governor; territories have Commissioners."],
+  ["Which three groups make up Canada's Aboriginal (Indigenous) peoples?", ["First Nations, Métis and Inuit", "First Nations, Acadians and Inuit", "Métis, Inuit and Loyalists", "Cree, Métis and Huron"], 0, "The Constitution recognizes First Nations, Métis and Inuit."],
+  ["Where do most Inuit live?", ["In the Arctic regions of Canada", "In the Prairie provinces", "On the West Coast", "In southern Ontario"], 0, "Inuit means 'the people' in Inuktitut; they live across Arctic Canada."],
+  ["What are the responsibilities of Canadian citizenship?", ["Obeying the law, serving on a jury, voting, volunteering and protecting our heritage", "Paying taxes only", "Voting only", "Military service for all citizens"], 0, "Responsibilities include obeying the law, taking responsibility for oneself and family, jury duty, voting, helping others and protecting heritage/environment."],
+  ["What is the significance of the poppy in November?", ["It honours Canadians who died in wars, worn for Remembrance Day", "It celebrates the harvest", "It marks the Queen's birthday", "It is Canada's national flower"], 0, "The poppy is worn for Remembrance Day, November 11, honouring war dead."],
+  ["Which document made Canada a country in 1867?", ["The British North America Act", "The Charter of Rights", "The Statute of Westminster", "The Treaty of Paris"], 0, "The British North America Act, 1867 (now the Constitution Act, 1867) created the Dominion of Canada."],
+  ["Who was the first Prime Minister of Canada?", ["Sir John A. Macdonald", "Sir Wilfrid Laurier", "Sir George-Étienne Cartier", "William Lyon Mackenzie King"], 0, "Sir John A. Macdonald became the first PM in 1867."],
+  ["Which provinces first joined Confederation in 1867?", ["Ontario, Quebec, Nova Scotia and New Brunswick", "Ontario, Manitoba, Quebec and PEI", "Nova Scotia, PEI, Quebec and Ontario", "British Columbia, Ontario, Quebec and Nova Scotia"], 0, "The original four: Ontario, Quebec, Nova Scotia, New Brunswick."],
+  ["What does the word “Canada” come from?", ["“Kanata”, the Huron-Iroquois word for village", "A French word for cold", "A Viking explorer's name", "A Latin word for north"], 0, "Jacques Cartier heard the word 'kanata' (village) and it became Canada."],
+  ["Who are the Acadians?", ["Descendants of French colonists in the Maritime provinces", "British Loyalists", "Indigenous people of the Prairies", "Scottish settlers of Ontario"], 0, "Acadians descend from French colonists who settled in the Maritimes from 1604."],
+  ["What was the Underground Railroad?", ["A network that helped enslaved people escape to freedom in Canada", "Canada's first railway", "A mining tunnel system", "A wartime supply route"], 0, "Thousands of enslaved African Americans escaped to Canada via the Underground Railroad."],
+  ["When did the Canadian Charter of Rights and Freedoms become part of the Constitution?", ["1982", "1867", "1931", "1965"], 0, "The Charter was entrenched in the Constitution Act, 1982."],
+  ["What are the four fundamental freedoms in the Charter?", ["Conscience and religion; thought and expression; peaceful assembly; association", "Work, travel, vote, protest", "Speech, press, arms, assembly", "Religion, education, health care, housing"], 0, "The Charter lists freedom of conscience/religion, thought/belief/expression (incl. press), peaceful assembly, and association."],
+  ["In Canada, are men and women equal under the law?", ["Yes — equality of women and men is a Canadian value protected by law", "Only in some provinces", "Only in the workplace", "No"], 0, "Men and women are equal under Canadian law; barbaric cultural practices are crimes."],
+  ["How are Members of Parliament chosen?", ["Elected by voters in their riding (electoral district)", "Appointed by the Prime Minister", "Appointed by the Governor General", "Chosen by the Senate"], 0, "MPs are elected by constituents in each riding."],
+  ["What are the three parts of Parliament?", ["The Sovereign, the Senate and the House of Commons", "The PM, Cabinet and Senate", "The House, the Court and the Crown", "The Commons, provinces and territories"], 0, "Parliament = Sovereign + Senate + House of Commons."],
+  ["What is the difference between the federal and provincial governments' responsibilities?", ["Federal handles national/international matters; provinces handle areas like education and health care", "They share all duties equally", "Provinces handle defence", "Federal government runs schools"], 0, "Defence, foreign policy, criminal law are federal; education, health, natural resources are largely provincial."],
+  ["How often must federal elections be held under the Constitution?", ["At least every five years", "Every two years", "Every three years", "Whenever the PM decides, with no limit"], 0, "Elections must be held at least every five years (by law, fixed dates every four years in October)."],
+  ["Who can vote in a federal election?", ["Canadian citizens aged 18 or older on voting day, on the voters' list", "Anyone living in Canada", "Citizens and permanent residents", "Citizens aged 16+"], 0, "You must be a citizen, 18+, and on the list of electors."],
+  ["What is the secret ballot?", ["No one can watch you vote or see how you voted", "A ballot with hidden candidates", "Voting by mail only", "A password for online voting"], 0, "Canadian law secures the secret ballot."],
+  ["Who becomes Prime Minister after an election?", ["The leader of the party with the most seats in the House of Commons", "The candidate with the most national votes", "Whoever the Senate chooses", "The Governor General's pick"], 0, "The leader of the party that wins the most seats is invited to form government."],
+  ["What is a Cabinet minister?", ["An MP (or senator) chosen by the PM to run a federal department", "A provincial judge", "A senior civil servant", "The Speaker's deputy"], 0, "The PM chooses ministers of the Crown, mostly from the House of Commons."],
+  ["What is Canada's system of government called?", ["A federal state, a parliamentary democracy and a constitutional monarchy", "A republic", "A direct democracy", "A unitary state"], 0, "Canada is all three: federal state, parliamentary democracy, constitutional monarchy."],
+  ["What is the highest court in Canada?", ["The Supreme Court of Canada", "The Federal Court", "The Court of King's Bench", "Parliament"], 0, "The Supreme Court of Canada is the highest court."],
+  ["In Canada, everyone is presumed ______ until proven guilty.", ["innocent", "responsible", "liable", "accountable"], 0, "Presumption of innocence is a core principle of Canadian justice."],
+  ["What are the Prairie provinces?", ["Manitoba, Saskatchewan and Alberta", "Ontario, Manitoba and Alberta", "Alberta, BC and Yukon", "Saskatchewan, Alberta and BC"], 0, "The Prairies: Manitoba, Saskatchewan, Alberta — energy-rich and fertile."],
+  ["Which province is Canada's main French-speaking province?", ["Quebec", "New Brunswick", "Ontario", "Manitoba"], 0, "More than three-quarters of Quebecers speak French as their first language."],
+  ["Which is the only officially bilingual province?", ["New Brunswick", "Quebec", "Ontario", "Manitoba"], 0, "New Brunswick is the only officially bilingual province."],
+  ["What are the three territories of Canada?", ["Yukon, Northwest Territories and Nunavut", "Yukon, Alaska and Nunavut", "NWT, Labrador and Yukon", "Nunavut, NWT and Churchill"], 0, "Canada has 10 provinces and 3 territories: Yukon, NWT, Nunavut."],
+  ["What is the most populous province?", ["Ontario", "Quebec", "British Columbia", "Alberta"], 0, "Ontario has more than one-third of Canadians."],
+  ["Which ocean borders British Columbia?", ["The Pacific Ocean", "The Atlantic Ocean", "The Arctic Ocean", "The Indian Ocean"], 0, "BC is on the Pacific coast; Canada borders three oceans."],
+  ["What is the national police force of Canada?", ["The Royal Canadian Mounted Police (RCMP)", "The OPP", "The Canada Border Agency", "Interpol Canada"], 0, "The RCMP is Canada's national police force."],
+  ["What does the Canadian flag look like?", ["A red-white-red banner with a red maple leaf in the centre", "A red leaf on blue", "The Union Jack with a leaf", "Three red leaves on white"], 0, "The maple leaf flag was raised for the first time in 1965."],
+  ["When is Canada Day celebrated?", ["July 1", "June 24", "May 24", "September 1"], 0, "Canada Day, July 1, marks Confederation in 1867."],
+  ["When do Canadians celebrate Remembrance Day?", ["November 11", "November 1", "October 11", "December 11"], 0, "Remembrance Day is November 11, marking the end of WWI in 1918."],
+  ["What song is Canada's royal anthem?", ["God Save the King", "O Canada", "The Maple Leaf Forever", "Amazing Grace"], 0, "The royal anthem is God Save the King (or Queen)."],
+  ["Which animal is an official symbol of Canada?", ["The beaver", "The moose", "The polar bear", "The Canada goose"], 0, "The beaver — and the maple leaf — are official symbols of Canada."],
+  ["What sport is Canada's official winter sport?", ["Ice hockey", "Curling", "Skiing", "Lacrosse"], 0, "Hockey is the official winter sport; lacrosse is the official summer sport."],
+  ["Who was Sir Wilfrid Laurier?", ["The first French-Canadian Prime Minister", "The first Governor General", "A famous general", "The inventor of insulin"], 0, "Laurier, PM from 1896–1911, championed immigration to the West; he's on the $5 bill."],
+  ["What did the discovery of insulin by Sir Frederick Banting and Charles Best do?", ["Saved millions of people with diabetes worldwide", "Cured polio", "Enabled heart transplants", "Prevented smallpox"], 0, "Insulin, discovered in Canada in 1921–22, treats diabetes."],
+  ["What is Canada's largest city?", ["Toronto", "Montreal", "Vancouver", "Ottawa"], 0, "Toronto is the largest city and Canada's main financial centre."],
+  ["The Canadian Pacific Railway, completed in 1885, connected…", ["Canada from east to west", "Canada to the USA", "Ontario to Quebec", "The Prairies to the Arctic"], 0, "The CPR's last spike (1885) bound the country together east to west."],
+  ["What must you do if you are called to serve on a jury?", ["Serve — it is a legal duty and a responsibility of citizenship", "Pay a fee to skip it", "Attend only if you want to", "Vote instead"], 0, "When called, serving on a jury is a legal requirement."],
+];
+
+const $ = (id) => document.getElementById(id);
+const KEY = "citizenship-best";
+let order = [], idx = 0, score = 0, wrong = [];
+
+$("bankCount").textContent = BANK.length;
+const best = localStorage.getItem(KEY);
+$("best").textContent = best ? `${best} / 20` : "—";
+
+const show = (id) => {
+  ["start", "quiz", "results"].forEach((s) => $(s).classList.toggle("hide", s !== id));
+};
+
+const shuffle = (a) => {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+function begin() {
+  order = shuffle([...BANK.keys()]).slice(0, 20);
+  idx = 0; score = 0; wrong = [];
+  show("quiz");
+  render();
+}
+
+function render() {
+  const [q, opts, ans] = BANK[order[idx]];
+  $("qNum").textContent = `Question ${idx + 1} / 20`;
+  $("qScore").textContent = `${score} correct`;
+  $("qTrack").style.width = `${(idx / 20) * 100}%`;
+  $("qText").textContent = q;
+  $("qExplain").classList.add("hide");
+  $("nextBtn").classList.add("hide");
+  const box = $("qOpts");
+  box.innerHTML = "";
+  // shuffle options but remember where the answer went
+  const mapped = shuffle(opts.map((t, i) => ({ t, correct: i === ans })));
+  mapped.forEach((o) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.type = "button";
+    b.textContent = o.t;
+    b.onclick = () => pick(b, o.correct, mapped);
+    box.appendChild(b);
+  });
+}
+
+function pick(btn, correct, mapped) {
+  const buttons = [...$("qOpts").children];
+  buttons.forEach((b, i) => {
+    b.disabled = true;
+    if (mapped[i].correct) b.classList.add("correct");
+  });
+  if (!correct) {
+    btn.classList.add("wrong");
+    const [q, opts, ans, why] = BANK[order[idx]];
+    wrong.push({ q, right: opts[ans], picked: btn.textContent });
+    $("qExplain").innerHTML = `<b>Correct answer:</b> ${opts[ans]}. ${why}`;
+    $("qExplain").classList.remove("hide");
+  } else {
+    score += 1;
+    $("qScore").textContent = `${score} correct`;
+  }
+  $("nextBtn").textContent = idx === 19 ? "See results →" : "Next question →";
+  $("nextBtn").classList.remove("hide");
+}
+
+function next() {
+  idx += 1;
+  if (idx >= 20) return finish();
+  render();
+}
+
+function finish() {
+  show("results");
+  const pass = score >= 15;
+  $("rScore").textContent = `${score} / 20`;
+  $("rScore").className = `score-big ${pass ? "pass" : "fail"}`;
+  $("rVerdict").textContent = pass
+    ? "You passed! The real test needs 15/20 — keep this level up."
+    : `Not yet — you need 15 to pass. Review your ${wrong.length} mistake${wrong.length === 1 ? "" : "s"} below and try again.`;
+  const prev = Number(localStorage.getItem(KEY) || 0);
+  if (score > prev) localStorage.setItem(KEY, score);
+  $("best").textContent = `${Math.max(score, prev)} / 20`;
+  const list = $("reviewList");
+  list.classList.add("hide");
+  list.innerHTML = wrong.length
+    ? wrong.map((w) => `<div class="item"><div class="q">${w.q}</div><div class="w">You picked: ${w.picked}</div><div class="a">Correct: ${w.right}</div></div>`).join("")
+    : `<div class="item">Perfect run — nothing to review. 🎉</div>`;
+}
+
+$("beginBtn").onclick = begin;
+$("nextBtn").onclick = next;
+$("againBtn").onclick = begin;
+$("reviewBtn").onclick = () => $("reviewList").classList.toggle("hide");
+})();
+</script>
+</body>
+</html>

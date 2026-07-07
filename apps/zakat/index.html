@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zakat Calculator — Simple, Private, Any Currency</title>
+<meta name="description" content="Calculate your zakat in any currency. Cash, gold, silver, investments, business inventory and debts — with nisab worked out from today's gold or silver price. Free and private.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #3fae8c; --accent-soft: #74cdb1;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(720px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(26px, 6vw, 36px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 56ch; }
+  fieldset { border: 1px solid var(--line); border-radius: 16px; background: var(--card); padding: 20px; margin-bottom: 16px; }
+  legend { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); padding: 0 8px; }
+  label { display: block; font-size: 14px; color: var(--dim); margin: 12px 0 5px; }
+  label:first-of-type { margin-top: 0; }
+  input, select {
+    width: 100%; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 11px 12px; font-size: 15px;
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 540px) { .r2 { grid-template-columns: 1fr; } }
+  .result {
+    background: linear-gradient(160deg, rgba(63,174,140,.13), transparent 60%), var(--card);
+    border: 1px solid rgba(63,174,140,.4); border-radius: 18px; padding: 24px; text-align: center;
+  }
+  .result .label { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+  .result .amount { font-size: 52px; font-weight: 700; color: var(--accent-soft); line-height: 1.15; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .result .status { margin-top: 8px; font-size: 15px; color: var(--dim); }
+  .result .status b { color: var(--ink); }
+  .breakdown { display: grid; gap: 6px; margin-top: 18px; text-align: left; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .breakdown div { display: flex; justify-content: space-between; color: var(--dim); border-bottom: 1px dashed var(--line); padding: 5px 2px; }
+  .breakdown div b { color: var(--ink); font-weight: 600; }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 24px; opacity: .8; max-width: 68ch; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .hint { font-size: 12.5px; color: var(--dim); margin-top: 4px; opacity: .85; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🌙 Private — nothing leaves your device</span>
+  </div>
+  <h1>Zakat <em>Calculator</em></h1>
+  <p class="lead">Enter what you own in any currency. The calculator works out your nisab from today's gold or silver price and tells you exactly what 2.5% zakat comes to.</p>
+
+  <fieldset>
+    <legend>Nisab</legend>
+    <div class="r2">
+      <div>
+        <label for="nisabBase">Base nisab on</label>
+        <select id="nisabBase">
+          <option value="silver">Silver — 612.36 g (lower threshold, safer)</option>
+          <option value="gold">Gold — 87.48 g</option>
+        </select>
+      </div>
+      <div>
+        <label for="metalPrice">Today's price per gram (your currency)</label>
+        <input id="metalPrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 1.15">
+        <p class="hint">Search “silver price per gram” for today's rate.</p>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>What you own (held one lunar year)</legend>
+    <div class="r2">
+      <div><label for="cash">Cash — in hand &amp; bank accounts</label><input id="cash" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+      <div><label for="goldG">Gold owned (grams)</label><input id="goldG" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+      <div><label for="goldP">Gold price per gram</label><input id="goldP" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+      <div><label for="silverG">Silver owned (grams)</label><input id="silverG" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+      <div><label for="silverP">Silver price per gram</label><input id="silverP" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+      <div><label for="invest">Investments — shares, funds, crypto (current value)</label><input id="invest" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+      <div><label for="stock">Business inventory / stock for sale</label><input id="stock" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+      <div><label for="owed">Money owed to you (expected back)</label><input id="owed" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>What you owe</legend>
+    <label for="debts">Debts due now — bills, rent due, loan payments due</label>
+    <input id="debts" type="number" min="0" inputmode="decimal" placeholder="0">
+  </fieldset>
+
+  <div class="result">
+    <div class="label">Your zakat (2.5%)</div>
+    <div class="amount" id="zakat">0.00</div>
+    <div class="status" id="status">Enter a metal price to work out your nisab.</div>
+    <div class="breakdown" id="breakdown"></div>
+  </div>
+
+  <p class="disclaimer">Zakat is due when your net zakatable wealth has stayed at or above the nisab for one full lunar year. Scholars differ on some details (e.g. jewellery in personal use, long-term debts) — for anything unusual, ask a knowledgeable scholar. This tool stores nothing and sends nothing.</p>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — need an app for your community or business? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const NISAB_G = { gold: 87.48, silver: 612.36 };
+const num = (id) => Number($(id).value) || 0;
+
+function calc() {
+  const assets = {
+    "Cash": num("cash"),
+    "Gold": num("goldG") * num("goldP"),
+    "Silver": num("silverG") * num("silverP"),
+    "Investments": num("invest"),
+    "Business stock": num("stock"),
+    "Owed to you": num("owed"),
+  };
+  const totalAssets = Object.values(assets).reduce((a, b) => a + b, 0);
+  const debts = num("debts");
+  const net = Math.max(0, totalAssets - debts);
+
+  const base = $("nisabBase").value;
+  const nisab = NISAB_G[base] * num("metalPrice");
+
+  const fmt = (n) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  let rows = Object.entries(assets)
+    .filter(([, v]) => v > 0)
+    .map(([k, v]) => `<div><span>${k}</span><span>${fmt(v)}</span></div>`);
+  if (debts) rows.push(`<div><span>Less: debts due</span><span>−${fmt(debts)}</span></div>`);
+  rows.push(`<div><span><b>Net zakatable wealth</b></span><span><b>${fmt(net)}</b></span></div>`);
+  if (nisab) rows.push(`<div><span>Nisab (${base}, ${NISAB_G[base]} g)</span><span>${fmt(nisab)}</span></div>`);
+  $("breakdown").innerHTML = rows.join("");
+
+  if (!num("metalPrice")) {
+    $("zakat").textContent = "—";
+    $("status").textContent = "Enter a metal price to work out your nisab.";
+    return;
+  }
+  if (net >= nisab && net > 0) {
+    $("zakat").textContent = fmt(net * 0.025);
+    $("status").innerHTML = `Your wealth is <b>above nisab</b> — zakat is due at 2.5%.`;
+  } else {
+    $("zakat").textContent = "0.00";
+    $("status").innerHTML = `Your wealth is <b>below nisab</b> (${fmt(nisab)}) — no zakat due, though voluntary charity always counts.`;
+  }
+}
+
+document.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", calc));
+calc();
+})();
+</script>
+</body>
+</html>

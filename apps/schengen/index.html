@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schengen 90/180 Calculator — Days Remaining Tracker</title>
+<meta name="description" content="Free Schengen visa calculator. Track your 90 days in any 180-day rolling window, see days remaining today, and check how long you can stay on your next trip. No sign-up, data stays on your device.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇪🇺</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #4a6fd4; --accent-soft: #8ba4ec;
+    --ok: #58c47a; --warn: #e0b13f; --bad: #e0524f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(720px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(26px, 5.5vw, 36px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 56ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 18px; }
+  legend, .card h2 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 14px; font-weight: 500; }
+  label { display: block; font-size: 13.5px; color: var(--dim); margin-bottom: 5px; }
+  input[type="date"] {
+    width: 100%; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 12px; font-size: 15px; color-scheme: dark;
+  }
+  input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .trip-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 10px; }
+  .btn {
+    border: 0; cursor: pointer; background: var(--accent); color: #fff;
+    font-weight: 600; font-size: 14.5px; padding: 11px 20px; border-radius: 10px;
+  }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+  .btn.del { background: transparent; border: 1px solid var(--line); color: var(--bad); padding: 10px 13px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 540px) { .stats { grid-template-columns: 1fr; } .trip-row { grid-template-columns: 1fr 1fr; } }
+  .stat { border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; }
+  .stat b { display: block; font-size: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 12.5px; color: var(--dim); }
+  .stat.ok b { color: var(--ok); } .stat.warn b { color: var(--warn); } .stat.bad b { color: var(--bad); }
+  .triplist { display: grid; gap: 8px; margin-top: 14px; }
+  .trip {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .trip .days { color: var(--accent-soft); font-family: var(--mono); font-size: 12.5px; }
+  .trip button { background: none; border: 0; color: var(--bad); cursor: pointer; font-size: 16px; }
+  .plan-result { margin-top: 14px; padding: 14px 16px; border-left: 3px solid var(--accent-soft); background: rgba(74,111,212,.07); border-radius: 0 10px 10px 0; font-size: 15px; }
+  .plan-result b { color: var(--accent-soft); }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 24px; opacity: .8; max-width: 68ch; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .empty { color: var(--dim); font-size: 14px; padding: 8px 2px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🇪🇺 Private — data stays on your device</span>
+  </div>
+  <h1>Schengen <em>90/180</em> Calculator</h1>
+  <p class="lead">Visitors to the Schengen area may stay <b>90 days within any rolling 180-day window</b>. Add your trips and see exactly where you stand — and how long your next trip can be.</p>
+
+  <div class="card">
+    <h2>Your trips (last 12 months)</h2>
+    <div class="trip-row">
+      <div><label for="tIn">Entry date</label><input type="date" id="tIn"></div>
+      <div><label for="tOut">Exit date</label><input type="date" id="tOut"></div>
+      <button class="btn" id="addTrip">Add</button>
+    </div>
+    <div class="triplist" id="tripList"><div class="empty">No trips yet — add your first Schengen entry above.</div></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat" id="usedBox"><b id="used">0</b><span>days used in the current 180-day window</span></div>
+    <div class="stat" id="leftBox"><b id="left">90</b><span>days remaining if you entered today</span></div>
+    <div class="stat" id="resetBox"><b id="nextFree">—</b><span>date your window fully clears</span></div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h2>Plan a future trip</h2>
+    <label for="planDate">If I enter on…</label>
+    <input type="date" id="planDate">
+    <div class="plan-result" id="planOut" hidden></div>
+  </div>
+
+  <p class="disclaimer">The 90/180 rule applies to visa-free visitors and short-stay (type C) visas; both entry and exit days count as stay days. This tool is an aid, not legal advice — the official EU short-stay calculator is the authoritative reference. Trips are saved only in your browser (localStorage).</p>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — need an app like this? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const KEY = "schengen-trips";
+const DAY = 86400000;
+const toUTC = (str) => { const [y, m, d] = str.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+const fmt = (ms) => new Date(ms).toISOString().slice(0, 10);
+let trips = [];
+try { trips = JSON.parse(localStorage.getItem(KEY)) || []; } catch { trips = []; }
+
+const save = () => localStorage.setItem(KEY, JSON.stringify(trips));
+
+/* days of presence within (windowEnd-179 .. windowEnd), inclusive */
+function usedInWindow(windowEnd, extra) {
+  const start = windowEnd - 179 * DAY;
+  let used = 0;
+  const all = extra ? [...trips, extra] : trips;
+  for (const t of all) {
+    const a = Math.max(toUTC(t.in), start);
+    const b = Math.min(toUTC(t.out), windowEnd);
+    if (b >= a) used += Math.round((b - a) / DAY) + 1;
+  }
+  return used;
+}
+
+function todayUTC() {
+  const n = new Date();
+  return Date.UTC(n.getFullYear(), n.getMonth(), n.getDate());
+}
+
+/* max consecutive stay entering on `entry` (simulate day by day, cap 90) */
+function maxStay(entry) {
+  for (let len = 0; len < 90; len++) {
+    const day = entry + len * DAY;
+    const wouldUse = usedInWindow(day, { in: fmt(entry), out: fmt(day) });
+    if (wouldUse > 90) return len; // this day violates → previous length was max
+  }
+  return 90;
+}
+
+function render() {
+  const list = $("tripList");
+  trips.sort((a, b) => toUTC(a.in) - toUTC(b.in));
+  list.innerHTML = trips.length
+    ? trips.map((t, i) => {
+        const d = Math.round((toUTC(t.out) - toUTC(t.in)) / DAY) + 1;
+        return `<div class="trip"><span>${t.in} → ${t.out}</span><span class="days">${d} day${d === 1 ? "" : "s"}</span><button aria-label="Remove trip" data-i="${i}">✕</button></div>`;
+      }).join("")
+    : `<div class="empty">No trips yet — add your first Schengen entry above.</div>`;
+  list.querySelectorAll("button").forEach((b) => {
+    b.onclick = () => { trips.splice(Number(b.dataset.i), 1); save(); render(); };
+  });
+
+  const today = todayUTC();
+  const used = usedInWindow(today);
+  const left = Math.max(0, 90 - used);
+  $("used").textContent = used;
+  $("left").textContent = left;
+  $("usedBox").className = `stat ${used > 90 ? "bad" : used > 60 ? "warn" : "ok"}`;
+  $("leftBox").className = `stat ${left === 0 ? "bad" : left < 30 ? "warn" : "ok"}`;
+
+  /* window fully clears 180 days after your last exit */
+  if (trips.length) {
+    const lastOut = Math.max(...trips.map((t) => toUTC(t.out)));
+    $("nextFree").textContent = fmt(lastOut + 180 * DAY);
+  } else {
+    $("nextFree").textContent = "—";
+  }
+  plan();
+}
+
+function plan() {
+  const v = $("planDate").value;
+  const out = $("planOut");
+  if (!v) { out.hidden = true; return; }
+  const entry = toUTC(v);
+  const days = maxStay(entry);
+  out.hidden = false;
+  out.innerHTML = days === 0
+    ? `Entering <b>${v}</b>, you'd already be at the limit — you can't stay that day without overstaying.`
+    : `Entering <b>${v}</b>, you can stay up to <b>${days} day${days === 1 ? "" : "s"}</b> — until <b>${fmt(entry + (days - 1) * DAY)}</b> inclusive.`;
+}
+
+$("addTrip").onclick = () => {
+  const i = $("tIn").value, o = $("tOut").value;
+  if (!i || !o) return alert("Pick both an entry and an exit date.");
+  if (toUTC(o) < toUTC(i)) return alert("Exit date can't be before entry date.");
+  trips.push({ in: i, out: o });
+  save();
+  $("tIn").value = ""; $("tOut").value = "";
+  render();
+};
+$("planDate").addEventListener("input", plan);
+render();
+})();
+</script>
+</body>
+</html>
