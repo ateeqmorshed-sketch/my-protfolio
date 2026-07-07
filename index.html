@@ -121,7 +121,8 @@
   <!-- 01 · Labbaik Driving School -->
   <article class="case reveal" style="--case-accent:#e39a3b">
     <div class="case-media" data-tilt>
-      <div class="mock mock-browser theme-labbaik">
+      <span class="demo-chip" aria-hidden="true"><i></i> Live demo</span>
+      <div class="mock mock-browser theme-labbaik" data-demo="book">
         <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">labbaikdrivingschool.com</span></div>
         <div class="mock-body">
           <div class="lb-nav"><span class="lb-logo">LABBAIK</span><span class="lb-links"><b></b><b></b><b></b></span><span class="lb-cta">Book now</span></div>
@@ -133,10 +134,10 @@
             </div>
             <div class="lb-card">
               <span class="lb-card-title">Book your lesson</span>
-              <span class="lb-field"></span>
-              <span class="lb-field"></span>
-              <span class="lb-field short"></span>
-              <span class="lb-submit">Confirm booking</span>
+              <span class="lb-field"><i class="fill"></i></span>
+              <span class="lb-field"><i class="fill"></i></span>
+              <span class="lb-field short"><i class="fill"></i></span>
+              <span class="lb-submit" data-demo-submit>Confirm booking</span>
             </div>
           </div>
         </div>
@@ -151,6 +152,16 @@
         real customers.
       </p>
       <ul class="case-tags"><li>Booking platform</li><li>Live business</li><li>Custom domain</li></ul>
+      <details class="case-details">
+        <summary>What's inside</summary>
+        <ul>
+          <li>Lesson booking flow customers complete in under a minute</li>
+          <li>Services &amp; pricing built to convert visitors into students</li>
+          <li>Mobile-first — most driving students book from a phone</li>
+          <li>SEO set up for local “driving school Calgary” searches</li>
+          <li>Production domain, HTTPS, instant global CDN via Vercel</li>
+        </ul>
+      </details>
       <div class="case-links">
         <a class="case-link" href="https://labbaikdrivingschool.com" target="_blank" rel="noopener">labbaikdrivingschool.com <span aria-hidden="true">↗</span></a>
       </div>
@@ -160,12 +171,13 @@
   <!-- 02 · Labbaik App -->
   <article class="case reveal" style="--case-accent:#e39a3b">
     <div class="case-media" data-tilt>
-      <div class="mock mock-phone theme-labbaik">
+      <span class="demo-chip" aria-hidden="true"><i></i> Live demo</span>
+      <div class="mock mock-phone theme-labbaik" data-demo="quiz">
         <div class="mock-notch"></div>
         <div class="mock-screen">
-          <div class="la-head"><span class="la-title">Class 7 Practice</span><span class="la-ring"><b>78%</b></span></div>
+          <div class="la-head"><span class="la-title">Class 7 Practice</span><span class="la-ring" style="--p:78"><b data-demo-pct>78%</b></span></div>
           <div class="la-question">
-            <span class="la-qnum">Question 12 / 30</span>
+            <span class="la-qnum" data-demo-qnum>Question 12 / 30</span>
             <span class="la-qtext"></span><span class="la-qtext w80"></span>
             <span class="la-opt ok">A · Yield to the right</span>
             <span class="la-opt">B · Proceed first</span>
@@ -185,6 +197,17 @@
         progress tracking — installable as a PWA.
       </p>
       <ul class="case-tags"><li>Flutter</li><li>PWA</li><li>EdTech</li></ul>
+      <details class="case-details">
+        <summary>What's inside</summary>
+        <ul>
+          <li>Practice mode plus full timed mock exams with results &amp; review</li>
+          <li>Animated right-of-way lessons drawn by a custom scene engine</li>
+          <li>Complete Alberta road-sign trainer with the real sign artwork</li>
+          <li>Progress tracking that shows exactly what to study next</li>
+          <li>In-app lesson booking, onboarding and sign-up flows</li>
+          <li>One Flutter codebase — web, Android and iOS ready</li>
+        </ul>
+      </details>
       <div class="case-links">
         <a class="case-link" href="https://labbaik-app-lac.vercel.app" target="_blank" rel="noopener">Open the app <span aria-hidden="true">↗</span></a>
       </div>
@@ -194,17 +217,18 @@
   <!-- 03 · ONS Fragrance -->
   <article class="case reveal" style="--case-accent:#d8b26a">
     <div class="case-media" data-tilt>
-      <div class="mock mock-browser theme-ons">
+      <span class="demo-chip" aria-hidden="true"><i></i> Live demo</span>
+      <div class="mock mock-browser theme-ons" data-demo="ons">
         <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">ons-fragnace-website.vercel.app</span></div>
         <div class="mock-body">
           <div class="ons-head"><span class="ons-brand">ONS <em>Fragrance</em></span><span class="ons-order">Order now</span></div>
           <span class="ons-tag">The art of scent, bottled.</span>
           <div class="ons-grid">
-            <div class="ons-card"><i class="bottle b1"></i><span>Hawas</span><b>Decant · 10ml</b></div>
-            <div class="ons-card"><i class="bottle b2"></i><span>Khamrah</span><b>Full bottle</b></div>
-            <div class="ons-card"><i class="bottle b3"></i><span>Fakhar</span><b>Decant · 30ml</b></div>
+            <div class="ons-card"><i class="bottle b1"></i><span>Hawas</span><b data-demo-size>Decant · 10ml</b></div>
+            <div class="ons-card"><i class="bottle b2"></i><span>Khamrah</span><b data-demo-size>Full bottle</b></div>
+            <div class="ons-card"><i class="bottle b3"></i><span>Fakhar</span><b data-demo-size>Decant · 30ml</b></div>
           </div>
-          <span class="ons-wa">Order on WhatsApp</span>
+          <span class="ons-wa" data-demo-wa>Order on WhatsApp</span>
         </div>
       </div>
     </div>
@@ -217,6 +241,17 @@
         hidden owner admin panel. Hand-built, no framework.
       </p>
       <ul class="case-tags"><li>E-commerce</li><li>Vanilla JS</li><li>SEO + schema.org</li></ul>
+      <details class="case-details">
+        <summary>What's inside</summary>
+        <ul>
+          <li>23-scent catalogue with instant search and category chips</li>
+          <li>Product modal with full-bottle and six decant sizes, priced each</li>
+          <li>One-tap ordering via WhatsApp, Instagram or Facebook deep links</li>
+          <li>Hidden owner admin panel — the shop edits products without me</li>
+          <li>schema.org Store markup + Open Graph for rich link previews</li>
+          <li>Zero framework, custom fonts, buttery scroll animations</li>
+        </ul>
+      </details>
       <div class="case-links">
         <a class="case-link" href="https://ons-fragnace-website.vercel.app" target="_blank" rel="noopener">Visit the store <span aria-hidden="true">↗</span></a>
       </div>
@@ -226,14 +261,15 @@
   <!-- 04 · Doctor Ase -->
   <article class="case reveal" style="--case-accent:#4fb8a8">
     <div class="case-media" data-tilt>
-      <div class="mock mock-phone theme-doctor">
+      <span class="demo-chip" aria-hidden="true"><i></i> Live demo</span>
+      <div class="mock mock-phone theme-doctor" data-demo="doctor">
         <div class="mock-notch"></div>
         <div class="mock-screen">
           <div class="dr-head"><span class="dr-hi">Doctor Ase</span><i class="dr-bell"></i></div>
           <div class="dr-appt">
-            <span class="dr-appt-label">AI symptom checker</span>
-            <span class="dr-appt-doc"><i class="dr-ava"></i><span><b>Dr. Rahman</b><em>Cardiology · Feni</em></span></span>
-            <span class="dr-appt-time">Chamber · 5–9 PM</span>
+            <span class="dr-appt-label" data-demo-symptom>AI symptom checker</span>
+            <span class="dr-appt-doc"><i class="dr-ava"></i><span><b data-demo-doc>Dr. Rahman</b><em data-demo-spec>Cardiology · Feni</em></span></span>
+            <span class="dr-appt-time" data-demo-time>Chamber · 5–9 PM</span>
           </div>
           <div class="dr-days"><b>S</b><b>M</b><b class="on">T</b><b>W</b><b>T</b><b>F</b><b>S</b></div>
           <div class="dr-row"><i class="dr-ava a2"></i><span class="dr-line"></span><span class="dr-book">Hours</span></div>
@@ -251,6 +287,16 @@
         for Android and iOS with Capacitor.
       </p>
       <ul class="case-tags"><li>React + TypeScript</li><li>Gemini AI</li><li>Capacitor</li></ul>
+      <details class="case-details">
+        <summary>What's inside</summary>
+        <ul>
+          <li>Every chamber's hours tracked live — see who's available right now</li>
+          <li>Search by doctor, specialty or hospital in Bangla-friendly UI</li>
+          <li>AI symptom checker (Gemini) that routes you to the right specialist</li>
+          <li>Express API backend with Firebase data layer</li>
+          <li>Same codebase ships to Android and iOS via Capacitor</li>
+        </ul>
+      </details>
       <div class="case-links">
         <a class="case-link" href="https://doctor-ase-app.vercel.app" target="_blank" rel="noopener">Open the app <span aria-hidden="true">↗</span></a>
       </div>
@@ -260,7 +306,8 @@
   <!-- 05 · Green World Block -->
   <article class="case reveal" style="--case-accent:#58c47a">
     <div class="case-media" data-tilt>
-      <div class="mock mock-browser theme-green">
+      <span class="demo-chip" aria-hidden="true"><i></i> Live demo</span>
+      <div class="mock mock-browser theme-green" data-demo="green">
         <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">Green World Block · Admin</span></div>
         <div class="mock-body gw-body">
           <div class="gw-side">
@@ -269,15 +316,15 @@
           </div>
           <div class="gw-main">
             <div class="gw-cards">
-              <div class="gw-card"><span>Orders today</span><b>18</b></div>
-              <div class="gw-card"><span>Production</span><b>2,400</b></div>
-              <div class="gw-card"><span>Deliveries</span><b>7</b></div>
+              <div class="gw-card"><span>Orders today</span><b data-demo-orders>18</b></div>
+              <div class="gw-card"><span>Production</span><b data-demo-prod>2,400</b></div>
+              <div class="gw-card"><span>Deliveries</span><b data-demo-del>7</b></div>
             </div>
             <div class="gw-table">
               <div class="gw-rowh"><span>Order</span><span>Status</span></div>
-              <div class="gw-row"><span class="gw-line w60"></span><span class="gw-pill ok">Delivered</span></div>
-              <div class="gw-row"><span class="gw-line w70"></span><span class="gw-pill">Producing</span></div>
-              <div class="gw-row"><span class="gw-line w50"></span><span class="gw-pill new">New · COD</span></div>
+              <div class="gw-row"><span class="gw-line w60"></span><span class="gw-pill ok" data-demo-pill1>Delivered</span></div>
+              <div class="gw-row"><span class="gw-line w70"></span><span class="gw-pill" data-demo-pill2>Producing</span></div>
+              <div class="gw-row"><span class="gw-line w50"></span><span class="gw-pill new" data-demo-pill3>New · COD</span></div>
             </div>
           </div>
         </div>
@@ -293,6 +340,17 @@
         checkout, a wall visualizer and a block calculator.
       </p>
       <ul class="case-tags"><li>Full-stack</li><li>React + Express</li><li>4-app platform</li></ul>
+      <details class="case-details">
+        <summary>What's inside</summary>
+        <ul>
+          <li>Five seeded roles — owner to delivery — each seeing only their modules</li>
+          <li>Orders inbox fed by the customer shop's cash-on-delivery checkout</li>
+          <li>Production, inventory, attendance and cash book in one dashboard</li>
+          <li>Customer shop with wall visualizer, block calculator and chatbot</li>
+          <li>Express + SQLite API as the single source of truth for all four apps</li>
+          <li>Docker deploy config with a written launch guide</li>
+        </ul>
+      </details>
       <div class="case-links">
         <span class="case-status"><i class="lab-pulse" aria-hidden="true"></i> In development — launching soon</span>
       </div>
