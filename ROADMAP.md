@@ -16,6 +16,26 @@ Branch: `claude/portfolio-project-sdr6a3`.
   - `apps/zakat/` — zakat calculator with nisab from metal prices
 - [x] OG image, apple-touch-icon, robots.txt, skip link, focus states, noscript fallback
 
+## Done (v2)
+
+- [x] Full redesign: light "gallery" theme, fixed identity rail, Bricolage/Archivo/Space Mono
+- [x] Four more tools (10 total): `apps/g1-practice/`, `apps/clb-converter/`,
+  `apps/presence-calculator/`, `apps/mortgage/`
+
+## Monetization plan (owner asked for revenue)
+
+The tools are traffic assets. Realistic revenue paths, in order of effort:
+1. **Deploy + AdSense**: the immigration/driving tools target high-CPC keywords
+   (mortgage, immigration). Needs the site live on a domain first, then an AdSense
+   application. Reserve one ad slot per tool below the result card.
+2. **Affiliates**: CLB converter + CRS calculator → IELTS/CELPIP prep course affiliate
+   links; mortgage calculator → mortgage broker/rate-comparison referral programs
+   (e.g. Ratehub-style partners); G1 practice → driving school cross-promo (Labbaik!).
+3. **Client funnel**: every tool footer already links "need an app? get in touch".
+4. **Paid tier later**: G1/citizenship banks can grow into a paid "full 300-question"
+   version via Stripe payment link — only after free traffic proves demand.
+Rule: never fake reviews/urgency; keep disclaimers on regulated topics.
+
 ## Next (in priority order)
 
 1. **Deploy**: merge to `main`, import repo on Vercel (preset "Other"). Needs Ateeq's go-ahead.
