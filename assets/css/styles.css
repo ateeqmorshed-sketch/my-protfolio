@@ -1110,6 +1110,7 @@ section[id] { scroll-margin-top: 82px; }
   object-fit: cover; object-position: top;
 }
 .mock-screen.scenes .scene.raw .real-shot { border-radius: 26px; }
+.real-shot.fit { object-fit: contain; background: #0e1512; }
 .real-tag {
   position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
   white-space: nowrap;
