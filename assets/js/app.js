@@ -11,8 +11,11 @@
   const nav = document.getElementById("nav");
   const progress = document.getElementById("progress");
 
+  const toTop = document.getElementById("toTop");
+
   const onScroll = () => {
     nav.classList.toggle("scrolled", window.scrollY > 24);
+    toTop.classList.toggle("show", window.scrollY > window.innerHeight);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.width = max > 0 ? `${(window.scrollY / max) * 100}%` : "0";
   };
@@ -113,6 +116,42 @@
       });
     });
   }
+
+  /* ---------- back to top ---------- */
+  document.getElementById("toTop").addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+
+  /* ---------- cursor spotlight ---------- */
+  const spotlight = document.getElementById("spotlight");
+  if (spotlight && !reduceMotion && matchMedia("(pointer: fine)").matches) {
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        spotlight.style.setProperty("--mx", `${e.clientX}px`);
+        spotlight.style.setProperty("--my", `${e.clientY}px`);
+      },
+      { passive: true }
+    );
+  }
+
+  /* ---------- copy email + toast ---------- */
+  const toast = document.getElementById("toast");
+  let toastTimer;
+  const showToast = (msg) => {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+  };
+  document.getElementById("copyEmail").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText("ateeqmorshed@gmail.com");
+      showToast("Email copied — talk soon.");
+    } catch {
+      showToast("ateeqmorshed@gmail.com");
+    }
+  });
 
   /* ---------- hero starfield ---------- */
   const canvas = document.getElementById("stars");
