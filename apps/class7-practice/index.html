@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alberta Class 7 Practice Test — Free Learner's Licence Mock Exam (Calgary)</title>
+<meta name="description" content="Free Alberta Class 7 learner's practice test — rules of the road, GDL conditions and road signs in real exam format, with instant feedback. Built in Calgary. No sign-up.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛞</text></svg>">
+<link rel="canonical" href="https://ateeqmorshed-sketch.github.io/my-protfolio/apps/class7-practice/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Alberta Class 7 Practice Test — Free Learner's Licence Mock Exam (Calgary)">
+<meta property="og:description" content="Free Alberta Class 7 learner's practice test — rules of the road, GDL conditions and road signs in real exam format, with instant feedback. Built in Calgary. No sign-up.">
+<meta property="og:locale" content="en_CA">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #e39a3b; --accent-soft: #f0bc6b;
+    --ok: #58c47a; --bad: #e0524f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; min-height: 100svh; display: flex; flex-direction: column; }
+  main { width: min(680px, 100%); margin: 0 auto; padding: 28px 20px 60px; flex: 1; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 34px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(25px, 5.8vw, 37px); line-height: 1.12; margin-bottom: 12px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 54ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .btn { display: inline-block; border: 0; cursor: pointer; text-decoration: none; background: var(--accent); color: #17110a; font-weight: 700; font-size: 15.5px; padding: 14px 26px; border-radius: 12px; transition: transform .2s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+  .meta { display: flex; gap: 18px; flex-wrap: wrap; margin: 22px 0; }
+  .meta div { font-size: 13.5px; color: var(--dim); }
+  .meta b { display: block; color: var(--ink); font-size: 19px; }
+  .qbar { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 10px; letter-spacing: .08em; }
+  .track { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; margin-bottom: 22px; }
+  .track i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); transition: width .3s; }
+  .qcat { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 8px; }
+  .qtext { font-size: 19px; font-weight: 600; margin-bottom: 18px; text-wrap: balance; }
+  .opts { display: grid; gap: 10px; }
+  .opt { text-align: left; background: var(--bg); border: 1px solid var(--line); color: var(--ink); font-size: 15.5px; padding: 13px 16px; border-radius: 12px; cursor: pointer; transition: border-color .2s; }
+  .opt:hover:not(:disabled) { border-color: var(--accent-soft); }
+  .opt.correct { border-color: var(--ok); background: rgba(88,196,122,.1); }
+  .opt.wrong { border-color: var(--bad); background: rgba(224,82,79,.1); }
+  .opt:disabled { cursor: default; }
+  .explain { margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--accent-soft); background: rgba(227,154,59,.06); border-radius: 0 10px 10px 0; color: var(--dim); font-size: 14.5px; }
+  .explain b { color: var(--ink); }
+  .next-row { margin-top: 20px; display: flex; justify-content: flex-end; }
+  .score-big { font-size: 56px; font-weight: 700; line-height: 1; }
+  .score-big.pass { color: var(--ok); } .score-big.fail { color: var(--bad); }
+  .verdict { font-size: 17px; margin: 8px 0 20px; color: var(--dim); }
+  .review { margin-top: 22px; display: grid; gap: 12px; }
+  .review .item { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 14.5px; }
+  .review .q { font-weight: 600; margin-bottom: 6px; }
+  .review .a { color: var(--ok); } .review .w { color: var(--bad); }
+  .promo { margin-top: 22px; border: 1px dashed rgba(227,154,59,.5); border-radius: 14px; padding: 18px; display: flex; gap: 14px; align-items: center; }
+  .promo b { display: block; margin-bottom: 3px; }
+  .promo p { font-size: 13.5px; color: var(--dim); }
+  .promo a { color: var(--accent-soft); font-weight: 700; text-decoration: none; white-space: nowrap; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 22px; opacity: .8; }
+  .hide { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🛞 Built in Calgary · Free</span>
+  </div>
+
+  <section id="start">
+    <h1>Alberta Class 7 <em>Practice Test</em></h1>
+    <p class="lead">The Alberta learner's exam is 30 questions and you need 25 correct. This free mock uses the same rules — road rules, GDL conditions and signs from the Alberta driver's guide.</p>
+    <div class="card">
+      <div class="meta">
+        <div><b id="bankCount">—</b> questions in bank</div>
+        <div><b>20</b> per mock test</div>
+        <div><b>~83%</b> to pass, like the real thing</div>
+        <div><b id="best">—</b> your best score</div>
+      </div>
+      <button class="btn" id="beginBtn">Start mock test</button>
+    </div>
+    <div class="promo">
+      <div>
+        <b>Want the full experience?</b>
+        <p>The Labbaik App has full-length timed exams, an animated lesson library and every Alberta road sign — free on the web.</p>
+      </div>
+      <a href="https://labbaik-app-lac.vercel.app" target="_blank" rel="noopener">Open Labbaik App →</a>
+    </div>
+    <p class="disclaimer">Unofficial study aid. The official Alberta “Driver's Guide to Operation, Safety and Licensing” is the source for the real knowledge test.</p>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="qbar"><span id="qNum">Question 1 / 20</span><span id="qScore">0 correct</span></div>
+    <div class="track"><i id="qTrack"></i></div>
+    <div class="card">
+      <p class="qcat" id="qCat"></p>
+      <p class="qtext" id="qText"></p>
+      <div class="opts" id="qOpts"></div>
+      <div class="explain hide" id="qExplain"></div>
+      <div class="next-row"><button class="btn hide" id="nextBtn">Next question →</button></div>
+    </div>
+  </section>
+
+  <section id="results" class="hide">
+    <div class="card" style="text-align:center">
+      <div class="score-big" id="rScore"></div>
+      <div class="verdict" id="rVerdict"></div>
+      <button class="btn" id="againBtn">Try another test</button>
+      <button class="btn ghost" id="reviewBtn" style="margin-left:8px">Review mistakes</button>
+    </div>
+    <div class="review hide" id="reviewList"></div>
+  </section>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> in Calgary — need an app for your driving school? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+/* [category, question, options, answerIndex, explanation] — facts from the official Alberta Driver's Guide */
+const BANK = [
+  ["GDL rules", "As a Class 7 (learner) driver in Alberta, your blood alcohol level must be…", ["Zero", "Under 0.05", "Under 0.08", "Under 0.02"], 0, "All GDL drivers (Class 7 and probationary Class 5) must have zero alcohol or drugs in their system."],
+  ["GDL rules", "A Class 7 driver must be accompanied by…", ["A fully licensed (non-GDL) driver aged 18 or older, seated beside them", "Any licensed driver", "A parent only", "A driving instructor only"], 0, "Learners must be supervised by a fully licensed driver who is 18+, seated in the front passenger seat."],
+  ["GDL rules", "When are Class 7 drivers not allowed to drive in Alberta?", ["Between midnight and 5 a.m.", "After 9 p.m.", "On weekends", "During rush hour"], 0, "Learners may not drive between midnight and 5 a.m., and can't have more passengers than seat belts."],
+  ["GDL rules", "A GDL driver's licence is suspended at how many demerit points?", ["8 points", "15 points", "10 points", "5 points"], 0, "GDL drivers are suspended at 8 demerits; fully licensed drivers at 15."],
+  ["Speed", "Unless posted otherwise, the speed limit within Alberta cities and towns is…", ["50 km/h", "40 km/h", "60 km/h", "30 km/h"], 0, "50 km/h in urban areas, 80 km/h outside urban areas unless otherwise posted, 100 km/h on most provincial highways."],
+  ["Speed", "The speed limit in Alberta school and playground zones is…", ["30 km/h during posted times", "50 km/h at all times", "20 km/h during posted times", "40 km/h at all times"], 0, "School and playground zones are 30 km/h during their effective times — playground zones typically 8:30 a.m. to one hour after sunset."],
+  ["Speed", "When passing an emergency vehicle or tow truck stopped with lights flashing, you must slow to…", ["60 km/h, or the posted speed if it's lower", "80 km/h always", "The posted limit", "40 km/h always"], 0, "Alberta law: slow to 60 km/h (or less if posted lower) in the lane next to the stopped vehicle. Fines double."],
+  ["Rules", "At an uncontrolled intersection, you must yield to…", ["The vehicle approaching from the right", "The faster vehicle", "The larger vehicle", "Whoever honks first"], 0, "When two vehicles arrive at the same time at an uncontrolled intersection, yield to the right."],
+  ["Rules", "A school bus with alternating flashing red lights means…", ["Stop in both directions — children are boarding or leaving", "Pass slowly at 20 km/h", "Stop only if behind the bus", "Proceed with caution"], 0, "Traffic in both directions must stop, unless on a divided highway approaching from the opposite side."],
+  ["Rules", "When an emergency vehicle approaches with siren and lights, you should…", ["Pull to the right edge of the road and stop", "Speed up to get out of the way", "Stop immediately wherever you are", "Pull left and slow down"], 0, "Move to the right and stop, clear of intersections, until it passes."],
+  ["Rules", "The safe following distance in good conditions is at least…", ["Two seconds behind the vehicle ahead", "One car length", "Half a second", "Ten metres at any speed"], 0, "Use the two-second rule minimum — three to four seconds in poor conditions."],
+  ["Rules", "Before changing lanes you should…", ["Signal, check mirrors, and shoulder check your blind spot", "Signal and go", "Honk and move over", "Slow down and drift over"], 0, "Mirror check + signal + shoulder check every time — mirrors alone leave blind spots."],
+  ["Rules", "When two vehicles arrive at a four-way stop at the same time…", ["The vehicle on the right goes first", "The vehicle on the left goes first", "The vehicle going straight always goes first", "The faster vehicle goes first"], 0, "First to stop goes first; on a tie, yield to the vehicle on your right."],
+  ["Rules", "You are being passed on a two-lane highway. You should…", ["Maintain or slightly reduce speed and keep right", "Speed up so they finish sooner", "Move onto the shoulder", "Brake hard"], 0, "Never speed up while being passed — hold steady and let the pass complete safely."],
+  ["Rules", "In winter driving, black ice is most common…", ["On bridges, overpasses and shaded areas", "On gravel roads", "In parking lots", "On hills only"], 0, "Bridge decks freeze first because cold air passes above and below — a Calgary winter essential."],
+  ["Rules", "If you start to skid on ice, you should…", ["Ease off the pedals and steer where you want to go", "Brake hard immediately", "Accelerate out of it", "Turn opposite to the skid and hold"], 0, "Look and steer where you want the car to go; avoid hard braking or sudden inputs."],
+  ["Rules", "Seat belts in Alberta are required for…", ["The driver and all passengers — the driver is responsible for those under 16", "Front seats only", "Adults only", "Highway driving only"], 0, "Everyone buckles up; drivers are responsible for passengers under 16."],
+  ["Rules", "Using a hand-held phone while driving in Alberta is…", ["Illegal under distracted driving law — fine plus 3 demerits", "Legal at red lights", "Legal under 60 km/h", "Legal for GPS use"], 0, "Alberta's distracted driving law bans hand-held devices — the ticket also carries demerit points."],
+  ["Rules", "When parking uphill with a curb, point your front wheels…", ["Away from the curb", "Toward the curb", "Straight", "It doesn't matter"], 0, "Uphill with curb: wheels away, letting the car rest against the curb. Downhill: wheels toward the curb."],
+  ["Rules", "Pedestrians in a crosswalk have…", ["The right-of-way — you must stop and yield", "Right-of-way only at lights", "To wait for cars", "Right-of-way only in school zones"], 0, "Yield the whole crossing to pedestrians; passing a vehicle stopped for a crosswalk is dangerous and illegal."],
+  ["Signs", "A red octagonal sign means…", ["Come to a complete stop", "Slow down and yield", "No entry", "Railway ahead"], 0, "The octagon is always a stop sign — full stop at the line or crosswalk."],
+  ["Signs", "A downward-pointing red and white triangle means…", ["Yield the right-of-way", "Stop completely", "Merge ahead", "Construction zone"], 0, "The inverted triangle is the yield sign."],
+  ["Signs", "Diamond-shaped yellow signs warn of…", ["Hazards or changes in the road ahead", "Regulations you must obey", "Construction zones", "Services ahead"], 0, "Yellow diamonds are warnings: curves, hills, merges, wildlife."],
+  ["Signs", "Orange signs indicate…", ["Construction or maintenance zones", "School zones", "Snow routes", "No stopping"], 0, "Orange means work zone — slow down and obey flag persons; speeding fines double with workers present."],
+  ["Signs", "A white rectangular sign with black text shows…", ["A regulation you must obey", "A warning", "A destination", "A detour"], 0, "White rectangles are regulatory: speed limits, turn restrictions, lane rules."],
+  ["Signs", "The X-shaped crossbuck sign marks…", ["A railway crossing", "A dead end", "A pedestrian crossing", "A hospital zone"], 0, "Crossbuck = railway crossing. Slow down, look both ways, never try to beat a train."],
+  ["Signs", "A red circle with a slash through a symbol means…", ["That action is prohibited", "Caution advised", "The action is permitted", "End of restriction"], 0, "Circle-and-slash prohibits the action shown — no left turn, no parking, and so on."],
+  ["Signs", "A flashing yellow traffic light means…", ["Slow down and proceed with caution", "Stop and wait for green", "Treat as a stop sign", "The signal is broken"], 0, "Flashing yellow = caution. Flashing red = treat as a stop sign."],
+];
+
+const $ = (id) => document.getElementById(id);
+const KEY = "class7-best";
+let order = [], idx = 0, score = 0, wrong = [];
+
+$("bankCount").textContent = BANK.length;
+const best = localStorage.getItem(KEY);
+$("best").textContent = best ? `${best} / 20` : "—";
+
+const show = (id) => ["start", "quiz", "results"].forEach((s) => $(s).classList.toggle("hide", s !== id));
+const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+function begin() {
+  order = shuffle([...BANK.keys()]).slice(0, 20);
+  idx = 0; score = 0; wrong = [];
+  show("quiz");
+  render();
+}
+
+function render() {
+  const [cat, q, opts] = BANK[order[idx]];
+  $("qNum").textContent = `Question ${idx + 1} / 20`;
+  $("qScore").textContent = `${score} correct`;
+  $("qTrack").style.width = `${(idx / 20) * 100}%`;
+  $("qCat").textContent = cat === "Signs" ? "🚧 Road signs" : cat === "GDL rules" ? "🪪 GDL conditions" : cat === "Speed" ? "⚡ Speed limits" : "📖 Rules of the road";
+  $("qText").textContent = q;
+  $("qExplain").classList.add("hide");
+  $("nextBtn").classList.add("hide");
+  const box = $("qOpts");
+  box.innerHTML = "";
+  const mapped = shuffle(opts.map((t, i) => ({ t, correct: i === BANK[order[idx]][3] })));
+  mapped.forEach((o) => {
+    const b = document.createElement("button");
+    b.className = "opt"; b.type = "button"; b.textContent = o.t;
+    b.onclick = () => pick(b, o.correct, mapped);
+    box.appendChild(b);
+  });
+}
+
+function pick(btn, correct, mapped) {
+  [...$("qOpts").children].forEach((b, i) => { b.disabled = true; if (mapped[i].correct) b.classList.add("correct"); });
+  if (!correct) {
+    btn.classList.add("wrong");
+    const [, q, opts, ans, why] = BANK[order[idx]];
+    wrong.push({ q, right: opts[ans], picked: btn.textContent });
+    $("qExplain").innerHTML = `<b>Correct answer:</b> ${opts[ans]}. ${why}`;
+    $("qExplain").classList.remove("hide");
+  } else {
+    score += 1;
+    $("qScore").textContent = `${score} correct`;
+  }
+  $("nextBtn").textContent = idx === 19 ? "See results →" : "Next question →";
+  $("nextBtn").classList.remove("hide");
+}
+
+function next() { idx += 1; idx >= 20 ? finish() : render(); }
+
+function finish() {
+  show("results");
+  const pass = score >= 17; // ~83%, mirroring the real 25/30
+  $("rScore").textContent = `${score} / 20`;
+  $("rScore").className = `score-big ${pass ? "pass" : "fail"}`;
+  $("rVerdict").textContent = pass
+    ? "You passed! The real Alberta exam needs 25/30 — you're at that level."
+    : `Not yet — the real exam needs about 83%. Review your ${wrong.length} mistake${wrong.length === 1 ? "" : "s"} and go again.`;
+  const prev = Number(localStorage.getItem(KEY) || 0);
+  if (score > prev) localStorage.setItem(KEY, score);
+  $("best").textContent = `${Math.max(score, prev)} / 20`;
+  const list = $("reviewList");
+  list.classList.add("hide");
+  list.innerHTML = wrong.length
+    ? wrong.map((w) => `<div class="item"><div class="q">${w.q}</div><div class="w">You picked: ${w.picked}</div><div class="a">Correct: ${w.right}</div></div>`).join("")
+    : `<div class="item">Perfect run — nothing to review. 🎉</div>`;
+}
+
+$("beginBtn").onclick = begin;
+$("nextBtn").onclick = next;
+$("againBtn").onclick = begin;
+$("reviewBtn").onclick = () => $("reviewList").classList.toggle("hide");
+})();
+</script>
+</body>
+</html>

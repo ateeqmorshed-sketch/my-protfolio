@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Car Lease vs Finance Calculator — Which Costs Less? (Canada)</title>
+<meta name="description" content="Compare leasing and financing a car side by side — monthly payments, total cost, and what you own at the end. Built for Canadian buyers (GST included). Free, no sign-up.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚙</text></svg>">
+<link rel="canonical" href="https://ateeqmorshed-sketch.github.io/my-protfolio/apps/lease-vs-finance/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Car Lease vs Finance Calculator — Which Costs Less? (Canada)">
+<meta property="og:description" content="Compare leasing and financing a car side by side — monthly payments, total cost, and what you own at the end. Built for Canadian buyers (GST included). Free, no sign-up.">
+<meta property="og:locale" content="en_CA">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #5fb5d4; --accent-soft: #92d2e8;
+    --lease: #c78fdc; --ok: #58c47a;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(760px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(25px, 5.6vw, 35px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 56ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 14px; font-weight: 500; }
+  label { display: block; font-size: 13.5px; color: var(--dim); margin-bottom: 5px; }
+  input, select { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; font-size: 15px; }
+  input:focus, select:focus { outline: 2px solid var(--accent); }
+  .r3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  @media (max-width: 600px) { .r3, .r2 { grid-template-columns: 1fr; } }
+  .hint { font-size: 12.5px; color: var(--dim); margin-top: 8px; opacity: .85; }
+  .duel { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .duel { grid-template-columns: 1fr; } }
+  .side { border: 1px solid var(--line); border-radius: 16px; padding: 20px; background: var(--card); }
+  .side.f { border-color: rgba(95,181,212,.45); }
+  .side.l { border-color: rgba(199,143,220,.45); }
+  .side h3 { font-size: 15px; margin-bottom: 4px; }
+  .side .pay { font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .side.f .pay { color: var(--accent-soft); }
+  .side.l .pay { color: var(--lease); }
+  .side .per { font-size: 12px; color: var(--dim); margin-bottom: 14px; }
+  .rows { display: grid; gap: 6px; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+  .rows div { display: flex; justify-content: space-between; color: var(--dim); border-bottom: 1px dashed var(--line); padding: 5px 0; }
+  .rows b { color: var(--ink); }
+  .verdict { margin-top: 16px; padding: 16px 18px; border-left: 3px solid var(--ok); background: rgba(88,196,122,.07); border-radius: 0 12px 12px 0; font-size: 15px; color: var(--dim); }
+  .verdict b { color: var(--ink); }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 22px; opacity: .8; max-width: 68ch; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🚙 Canadian taxes built in</span>
+  </div>
+  <h1>Lease vs Finance — <em>which wins?</em></h1>
+  <p class="lead">The dealership makes both sound great. Enter the numbers from your quote and see the true side-by-side: monthly payment, total cost over the term, and what you actually own at the end.</p>
+
+  <div class="card">
+    <h2>The car</h2>
+    <div class="r3">
+      <div><label for="price">Vehicle price</label><input id="price" type="number" min="0" inputmode="decimal" value="45000"></div>
+      <div><label for="down">Down payment</label><input id="down" type="number" min="0" inputmode="decimal" value="5000"></div>
+      <div><label for="tax">Sales tax %</label><input id="tax" type="number" min="0" step="0.1" value="5"><p class="hint">Alberta = 5% GST only</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>The two offers</h2>
+    <div class="r3">
+      <div><label for="fRate">Finance APR %</label><input id="fRate" type="number" min="0" step="0.01" value="6.5"></div>
+      <div><label for="fTerm">Finance term (months)</label>
+        <select id="fTerm"><option>48</option><option>60</option><option selected>72</option><option>84</option></select>
+      </div>
+      <div><label for="resale">Car's value at end of comparison %</label><input id="resale" type="number" min="0" max="100" value="55"><p class="hint">Typical after 3 yrs ≈ 55%</p></div>
+    </div>
+    <div class="r3" style="margin-top:12px">
+      <div><label for="lRate">Lease APR %</label><input id="lRate" type="number" min="0" step="0.01" value="5.5"></div>
+      <div><label for="lTerm">Lease term (months)</label>
+        <select id="lTerm"><option>24</option><option selected>36</option><option>48</option></select>
+      </div>
+      <div><label for="resid">Lease residual %</label><input id="resid" type="number" min="0" max="100" value="55"><p class="hint">On your lease quote</p></div>
+    </div>
+  </div>
+
+  <div class="duel">
+    <div class="side f">
+      <h3>💰 Finance</h3>
+      <div class="pay" id="fPay">—</div>
+      <div class="per">per month · <span id="fTermLbl">72</span> months</div>
+      <div class="rows">
+        <div><span>Paid over <span id="cmpLbl1">36</span> months</span><b id="fPaid">—</b></div>
+        <div><span>Loan still owing then</span><b id="fOwing">—</b></div>
+        <div><span>Car is worth</span><b id="fWorth">—</b></div>
+        <div><span><b>Net cost over period</b></span><b id="fNet">—</b></div>
+      </div>
+    </div>
+    <div class="side l">
+      <h3>🔑 Lease</h3>
+      <div class="pay" id="lPay">—</div>
+      <div class="per">per month · <span id="lTermLbl">36</span> months</div>
+      <div class="rows">
+        <div><span>Paid over <span id="cmpLbl2">36</span> months</span><b id="lPaid">—</b></div>
+        <div><span>You owe at the end</span><b>0</b></div>
+        <div><span>You own</span><b>Nothing — car goes back</b></div>
+        <div><span><b>Net cost over period</b></span><b id="lNet">—</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+
+  <p class="disclaimer">Estimates for comparison only — dealer quotes include fees, freight and incentives this can't know about. Lease math uses the standard money-factor method; financing assumes monthly compounding. Not financial advice.</p>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> in Calgary — need a calculator for your dealership or business? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const num = (id) => Number($(id).value) || 0;
+const money = (n) => "$" + Math.round(n).toLocaleString("en-CA");
+
+function pmt(principal, annualRate, months) {
+  const i = annualRate / 100 / 12;
+  return i > 0 ? (principal * i) / (1 - Math.pow(1 + i, -months)) : principal / months;
+}
+
+function calc() {
+  const price = num("price"), down = num("down"), taxR = num("tax") / 100;
+  const fTerm = num("fTerm"), lTerm = num("lTerm");
+  const cmp = lTerm; // compare over the lease term
+
+  /* --- finance: tax up front on full price --- */
+  const fPrincipal = price * (1 + taxR) - down;
+  const fPay = pmt(fPrincipal, num("fRate"), fTerm);
+  $("fPay").textContent = money(fPay);
+  $("fTermLbl").textContent = fTerm;
+
+  /* balance after cmp months */
+  const i = num("fRate") / 100 / 12;
+  let bal = fPrincipal;
+  for (let m = 0; m < Math.min(cmp, fTerm); m++) bal = bal * (1 + i) - fPay;
+  bal = Math.max(0, bal);
+  const fPaid = down + fPay * Math.min(cmp, fTerm);
+  const worth = price * (num("resale") / 100);
+  const fNet = fPaid + bal - worth;
+  $("fPaid").textContent = money(fPaid);
+  $("fOwing").textContent = money(bal);
+  $("fWorth").textContent = money(worth);
+  $("fNet").textContent = money(fNet);
+
+  /* --- lease: money factor method, tax on payment (Alberta style) --- */
+  const residual = price * (num("resid") / 100);
+  const capCost = price - down;
+  const mf = num("lRate") / 100 / 24;
+  const depreciation = (capCost - residual) / lTerm;
+  const financeCharge = (capCost + residual) * mf;
+  const lPayBase = depreciation + financeCharge;
+  const lPay = lPayBase * (1 + taxR);
+  $("lPay").textContent = money(lPay);
+  $("lTermLbl").textContent = lTerm;
+  const lPaid = down + lPay * lTerm;
+  $("lPaid").textContent = money(lPaid);
+  $("lNet").textContent = money(lPaid);
+  $("cmpLbl1").textContent = cmp;
+  $("cmpLbl2").textContent = cmp;
+
+  /* --- verdict --- */
+  const diff = Math.abs(fNet - lPaid);
+  $("verdict").innerHTML =
+    fNet < lPaid
+      ? `Over ${cmp} months, <b>financing comes out ahead by about ${money(diff)}</b> — because you keep a car worth ${money(worth)}. Leasing still wins on lower monthly payments (${money(lPay)} vs ${money(fPay)}) and a fresh car every few years.`
+      : `Over ${cmp} months, <b>leasing comes out ahead by about ${money(diff)}</b> at these rates. Financing still builds ownership — after the full ${fTerm} months the car is yours outright.`;
+}
+
+document.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", calc));
+calc();
+})();
+</script>
+</body>
+</html>

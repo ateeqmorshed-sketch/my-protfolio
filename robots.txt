@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://ateeqmorshed-sketch.github.io/my-protfolio/sitemap.xml
