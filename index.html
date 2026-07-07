@@ -76,6 +76,17 @@
 <main class="content" id="top">
 
 <section class="hero">
+  <div class="codefloat" aria-hidden="true">
+    <span>flutter build web --release</span>
+    <span>const score = crs(profile)</span>
+    <span>wa.me/15871234567?text=…</span>
+    <span>SELECT * FROM orders WHERE status='new'</span>
+    <span>&lt;Route path="/doctors/:district"&gt;</span>
+    <span>git push origin main ✓</span>
+    <span>calgary.time → "open now"</span>
+    <span>npm run deploy</span>
+    <span>blocks = wall(3m × 2m)</span>
+  </div>
   <p class="eyebrow reveal">Calgary → anywhere</p>
   <h1 class="hero-title reveal">
     I build apps people<br><em>actually&nbsp;use.</em>
@@ -110,7 +121,7 @@
   <div class="section-head reveal">
     <p class="eyebrow">01 · Selected work</p>
     <h2 class="section-title">Shipped, not just started.</h2>
-    <p class="section-lead">Every project below is deployed and clickable — and every preview is a running demo, not a screenshot.</p>
+    <p class="section-lead">Every project below is deployed and clickable. Each showcase opens with a screenshot captured from the real running app, then plays its features as live demos.</p>
   </div>
 
   <!-- 01 · Labbaik Driving School -->
@@ -196,7 +207,11 @@
         <div class="mock mock-phone theme-labbaik">
           <div class="mock-notch"></div>
           <div class="mock-screen scenes">
-            <div class="scene active">
+            <div class="scene raw active">
+              <img class="real-shot" src="assets/previews/real-labbaik-app.jpg" alt="The real Labbaik App running — onboarding screen" loading="lazy">
+              <span class="real-tag">● REAL APP — captured running</span>
+            </div>
+            <div class="scene">
               <div class="la-head"><span class="la-title">Class 7 Practice</span><span class="la-ring" style="--p:78"><b>78%</b></span></div>
               <div class="la-question">
                 <span class="la-qnum">Question 12 / 30</span>
@@ -241,6 +256,7 @@
           </div>
         </div>
         <div class="pchips" role="tablist" aria-label="Labbaik App features">
+          <button class="pchip" type="button">Real app<i></i></button>
           <button class="pchip" type="button">Practice tests<i></i></button>
           <button class="pchip" type="button">Sign trainer<i></i></button>
           <button class="pchip" type="button">Animated lessons<i></i></button>
@@ -282,7 +298,11 @@
         <div class="mock mock-browser theme-ons">
           <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">ons-fragnace-website.vercel.app</span></div>
           <div class="mock-body scenes">
-            <div class="scene active">
+            <div class="scene raw active">
+              <img class="real-shot" src="assets/previews/real-ons.jpg" alt="The real ONS Fragrance website — hero and brand marquee" loading="lazy">
+              <span class="real-tag">● REAL SITE — captured running</span>
+            </div>
+            <div class="scene">
               <div class="ons-head"><span class="ons-brand">ONS <em>Fragrance</em></span><span class="ons-order">Order now</span></div>
               <div class="ons-search"><span class="ons-type">oud</span><i class="caret"></i></div>
               <div class="ons-grid">
@@ -323,6 +343,7 @@
           </div>
         </div>
         <div class="pchips" role="tablist" aria-label="ONS Fragrance features">
+          <button class="pchip" type="button">Real site<i></i></button>
           <button class="pchip" type="button">Search 23 scents<i></i></button>
           <button class="pchip" type="button">Size picker<i></i></button>
           <button class="pchip" type="button">WhatsApp order<i></i></button>
@@ -364,7 +385,11 @@
         <div class="mock mock-phone theme-doctor">
           <div class="mock-notch"></div>
           <div class="mock-screen scenes">
-            <div class="scene active">
+            <div class="scene raw active">
+              <img class="real-shot" src="assets/previews/real-doctorase-home.jpg" alt="The real Doctor Ase app — district picker showing Feni with 326 doctors" loading="lazy">
+              <span class="real-tag">● REAL APP — 326 doctors in Feni</span>
+            </div>
+            <div class="scene">
               <div class="dr-head"><span class="dr-hi">Doctor Ase</span><i class="dr-bell"></i></div>
               <div class="dr-ask"><span class="dr-type">chest pain, dizzy</span><i class="caret"></i></div>
               <div class="dr-appt rise">
@@ -392,6 +417,7 @@
           </div>
         </div>
         <div class="pchips" role="tablist" aria-label="Doctor Ase features">
+          <button class="pchip" type="button">Real app<i></i></button>
           <button class="pchip" type="button">AI symptom checker<i></i></button>
           <button class="pchip" type="button">Live chamber hours<i></i></button>
           <button class="pchip" type="button">Web + mobile<i></i></button>
@@ -432,7 +458,11 @@
         <div class="mock mock-browser theme-green">
           <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">Green World Block · Platform</span></div>
           <div class="mock-body scenes">
-            <div class="scene active">
+            <div class="scene raw active">
+              <img class="real-shot" src="assets/previews/real-greenworld.jpg" alt="The real Green World Block marketing site — Beautiful walls. Breathing spaces." loading="lazy">
+              <span class="real-tag">● REAL SITE — captured running</span>
+            </div>
+            <div class="scene">
               <div class="gw-body">
                 <div class="gw-side">
                   <span class="gw-logo">GW</span>
@@ -488,6 +518,7 @@
           </div>
         </div>
         <div class="pchips" role="tablist" aria-label="Green World Block features">
+          <button class="pchip" type="button">Real site<i></i></button>
           <button class="pchip" type="button">Admin dashboard<i></i></button>
           <button class="pchip" type="button">Customer shop<i></i></button>
           <button class="pchip" type="button">Wall visualizer<i></i></button>
@@ -532,60 +563,70 @@
   </div>
   <div class="tools-grid">
     <a class="tool reveal" href="apps/citizenship-test/">
+      <img class="tool-shot" src="assets/previews/tool-citizenship-test.jpg" alt="citizenship test preview" loading="lazy">
       <span class="tool-ico">🍁</span>
       <b>Citizenship Test Practice</b>
       <p>A realistic 20-question Canadian citizenship mock exam with explanations and score tracking.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/g1-practice/">
+      <img class="tool-shot" src="assets/previews/tool-g1-practice.jpg" alt="g1 practice preview" loading="lazy">
       <span class="tool-ico">🚗</span>
       <b>Ontario G1 Practice Test</b>
       <p>Rules of the road and sign questions in the real 40-question G1 format.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/crs-calculator/">
+      <img class="tool-shot" src="assets/previews/tool-crs-calculator.jpg" alt="crs calculator preview" loading="lazy">
       <span class="tool-ico">🧮</span>
       <b>Express Entry CRS Calculator</b>
       <p>Your full Comprehensive Ranking System score, live — updated for the 2025 rules.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/clb-converter/">
+      <img class="tool-shot" src="assets/previews/tool-clb-converter.jpg" alt="clb converter preview" loading="lazy">
       <span class="tool-ico">🗣️</span>
       <b>IELTS ↔ CLB Converter</b>
       <p>Instant conversion between IELTS, CELPIP and Canadian Language Benchmarks.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/presence-calculator/">
+      <img class="tool-shot" src="assets/previews/tool-presence-calculator.jpg" alt="presence calculator preview" loading="lazy">
       <span class="tool-ico">🛂</span>
       <b>Citizenship Presence Calculator</b>
       <p>Track your 1,095 days of physical presence — including half-credit pre-PR days.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/schengen/">
+      <img class="tool-shot" src="assets/previews/tool-schengen.jpg" alt="schengen preview" loading="lazy">
       <span class="tool-ico">🇪🇺</span>
       <b>Schengen 90/180 Calculator</b>
       <p>Track your rolling-window days in Europe and see exactly how long your next trip can be.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/mortgage/">
+      <img class="tool-shot" src="assets/previews/tool-mortgage.jpg" alt="mortgage preview" loading="lazy">
       <span class="tool-ico">🏠</span>
       <b>Mortgage &amp; Loan Calculator</b>
       <p>Payments, total interest and a full amortization view — any currency, any term.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/unit-price/">
+      <img class="tool-shot" src="assets/previews/tool-unit-price.jpg" alt="unit price preview" loading="lazy">
       <span class="tool-ico">🛒</span>
       <b>Unit Price Comparator</b>
       <p>Which pack is actually cheaper per 100g? Compare real unit prices in the store aisle.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/invoice/">
+      <img class="tool-shot" src="assets/previews/tool-invoice.jpg" alt="invoice preview" loading="lazy">
       <span class="tool-ico">🧾</span>
       <b>Invoice Generator</b>
       <p>A clean professional invoice in your browser — print to PDF, no account, any currency.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/zakat/">
+      <img class="tool-shot" src="assets/previews/tool-zakat.jpg" alt="zakat preview" loading="lazy">
       <span class="tool-ico">🌙</span>
       <b>Zakat Calculator</b>
       <p>Nisab from today's gold or silver price, full asset breakdown, completely private.</p>
@@ -595,27 +636,30 @@
 
   <h3 class="tools-sub reveal">For your business <span>— try the product before you hire me</span></h3>
   <a class="tool tool-flagship reveal" href="apps/bow-ember/">
-    <span class="tool-ico">🔥</span>
+    <img class="tool-shot flag-shot" src="assets/previews/tool-bow-ember.jpg" alt="Bow & Ember concept restaurant preview" loading="lazy">
     <div>
-      <b>Bow &amp; Ember — full concept restaurant, Calgary</b>
+      <b>🔥 Bow &amp; Ember — full concept restaurant, Calgary</b>
       <p>A complete demo restaurant website that runs on Calgary time: live open-now status, menus that switch from brunch to dinner by the clock, dietary tags, private dining and WhatsApp reservations. This is the level your restaurant's site could be at.</p>
     </div>
     <span class="tool-go">Open the demo →</span>
   </a>
   <div class="tools-grid">
     <a class="tool reveal" href="apps/qr-menu/">
+      <img class="tool-shot" src="assets/previews/tool-qr-menu.jpg" alt="qr menu preview" loading="lazy">
       <span class="tool-ico">🍽️</span>
       <b>Digital Menu Maker</b>
       <p>Build your restaurant's menu once, get a QR-ready link customers open at the table. No monthly fee.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/table-booking/">
+      <img class="tool-shot" src="assets/previews/tool-table-booking.jpg" alt="table booking preview" loading="lazy">
       <span class="tool-ico">🪑</span>
       <b>Table Booking Widget</b>
       <p>Customers pick a date, time and party size — the reservation arrives on your WhatsApp.</p>
       <span class="tool-go">Open tool →</span>
     </a>
     <a class="tool reveal" href="apps/food-cost/">
+      <img class="tool-shot" src="assets/previews/tool-food-cost.jpg" alt="food cost preview" loading="lazy">
       <span class="tool-ico">🥘</span>
       <b>Food Cost Calculator</b>
       <p>Cost each dish from its ingredients, see your true margin, and price for your target food-cost %.</p>

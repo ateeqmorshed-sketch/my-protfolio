@@ -1107,3 +1107,71 @@ section[id] { scroll-margin-top: 30px; }
 /* scene sizing: active scene defines the frame height */
 .mock-body.scenes .scene.active { min-height: 270px; }
 .mock-screen.scenes .scene.active { min-height: 430px; }
+
+/* ============================================================
+   REAL PREVIEWS + FLOATING CODE + TOOL SHOTS
+   ============================================================ */
+.scene.raw { padding: 0 !important; }
+.real-shot {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top;
+}
+.mock-screen.scenes .scene.raw .real-shot { border-radius: 26px; }
+.real-tag {
+  position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #58c47a; background: rgba(10, 12, 10, 0.82);
+  border: 1px solid rgba(88, 196, 122, 0.5);
+  border-radius: 999px; padding: 5px 12px;
+  backdrop-filter: blur(4px);
+}
+
+.codefloat { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero { position: relative; }
+.codefloat span {
+  position: absolute;
+  font-family: var(--mono); font-size: 12.5px;
+  color: var(--accent);
+  opacity: 0;
+  white-space: nowrap;
+  animation: codedrift 16s linear infinite;
+}
+.codefloat span:nth-child(1) { left: 4%;  animation-delay: 0s; }
+.codefloat span:nth-child(2) { left: 58%; animation-delay: 2s; }
+.codefloat span:nth-child(3) { left: 22%; animation-delay: 4s; }
+.codefloat span:nth-child(4) { left: 66%; animation-delay: 6s; }
+.codefloat span:nth-child(5) { left: 8%;  animation-delay: 8s; }
+.codefloat span:nth-child(6) { left: 74%; animation-delay: 10s; }
+.codefloat span:nth-child(7) { left: 38%; animation-delay: 12s; }
+.codefloat span:nth-child(8) { left: 84%; animation-delay: 14s; }
+.codefloat span:nth-child(9) { left: 48%; animation-delay: 7s; }
+@keyframes codedrift {
+  0%   { transform: translateY(105vh) rotate(0.001deg); opacity: 0; }
+  8%   { opacity: 0.22; }
+  50%  { opacity: 0.22; }
+  92%  { opacity: 0; }
+  100% { transform: translateY(-8vh); opacity: 0; }
+}
+
+.tool-shot {
+  width: calc(100% + 44px);
+  margin: -24px -22px 4px;
+  aspect-ratio: 16 / 9.5;
+  object-fit: cover; object-position: top;
+  border-bottom: 1px solid var(--line);
+  border-radius: 15px 15px 0 0;
+}
+.tool-flagship .tool-shot.flag-shot {
+  width: 230px; margin: -6px 0 -6px -6px; flex: none;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line); border-radius: 10px;
+}
+@media (max-width: 700px) {
+  .tool-flagship .tool-shot.flag-shot { width: 100%; margin: -6px 0 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .codefloat { display: none; }
+}
