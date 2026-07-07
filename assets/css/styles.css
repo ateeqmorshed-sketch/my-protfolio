@@ -1245,3 +1245,6 @@ section[id] { scroll-margin-top: 82px; }
 }
 .faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
 .faq-item p { color: var(--muted); font-size: 15px; padding: 0 0 18px; max-width: 65ch; }
+
+.tool-flagship.flag-mint { border-color: #5f8a6b; background: linear-gradient(120deg, rgba(127, 174, 138, 0.1), transparent 55%), var(--panel); }
+.tool-flagship.flag-mint .tool-go { color: #5f8a6b; }

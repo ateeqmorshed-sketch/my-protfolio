@@ -147,11 +147,11 @@
   const estTypes = document.getElementById("estTypes");
   if (estTypes) {
     const TYPES = [
-      { name: "Business website", t: "about 1 week", incl: ["Design with your real content", "Mobile-first build", "Local SEO setup"] },
-      { name: "Booking website", t: "1–2 weeks", incl: ["Booking flow customers finish in a minute", "Services & pricing pages", "Local SEO setup"] },
-      { name: "Online store", t: "2–3 weeks", incl: ["Product catalogue with search", "WhatsApp / cash-on-delivery ordering", "Owner admin panel"] },
-      { name: "Mobile app", t: "3–5 weeks", incl: ["One codebase — web, Android & iOS", "Installable, offline-friendly", "Store-ready packaging"] },
-      { name: "Business system", t: "4–8 weeks", incl: ["Orders, inventory & staff roles", "Dashboards for owners and staff", "Runs your whole operation"] },
+      { name: "Business website", t: "2–4 days", incl: ["Design with your real content", "Mobile-first build", "Local SEO setup"] },
+      { name: "Booking website", t: "4–7 days", incl: ["Booking flow customers finish in a minute", "Services & pricing pages", "Local SEO setup"] },
+      { name: "Online store", t: "about 1 week", incl: ["Product catalogue with search", "WhatsApp / cash-on-delivery ordering", "Owner admin panel"] },
+      { name: "Mobile app", t: "2–3 weeks", incl: ["One codebase — web, Android & iOS", "Installable, offline-friendly", "Store-ready packaging"] },
+      { name: "Business system", t: "3–5 weeks", incl: ["Orders, inventory & staff roles", "Dashboards for owners and staff", "Runs your whole operation"] },
     ];
     const FEATS = [
       { name: "Admin panel", d: "edit content yourself" },
