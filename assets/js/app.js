@@ -127,90 +127,52 @@
     });
   }
 
-  /* ---------- live demo scenes ---------- */
-  if (!reduceMotion) {
-    const scenes = {
-      book(mock, step) {
-        const submit = mock.querySelector("[data-demo-submit]");
-        const s = step % 6;
-        mock.classList.toggle("s1", s >= 1);
-        mock.classList.toggle("s2", s >= 2);
-        mock.classList.toggle("s3", s >= 3);
-        submit.classList.toggle("booked", s === 4);
-        submit.textContent = s === 4 ? "Booked ✓" : "Confirm booking";
-      },
-      quiz(mock, step) {
-        const ring = mock.querySelector(".la-ring");
-        const pct = mock.querySelector("[data-demo-pct]");
-        const qnum = mock.querySelector("[data-demo-qnum]");
-        const opts = mock.querySelectorAll(".la-opt");
-        const q = 12 + (step % 4);
-        const p = 78 + (step % 4) * 2;
-        qnum.textContent = `Question ${q} / 30`;
-        ring.style.setProperty("--p", p);
-        pct.textContent = `${p}%`;
-        opts.forEach((o, i) => o.classList.toggle("ok", i === step % 3));
-      },
-      ons(mock, step) {
-        const cards = mock.querySelectorAll(".ons-card");
-        const sizes = ["Decant · 10ml", "Decant · 30ml", "Full bottle"];
-        const wa = mock.querySelector("[data-demo-wa]");
-        cards.forEach((c, i) => c.classList.toggle("active", i === step % 3));
-        cards[step % 3].querySelector("[data-demo-size]").textContent = sizes[step % 3];
-        wa.classList.toggle("sent", step % 6 === 5);
-        wa.textContent = step % 6 === 5 ? "Opening WhatsApp…" : "Order on WhatsApp";
-      },
-      doctor(mock, step) {
-        const rota = [
-          ["“chest pain” →", "Dr. Rahman", "Cardiology · Feni", "Chamber · 5–9 PM"],
-          ["“skin rash” →", "Dr. Sultana", "Dermatology · Feni", "Chamber · 4–8 PM"],
-          ["“fever, cough” →", "Dr. Karim", "Medicine · Feni", "Open now · until 10 PM"],
-        ];
-        const [sym, doc, spec, time] = rota[step % 3];
-        mock.querySelector("[data-demo-symptom]").textContent = `AI: ${sym}`;
-        mock.querySelector("[data-demo-doc]").textContent = doc;
-        mock.querySelector("[data-demo-spec]").textContent = spec;
-        mock.querySelector("[data-demo-time]").textContent = time;
-        const days = mock.querySelectorAll(".dr-days b");
-        days.forEach((d, i) => d.classList.toggle("on", i === 2 + (step % 3)));
-      },
-      green(mock, step) {
-        mock.querySelector("[data-demo-orders]").textContent = 18 + (step % 4);
-        mock.querySelector("[data-demo-prod]").textContent = (2400 + (step % 4) * 150).toLocaleString("en-CA");
-        mock.querySelector("[data-demo-del]").textContent = 7 + (step % 3);
-        const p3 = mock.querySelector("[data-demo-pill3]");
-        const states = [
-          ["New · COD", "new"],
-          ["Producing", ""],
-          ["Delivered", "ok"],
-        ];
-        const [label, cls] = states[step % 3];
-        p3.textContent = label;
-        p3.className = `gw-pill ${cls}`.trim();
-      },
+  /* ---------- feature showcase players ---------- */
+  document.querySelectorAll("[data-player]").forEach((player) => {
+    const scenes = [...player.querySelectorAll(".scene")];
+    const chips = [...player.querySelectorAll(".pchip")];
+    if (!scenes.length || scenes.length !== chips.length) return;
+    let idx = 0;
+    let timer = null;
+
+    const go = (i) => {
+      idx = ((i % scenes.length) + scenes.length) % scenes.length;
+      scenes.forEach((s, j) => s.classList.toggle("active", j === idx));
+      chips.forEach((c, j) => {
+        c.classList.toggle("on", j === idx);
+        c.setAttribute("aria-selected", String(j === idx));
+        const bar = c.querySelector("i");
+        bar.style.animation = "none";
+        void bar.offsetWidth; // restart the progress bar
+        if (j === idx && !reduceMotion) bar.style.animation = "chipbar 5.2s linear forwards";
+      });
     };
 
-    document.querySelectorAll("[data-demo]").forEach((mock) => {
-      const scene = scenes[mock.dataset.demo];
-      if (!scene) return;
-      let step = 0;
-      let timer = null;
-      const tick = () => {
-        scene(mock, step);
-        step += 1;
-      };
-      new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !timer) {
-            tick();
-            timer = setInterval(tick, 1700);
-          } else if (!entry.isIntersecting && timer) {
-            clearInterval(timer);
-            timer = null;
-          }
-        },
-        { threshold: 0.35 }
-      ).observe(mock);
-    });
-  }
+    const restart = () => {
+      clearInterval(timer);
+      timer = reduceMotion ? null : setInterval(() => go(idx + 1), 5200);
+    };
+
+    chips.forEach((c, j) =>
+      c.addEventListener("click", () => {
+        go(j);
+        restart();
+      })
+    );
+
+    new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          go(idx);
+          restart();
+        } else {
+          clearInterval(timer);
+          timer = null;
+        }
+      },
+      { threshold: 0.25 }
+    ).observe(player);
+
+    go(0);
+  });
 })();
