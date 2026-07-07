@@ -1,5 +1,29 @@
 # Portfolio roadmap
 
+## Current state (v4 — latest)
+
+- Light "gallery" design with sticky top header (rail retired)
+- 5 case studies, each opening with REAL captured screenshots (Flutter app run via
+  local CanvasKit patch; ONS/Doctor Ase/Green World stack booted from their repos —
+  Green World shows real admin/shop/staff-app logins) + story-chip feature scenes
+- 15 free tools (incl. Alberta Class 7 test that funnels to Labbaik App, and
+  lease-vs-finance) with benefit-state preview images
+- Bow & Ember concept restaurant (Calgary-time aware)
+- Project estimator with pre-filled quote emails, FAQ (+ FAQPage schema),
+  free website check-up offer
+- Local SEO: Calgary title/geo meta/en_CA, ProfessionalService schema (areaServed
+  Calgary/AB/Canada), canonicals on all 17 pages, sitemap.xml + robots.txt, fresh
+  Calgary-branded og.png, 404.html
+- Site copy contains no build-process/tooling mentions (owner request)
+
+## Owner actions pending (highest value, only owner can do)
+
+1. Merge branch → main (deploy workflow fires) · delete branch after merge
+2. Google Search Console: submit sitemap
+3. Google Business Profile (service-area, Calgary)
+4. Buy ateeqmorshed.com → then swap canonical/sitemap URLs (one commit)
+5. Ask Labbaik + ONS owners for one-line testimonials (never fabricate)
+
 Working notes so any future session can continue exactly where this one stopped.
 Branch: `claude/portfolio-project-sdr6a3`.
 
