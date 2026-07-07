@@ -143,6 +143,59 @@
     });
   }
 
+  /* ---------- project estimator ---------- */
+  const estTypes = document.getElementById("estTypes");
+  if (estTypes) {
+    const TYPES = [
+      { name: "Business website", t: "about 1 week", incl: ["Design with your real content", "Mobile-first build", "Local SEO setup"] },
+      { name: "Booking website", t: "1–2 weeks", incl: ["Booking flow customers finish in a minute", "Services & pricing pages", "Local SEO setup"] },
+      { name: "Online store", t: "2–3 weeks", incl: ["Product catalogue with search", "WhatsApp / cash-on-delivery ordering", "Owner admin panel"] },
+      { name: "Mobile app", t: "3–5 weeks", incl: ["One codebase — web, Android & iOS", "Installable, offline-friendly", "Store-ready packaging"] },
+      { name: "Business system", t: "4–8 weeks", incl: ["Orders, inventory & staff roles", "Dashboards for owners and staff", "Runs your whole operation"] },
+    ];
+    const FEATS = [
+      { name: "Admin panel", d: "edit content yourself" },
+      { name: "Online payments / COD", d: "take orders" },
+      { name: "AI feature", d: "chatbot or smart search" },
+      { name: "Two languages", d: "e.g. English + Bangla" },
+      { name: "Your own domain", d: "setup included" },
+    ];
+    const BASE = ["Deployed on fast global hosting", "Documented handover — you own everything"];
+    let type = 0;
+    const feats = new Set();
+
+    const mk = (label, cls, onclick) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "est-opt" + cls;
+      b.textContent = label;
+      b.onclick = onclick;
+      return b;
+    };
+    TYPES.forEach((t, i) =>
+      estTypes.appendChild(mk(t.name, i === 0 ? " on" : "", () => { type = i; render(); }))
+    );
+    const featBox = document.getElementById("estFeats");
+    FEATS.forEach((f, i) =>
+      featBox.appendChild(mk(f.name, "", () => { feats.has(i) ? feats.delete(i) : feats.add(i); render(); }))
+    );
+
+    function render() {
+      [...estTypes.children].forEach((b, i) => b.classList.toggle("on", i === type));
+      [...featBox.children].forEach((b, i) => b.classList.toggle("on", feats.has(i)));
+      const t = TYPES[type];
+      document.getElementById("estName").textContent =
+        t.name + (feats.size ? ` + ${feats.size} extra${feats.size > 1 ? "s" : ""}` : "");
+      document.getElementById("estTime").textContent = feats.size >= 2 ? t.t + " +" : t.t;
+      const incl = [...t.incl, ...[...feats].map((i) => `${FEATS[i].name} — ${FEATS[i].d}`), ...BASE];
+      document.getElementById("estIncl").innerHTML = incl.map((x) => `<li>${x}</li>`).join("");
+      const body = `Hi Ateeq,%0A%0AI used the estimator on your site. I'm looking for:%0A%0A• ${t.name}${[...feats].map((i) => `%0A• ${FEATS[i].name}`).join("")}%0A%0AMy business: %0AMy timeline: %0A%0AThanks!`;
+      document.getElementById("estSend").href =
+        `mailto:ateeqmorshed@gmail.com?subject=${encodeURIComponent("Project quote: " + t.name)}&body=${body}`;
+    }
+    render();
+  }
+
   /* ---------- feature showcase players ---------- */
   document.querySelectorAll("[data-player]").forEach((player) => {
     const scenes = [...player.querySelectorAll(".scene")];

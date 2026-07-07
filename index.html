@@ -33,6 +33,18 @@
   "knowsAbout": ["Flutter", "TypeScript", "JavaScript", "React", "Supabase", "Vercel"]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How much does a website or app cost?", "acceptedAnswer": {"@type": "Answer", "text": "Every project gets a fixed price before any work starts, based on a free scoping call — no hourly surprises. Solo overhead means quotes routinely come in well under agency prices."}},
+    {"@type": "Question", "name": "How fast can it be live?", "acceptedAnswer": {"@type": "Answer", "text": "Simple business websites go live in about a week; booking sites and online stores in one to three weeks; full business systems take longer, with a working preview within days."}},
+    {"@type": "Question", "name": "Who owns the website when it's done?", "acceptedAnswer": {"@type": "Answer", "text": "The client owns everything — code, domain, hosting account and admin logins, set up in their name and handed over documented."}},
+    {"@type": "Question", "name": "Do you only work with Calgary businesses?", "acceptedAnswer": {"@type": "Answer", "text": "Calgary is home but the work ships worldwide — clients in Canada and Bangladesh so far, with everything handled online."}}
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -682,6 +694,31 @@
   </div>
 </section>
 
+<!-- ============ ESTIMATOR ============ -->
+<section id="estimate" class="estimate">
+  <div class="section-head reveal">
+    <p class="eyebrow">Project estimator</p>
+    <h2 class="section-title">What would yours take?</h2>
+    <p class="section-lead">Pick what you need — see what's included and a realistic timeline. Send it over and I'll reply with an exact quote.</p>
+  </div>
+  <div class="est reveal">
+    <div class="est-form">
+      <span class="est-label">I need a…</span>
+      <div class="est-types" id="estTypes"></div>
+      <span class="est-label">With…</span>
+      <div class="est-feats" id="estFeats"></div>
+    </div>
+    <div class="est-out">
+      <span class="est-out-label">Your project</span>
+      <b class="est-name" id="estName">Business website</b>
+      <div class="est-time"><span>Typical timeline</span><i id="estTime">about 1 week</i></div>
+      <ul class="est-incl" id="estIncl"></ul>
+      <a class="btn btn-accent" id="estSend" href="mailto:ateeqmorshed@gmail.com">Get an exact quote →</a>
+      <span class="est-note">Free scoping call · fixed price before we start · you own everything</span>
+    </div>
+  </div>
+</section>
+
 <!-- ============ ABOUT ============ -->
 <section id="about" class="about">
   <div class="about-inner">
@@ -751,12 +788,46 @@
   </div>
 </section>
 
+<!-- ============ FAQ ============ -->
+<section id="faq" class="faq">
+  <div class="section-head reveal">
+    <p class="eyebrow">Questions, answered</p>
+    <h2 class="section-title">Before you ask.</h2>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item reveal">
+      <summary>How much does a website or app cost?</summary>
+      <p>Every project gets a fixed price before any work starts, based on a free scoping call — no hourly surprises, no meters running. Because I work solo with a lean toolchain, my quotes routinely come in well under agency prices for the same result.</p>
+    </details>
+    <details class="faq-item reveal">
+      <summary>How fast can it be live?</summary>
+      <p>Simple business websites go live in about a week. Booking sites and online stores usually take one to three weeks. Full business systems like the factory platform take longer — but you'll click a working preview within days, whatever the size.</p>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Who owns the website when it's done?</summary>
+      <p>You do — completely. The code, the domain, the hosting account, the admin logins. I set everything up in your name and hand it over documented, so you're never locked in or held hostage for changes.</p>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Can I update things myself, or do I have to call you?</summary>
+      <p>Where it makes sense, you get an admin panel — the fragrance shop updates its own products and prices, the factory manages its own orders and staff. For everything else, small changes are quick, and I'm one message away.</p>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Do you only work with Calgary businesses?</summary>
+      <p>Calgary is home, but the work ships worldwide — I've built for businesses in Canada and Bangladesh, and everything happens online anyway. Local clients get in-person meetings; everyone gets the same product.</p>
+    </details>
+    <details class="faq-item reveal">
+      <summary>What if I already have a website but it's not bringing customers?</summary>
+      <p>Send me the link — I'll reply with a free, no-strings check-up: three concrete things holding it back and what fixing them would involve. If you want me to do the fixing, great; if not, the advice is yours to keep.</p>
+    </details>
+  </div>
+</section>
+
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="contact">
   <div class="contact-inner reveal">
     <p class="eyebrow">05 · Contact</p>
     <h2 class="contact-title">Have something that<br>needs to <em>exist?</em></h2>
-    <p class="section-lead">Tell me what you're building — I'll tell you how fast it can be live.</p>
+    <p class="section-lead">Tell me what you're building — I'll tell you how fast it can be live. Already have a website that isn't working? Send the link and get a <b>free check-up</b>: three concrete improvements, no strings attached.</p>
     <div class="contact-actions">
       <a href="mailto:ateeqmorshed@gmail.com" class="btn btn-accent btn-lg" data-magnetic>ateeqmorshed@gmail.com</a>
       <button type="button" class="btn btn-plain btn-lg" id="copyEmail" data-magnetic>Copy email</button>
