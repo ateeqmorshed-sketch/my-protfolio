@@ -8,17 +8,33 @@
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
-  /* ---------- scroll progress + back-to-top ---------- */
+  /* ---------- scroll progress + back-to-top + topbar shadow ---------- */
   const progress = document.getElementById("progress");
   const toTop = document.getElementById("toTop");
+  const topbar = document.getElementById("topbar");
 
   const onScroll = () => {
     toTop.classList.toggle("show", window.scrollY > window.innerHeight);
+    topbar.classList.toggle("scrolled", window.scrollY > 10);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.width = max > 0 ? `${(window.scrollY / max) * 100}%` : "0";
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  /* ---------- mobile menu ---------- */
+  const burger = document.getElementById("burger");
+  const navEl = document.getElementById("navLinks");
+  burger.addEventListener("click", () => {
+    const open = navEl.classList.toggle("open");
+    burger.setAttribute("aria-expanded", String(open));
+  });
+  navEl.addEventListener("click", (e) => {
+    if (e.target.tagName === "A") {
+      navEl.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+    }
+  });
 
   toTop.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
