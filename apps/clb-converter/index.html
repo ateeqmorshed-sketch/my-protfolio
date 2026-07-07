@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS to CLB Converter — Canadian Language Benchmarks</title>
+<meta name="description" content="Convert IELTS General or CELPIP scores to Canadian Language Benchmark (CLB) levels instantly — per ability, using the official IRCC equivalency tables. Free.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗣️</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #8f6fd4; --accent-soft: #b49aec;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(680px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(26px, 6vw, 36px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 54ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+  .tab { flex: 1; padding: 11px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--dim); font-weight: 600; font-size: 14.5px; cursor: pointer; }
+  .tab.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  label { display: block; font-size: 13px; color: var(--dim); margin-bottom: 5px; }
+  select { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; font-size: 15px; }
+  select:focus { outline: 2px solid var(--accent); }
+  .r4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 560px) { .r4 { grid-template-columns: repeat(2, 1fr); } }
+  .out { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px; }
+  @media (max-width: 560px) { .out { grid-template-columns: repeat(2, 1fr); } }
+  .clb-box { border: 1px solid var(--line); border-radius: 12px; padding: 14px 10px; text-align: center; }
+  .clb-box b { display: block; font-size: 26px; color: var(--accent-soft); font-variant-numeric: tabular-nums; }
+  .clb-box span { font-size: 11.5px; color: var(--dim); }
+  .overall { margin-top: 16px; padding: 16px; border-radius: 12px; background: rgba(143,111,212,.1); border: 1px solid rgba(143,111,212,.4); text-align: center; font-size: 15px; }
+  .overall b { color: var(--accent-soft); font-size: 22px; }
+  .note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+  .note a { color: var(--accent-soft); }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 20px; opacity: .8; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">Official IRCC tables</span>
+  </div>
+  <h1>IELTS ↔ <em>CLB</em> Converter</h1>
+  <p class="lead">Enter your test scores, get your Canadian Language Benchmark level per ability — the number that actually drives your Express Entry points.</p>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab on" id="tabIelts" type="button">IELTS General</button>
+      <button class="tab" id="tabCelpip" type="button">CELPIP-General</button>
+    </div>
+
+    <div class="r4">
+      <div><label>Listening</label><select id="sL"></select></div>
+      <div><label>Reading</label><select id="sR"></select></div>
+      <div><label>Writing</label><select id="sW"></select></div>
+      <div><label>Speaking</label><select id="sS"></select></div>
+    </div>
+
+    <div class="out">
+      <div class="clb-box"><b id="cL">—</b><span>Listening CLB</span></div>
+      <div class="clb-box"><b id="cR">—</b><span>Reading CLB</span></div>
+      <div class="clb-box"><b id="cW">—</b><span>Writing CLB</span></div>
+      <div class="clb-box"><b id="cS">—</b><span>Speaking CLB</span></div>
+    </div>
+
+    <div class="overall" id="overall">Your lowest ability is <b>CLB —</b></div>
+    <p class="note">Your <b>lowest</b> CLB usually gates program eligibility (e.g. CLB 7 for Express Entry FSW, CLB 5/7 for CEC). Feed these into the <a href="../crs-calculator/">CRS calculator →</a></p>
+  </div>
+
+  <p class="disclaimer">Based on IRCC's published language test equivalency charts (IELTS General Training and CELPIP-General). Always confirm with your official test result and IRCC's own tables. PTE Core conversions coming soon.</p>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — need an app? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+
+/* IRCC: IELTS General → CLB thresholds per ability: [CLB4, 5, 6, 7, 8, 9, 10] minimum scores */
+const IELTS = {
+  L: [4.5, 5.0, 5.5, 6.0, 7.5, 8.0, 8.5],
+  R: [3.5, 4.0, 5.0, 6.0, 6.5, 7.0, 8.0],
+  W: [4.0, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5],
+  S: [4.0, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5],
+};
+const IELTS_BANDS = [3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0];
+
+let mode = "ielts";
+const abil = { L: "sL", R: "sR", W: "sW", S: "sS" };
+
+function fillSelects() {
+  Object.values(abil).forEach((id) => {
+    const sel = $(id);
+    sel.innerHTML = "";
+    if (mode === "ielts") {
+      IELTS_BANDS.forEach((b) => {
+        const o = document.createElement("option");
+        o.value = b; o.textContent = b.toFixed(1);
+        sel.appendChild(o);
+      });
+      sel.value = "6.0";
+    } else {
+      for (let v = 3; v <= 12; v++) {
+        const o = document.createElement("option");
+        o.value = v; o.textContent = v === 3 ? "3 or under" : String(v);
+        sel.appendChild(o);
+      }
+      sel.value = "7";
+    }
+  });
+}
+
+function toCLB(key, score) {
+  if (mode === "celpip") {
+    const v = Number(score);
+    return v < 4 ? "<4" : v >= 10 ? "10+" : v; // CELPIP level = CLB level
+  }
+  const t = IELTS[key];
+  const s = Number(score);
+  let clb = "<4";
+  for (let i = 0; i < t.length; i++) if (s >= t[i]) clb = 4 + i;
+  return clb === 10 ? "10+" : clb;
+}
+
+function calc() {
+  const vals = Object.entries(abil).map(([k, id]) => toCLB(k, $(id).value));
+  ["cL", "cR", "cW", "cS"].forEach((id, i) => ($(id).textContent = vals[i]));
+  const nums = vals.map((v) => (v === "<4" ? 0 : parseInt(v, 10)));
+  const min = Math.min(...nums);
+  $("overall").innerHTML = min === 0
+    ? `Your lowest ability is <b>below CLB 4</b>`
+    : `Your lowest ability is <b>CLB ${min}${min === 10 ? "+" : ""}</b>`;
+}
+
+$("tabIelts").onclick = () => { mode = "ielts"; $("tabIelts").classList.add("on"); $("tabCelpip").classList.remove("on"); fillSelects(); calc(); };
+$("tabCelpip").onclick = () => { mode = "celpip"; $("tabCelpip").classList.add("on"); $("tabIelts").classList.remove("on"); fillSelects(); calc(); };
+Object.values(abil).forEach((id) => $(id).addEventListener("input", calc));
+
+fillSelects();
+calc();
+})();
+</script>
+</body>
+</html>

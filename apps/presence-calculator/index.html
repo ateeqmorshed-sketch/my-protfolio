@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citizenship Physical Presence Calculator — 1,095 Days</title>
+<meta name="description" content="Track your physical presence in Canada toward the 1,095 days needed for citizenship — including half-credit for pre-PR days. See your earliest application date. Free and private.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛂</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #d46a8f; --accent-soft: #e695b2;
+    --ok: #58c47a; --warn: #e0b13f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(700px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(25px, 5.6vw, 35px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 56ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-family: var(--mono); font-size: 11.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 14px; font-weight: 500; }
+  label { display: block; font-size: 13.5px; color: var(--dim); margin-bottom: 5px; }
+  input[type="date"] { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 15px; color-scheme: dark; }
+  input:focus { outline: 2px solid var(--accent); }
+  .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 540px) { .r2 { grid-template-columns: 1fr; } .trip-row { grid-template-columns: 1fr 1fr !important; } }
+  .hint { font-size: 12.5px; color: var(--dim); margin-top: 6px; opacity: .85; }
+  .trip-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 10px; }
+  .btn { border: 0; cursor: pointer; background: var(--accent); color: #fff; font-weight: 600; font-size: 14.5px; padding: 11px 20px; border-radius: 10px; }
+  .triplist { display: grid; gap: 8px; margin-top: 8px; }
+  .trip { display: flex; justify-content: space-between; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 10px; padding: 9px 14px; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .trip button { background: none; border: 0; color: #e0524f; cursor: pointer; font-size: 16px; }
+  .empty { color: var(--dim); font-size: 14px; }
+  .result { background: linear-gradient(160deg, rgba(212,106,143,.13), transparent 60%), var(--card); border: 1px solid rgba(212,106,143,.4); border-radius: 18px; padding: 24px; text-align: center; }
+  .result .label { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+  .result .big { font-size: 50px; font-weight: 700; color: var(--accent-soft); line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .result .sub { color: var(--dim); font-size: 14.5px; }
+  .bar { height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; margin: 16px 0 8px; }
+  .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); transition: width .4s; }
+  .rows { display: grid; gap: 6px; margin-top: 16px; text-align: left; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .rows div { display: flex; justify-content: space-between; color: var(--dim); border-bottom: 1px dashed var(--line); padding: 5px 2px; }
+  .rows b { color: var(--ink); }
+  .eligible { margin-top: 14px; font-size: 15.5px; }
+  .eligible b { color: var(--ok); }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 22px; opacity: .8; max-width: 68ch; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🛂 Private — data stays on your device</span>
+  </div>
+  <h1>Citizenship <em>Presence</em> Calculator</h1>
+  <p class="lead">Canadian citizenship needs <b>1,095 days physically in Canada</b> within the 5 years before you apply. Days before you became a PR count half (up to 365). See where you stand and your earliest application date.</p>
+
+  <div class="card">
+    <h2>Your dates</h2>
+    <div class="r2">
+      <div>
+        <label for="arrived">First arrived in Canada (as worker/student — optional)</label>
+        <input type="date" id="arrived">
+      </div>
+      <div>
+        <label for="prDate">Became a permanent resident on</label>
+        <input type="date" id="prDate">
+      </div>
+    </div>
+    <p class="hint">Assumes you've been living in Canada since arrival — list your time outside Canada below.</p>
+  </div>
+
+  <div class="card">
+    <h2>Trips outside Canada</h2>
+    <div class="trip-row">
+      <div><label for="tOut">Left Canada</label><input type="date" id="tOut"></div>
+      <div><label for="tBack">Returned</label><input type="date" id="tBack"></div>
+      <button class="btn" id="addTrip">Add</button>
+    </div>
+    <p class="hint">Departure and return days both count as days IN Canada (per IRCC).</p>
+    <div class="triplist" id="tripList"><div class="empty">No absences added.</div></div>
+  </div>
+
+  <div class="result">
+    <div class="label">Physical presence today</div>
+    <div class="big" id="days">—</div>
+    <div class="sub">of 1,095 required days</div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="rows" id="rows"></div>
+    <div class="eligible" id="eligible"></div>
+  </div>
+
+  <p class="disclaimer">Unofficial estimate using IRCC's rules: PR days count in full, pre-PR days as a temporary resident count half (max 365 days credit), all within the 5-year window before applying. The official IRCC presence calculator is the authoritative check before you apply. Data is saved only in your browser.</p>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — also try the <a href="../citizenship-test/">citizenship practice test</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const KEY = "presence-data";
+const DAY = 86400000;
+const toUTC = (s) => { const [y, m, d] = s.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+const fmt = (ms) => new Date(ms).toISOString().slice(0, 10);
+const todayUTC = () => { const n = new Date(); return Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()); };
+
+let state = { arrived: "", prDate: "", trips: [] };
+try { state = { ...state, ...(JSON.parse(localStorage.getItem(KEY)) || {}) }; } catch {}
+$("arrived").value = state.arrived;
+$("prDate").value = state.prDate;
+
+const save = () => localStorage.setItem(KEY, JSON.stringify(state));
+
+/* count days absent within [a,b] window — exclude travel days (they count as in Canada) */
+function absentDaysIn(a, b) {
+  let out = 0;
+  for (const t of state.trips) {
+    const lo = Math.max(toUTC(t.out) + DAY, a);   // day after departure
+    const hi = Math.min(toUTC(t.back) - DAY, b);  // day before return
+    if (hi >= lo) out += Math.round((hi - lo) / DAY) + 1;
+  }
+  return out;
+}
+
+/* presence credit as of date `asOf` */
+function presence(asOf) {
+  if (!state.prDate) return null;
+  const pr = toUTC(state.prDate);
+  const windowStart = asOf - Math.round(5 * 365.25) * DAY;
+
+  /* PR days in window */
+  const prFrom = Math.max(pr, windowStart);
+  let prDays = asOf >= prFrom ? Math.round((asOf - prFrom) / DAY) + 1 : 0;
+  prDays -= absentDaysIn(prFrom, asOf);
+  prDays = Math.max(0, prDays);
+
+  /* pre-PR days in window (half credit, max 365) */
+  let preCredit = 0, preDays = 0;
+  if (state.arrived) {
+    const arr = toUTC(state.arrived);
+    const preFrom = Math.max(arr, windowStart);
+    const preTo = Math.min(pr - DAY, asOf);
+    if (preTo >= preFrom) {
+      preDays = Math.round((preTo - preFrom) / DAY) + 1 - absentDaysIn(preFrom, preTo);
+      preDays = Math.max(0, preDays);
+      preCredit = Math.min(365, preDays / 2);
+    }
+  }
+  return { total: Math.floor(prDays + preCredit), prDays, preDays, preCredit: Math.floor(preCredit) };
+}
+
+function render() {
+  const list = $("tripList");
+  state.trips.sort((a, b) => toUTC(a.out) - toUTC(b.out));
+  list.innerHTML = state.trips.length
+    ? state.trips.map((t, i) => {
+        const gone = Math.max(0, Math.round((toUTC(t.back) - toUTC(t.out)) / DAY) - 1);
+        return `<div class="trip"><span>${t.out} → ${t.back}</span><span>${gone} day${gone === 1 ? "" : "s"} away</span><button aria-label="Remove" data-i="${i}">✕</button></div>`;
+      }).join("")
+    : `<div class="empty">No absences added.</div>`;
+  list.querySelectorAll("button").forEach((b) => {
+    b.onclick = () => { state.trips.splice(Number(b.dataset.i), 1); save(); render(); };
+  });
+
+  const p = presence(todayUTC());
+  if (!p) {
+    $("days").textContent = "—";
+    $("bar").style.width = "0";
+    $("rows").innerHTML = "";
+    $("eligible").textContent = "Enter your PR date to begin.";
+    return;
+  }
+  $("days").textContent = p.total.toLocaleString();
+  $("bar").style.width = `${Math.min((p.total / 1095) * 100, 100)}%`;
+  $("rows").innerHTML = `
+    <div><span>Days as a PR (in window, minus absences)</span><b>${p.prDays.toLocaleString()}</b></div>
+    <div><span>Pre-PR days in Canada</span><b>${p.preDays.toLocaleString()}</b></div>
+    <div><span>Pre-PR credit (half, max 365)</span><b>${p.preCredit.toLocaleString()}</b></div>`;
+
+  if (p.total >= 1095) {
+    $("eligible").innerHTML = `🎉 You appear to meet the presence requirement <b>today</b>. Verify with IRCC's official calculator before applying.`;
+  } else {
+    /* project forward assuming continuous presence in Canada from now */
+    let d = todayUTC();
+    for (let i = 0; i < 3000; i++) {
+      d += DAY;
+      const f = presence(d);
+      if (f.total >= 1095) break;
+    }
+    $("eligible").innerHTML = `Staying in Canada from today, your earliest application date is about <b>${fmt(d)}</b>.`;
+  }
+}
+
+$("arrived").addEventListener("input", () => { state.arrived = $("arrived").value; save(); render(); });
+$("prDate").addEventListener("input", () => { state.prDate = $("prDate").value; save(); render(); });
+$("addTrip").onclick = () => {
+  const o = $("tOut").value, b = $("tBack").value;
+  if (!o || !b) return alert("Pick both dates.");
+  if (toUTC(b) < toUTC(o)) return alert("Return can't be before departure.");
+  state.trips.push({ out: o, back: b });
+  save();
+  $("tOut").value = ""; $("tBack").value = "";
+  render();
+};
+render();
+})();
+</script>
+</body>
+</html>

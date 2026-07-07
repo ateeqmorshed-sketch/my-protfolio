@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mortgage &amp; Loan Calculator — Payments, Interest, Amortization</title>
+<meta name="description" content="Free mortgage and loan calculator — monthly or bi-weekly payments, total interest, and a year-by-year amortization view. Supports Canadian semi-annual compounding. Any currency.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #4fa8d4; --accent-soft: #83c6e6;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; }
+  main { width: min(760px, 100%); margin: 0 auto; padding: 28px 20px 80px; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(25px, 5.6vw, 35px); line-height: 1.15; margin-bottom: 10px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 56ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  label { display: block; font-size: 13.5px; color: var(--dim); margin-bottom: 5px; }
+  input, select { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; font-size: 15px; }
+  input:focus, select:focus { outline: 2px solid var(--accent); }
+  .r3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  @media (max-width: 600px) { .r3, .r2 { grid-template-columns: 1fr; } }
+  .check { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 14.5px; cursor: pointer; }
+  .check input { width: 18px; height: 18px; accent-color: var(--accent); }
+  .hint { font-size: 12.5px; color: var(--dim); margin-top: 6px; opacity: .85; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 600px) { .stats { grid-template-columns: 1fr; } }
+  .stat { border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; background: var(--card); }
+  .stat b { display: block; font-size: clamp(22px, 4vw, 30px); font-weight: 700; color: var(--accent-soft); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .stat span { font-size: 12.5px; color: var(--dim); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+  th { text-align: right; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding: 8px 6px; border-bottom: 1px solid var(--line); }
+  th:first-child { text-align: left; }
+  td { padding: 8px 6px; text-align: right; border-bottom: 1px solid rgba(240,236,227,.05); color: var(--dim); }
+  td:first-child { text-align: left; color: var(--ink); }
+  .tablewrap { overflow-x: auto; }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 20px; opacity: .8; }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🏠 Any currency</span>
+  </div>
+  <h1>Mortgage &amp; Loan <em>Calculator</em></h1>
+  <p class="lead">Payment, total interest, and a year-by-year view of your balance — with proper Canadian semi-annual compounding if you need it.</p>
+
+  <div class="card">
+    <div class="r3">
+      <div><label for="amount">Loan amount</label><input id="amount" type="number" min="0" inputmode="decimal" value="400000"></div>
+      <div><label for="rate">Interest rate % (annual)</label><input id="rate" type="number" min="0" step="0.01" inputmode="decimal" value="4.5"></div>
+      <div><label for="years">Amortization (years)</label><input id="years" type="number" min="1" max="35" value="25"></div>
+    </div>
+    <div class="r2">
+      <div>
+        <label for="freq">Payment frequency</label>
+        <select id="freq">
+          <option value="12">Monthly</option>
+          <option value="26">Bi-weekly</option>
+          <option value="52">Weekly</option>
+        </select>
+      </div>
+      <div>
+        <label for="extra">Extra payment per period (optional)</label>
+        <input id="extra" type="number" min="0" inputmode="decimal" placeholder="0">
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="cdn" checked> Canadian mortgage (semi-annual compounding)</label>
+    <p class="hint">Canadian fixed-rate mortgages compound twice a year by law; most other loans (and US mortgages) compound monthly — untick for those.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="pay">—</b><span id="payLabel">per month</span></div>
+    <div class="stat"><b id="interest">—</b><span>total interest</span></div>
+    <div class="stat"><b id="payoff">—</b><span id="payoffLabel">to pay off</span></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Year</th><th>Paid</th><th>Interest</th><th>Principal</th><th>Balance</th></tr></thead>
+        <tbody id="sched"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="disclaimer">Estimates only — your lender's exact figures may differ slightly (payment rounding, rate compounding, fees). Doesn't include property tax, insurance or CMHC premiums.</p>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — need a calculator for your business? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const money = (n) => n.toLocaleString(undefined, { maximumFractionDigits: 0 });
+
+function calc() {
+  const P = Number($("amount").value) || 0;
+  const annual = (Number($("rate").value) || 0) / 100;
+  const years = Number($("years").value) || 25;
+  const freq = Number($("freq").value);
+  const extra = Number($("extra").value) || 0;
+  const cdn = $("cdn").checked;
+
+  /* periodic rate: Canadian mortgages compound semi-annually */
+  const i = cdn
+    ? Math.pow(1 + annual / 2, 2 / freq) - 1
+    : annual / freq;
+
+  const n = years * freq;
+  const basePay = i > 0 ? (P * i) / (1 - Math.pow(1 + i, -n)) : P / n;
+  const pay = basePay + extra;
+
+  /* simulate */
+  let bal = P, totInt = 0, periods = 0;
+  const yearly = [];
+  let yPaid = 0, yInt = 0, yPrin = 0;
+  const maxP = freq * 40;
+  while (bal > 0.005 && periods < maxP) {
+    const int_ = bal * i;
+    let prin = pay - int_;
+    if (prin <= 0) break; // payment doesn't cover interest
+    if (prin > bal) prin = bal;
+    bal -= prin;
+    totInt += int_;
+    yPaid += int_ + prin; yInt += int_; yPrin += prin;
+    periods += 1;
+    if (periods % freq === 0 || bal <= 0.005) {
+      yearly.push([Math.ceil(periods / freq), yPaid, yInt, yPrin, Math.max(0, bal)]);
+      yPaid = yInt = yPrin = 0;
+    }
+  }
+
+  const freqLabel = { 12: "per month", 26: "bi-weekly", 52: "per week" }[freq];
+  $("pay").textContent = money(pay);
+  $("payLabel").textContent = freqLabel;
+  $("interest").textContent = money(totInt);
+  const yrs = Math.floor(periods / freq), rem = periods % freq;
+  $("payoff").textContent = pay - (Number($("extra").value) || 0) <= P * i && annual > 0 && periods >= maxP
+    ? "never"
+    : `${yrs}y ${rem ? Math.round((rem / freq) * 12) + "m" : ""}`.trim();
+
+  $("sched").innerHTML = yearly
+    .map(([y, paid, int_, prin, b]) => `<tr><td>Year ${y}</td><td>${money(paid)}</td><td>${money(int_)}</td><td>${money(prin)}</td><td>${money(b)}</td></tr>`)
+    .join("");
+}
+
+document.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", calc));
+calc();
+})();
+</script>
+</body>
+</html>

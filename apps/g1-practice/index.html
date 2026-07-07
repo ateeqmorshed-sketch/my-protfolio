@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontario G1 Practice Test — Free Mock Exam</title>
+<meta name="description" content="Free Ontario G1 practice test — rules of the road and road sign questions in the real exam format, with instant feedback and explanations. No sign-up.">
+<meta name="theme-color" content="#0e0f13">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+<style>
+  :root {
+    --bg: #0e0f13; --card: #16171d; --line: rgba(240,236,227,.1);
+    --ink: #f0ece3; --dim: #a09a8d; --accent: #e0a13f; --accent-soft: #eebd6e;
+    --ok: #58c47a; --bad: #e0524f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; min-height: 100svh; display: flex; flex-direction: column; }
+  main { width: min(680px, 100%); margin: 0 auto; padding: 28px 20px 60px; flex: 1; }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 34px; }
+  .back { color: var(--dim); text-decoration: none; font-size: 13.5px; }
+  .back:hover { color: var(--ink); }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(26px, 6vw, 38px); line-height: 1.12; margin-bottom: 12px; }
+  h1 em { font-style: normal; color: var(--accent-soft); }
+  .lead { color: var(--dim); margin-bottom: 26px; max-width: 52ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .btn { display: inline-block; border: 0; cursor: pointer; text-decoration: none; background: var(--accent); color: #17110a; font-weight: 700; font-size: 15.5px; padding: 14px 26px; border-radius: 12px; transition: transform .2s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink); }
+  .meta { display: flex; gap: 18px; flex-wrap: wrap; margin: 22px 0; }
+  .meta div { font-size: 13.5px; color: var(--dim); }
+  .meta b { display: block; color: var(--ink); font-size: 19px; }
+  .qbar { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 10px; letter-spacing: .08em; }
+  .track { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; margin-bottom: 22px; }
+  .track i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); transition: width .3s; }
+  .qcat { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 8px; }
+  .qtext { font-size: 19px; font-weight: 600; margin-bottom: 18px; text-wrap: balance; }
+  .opts { display: grid; gap: 10px; }
+  .opt { text-align: left; background: var(--bg); border: 1px solid var(--line); color: var(--ink); font-size: 15.5px; padding: 13px 16px; border-radius: 12px; cursor: pointer; transition: border-color .2s; }
+  .opt:hover:not(:disabled) { border-color: var(--accent-soft); }
+  .opt.correct { border-color: var(--ok); background: rgba(88,196,122,.1); }
+  .opt.wrong { border-color: var(--bad); background: rgba(224,82,79,.1); }
+  .opt:disabled { cursor: default; }
+  .explain { margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--accent-soft); background: rgba(224,161,63,.06); border-radius: 0 10px 10px 0; color: var(--dim); font-size: 14.5px; }
+  .explain b { color: var(--ink); }
+  .next-row { margin-top: 20px; display: flex; justify-content: flex-end; }
+  .score-big { font-size: 56px; font-weight: 700; line-height: 1; }
+  .score-big.pass { color: var(--ok); } .score-big.fail { color: var(--bad); }
+  .verdict { font-size: 17px; margin: 8px 0 20px; color: var(--dim); }
+  .review { margin-top: 22px; display: grid; gap: 12px; }
+  .review .item { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 14.5px; }
+  .review .q { font-weight: 600; margin-bottom: 6px; }
+  .review .a { color: var(--ok); } .review .w { color: var(--bad); }
+  footer { border-top: 1px solid var(--line); padding: 18px 20px; text-align: center; font-size: 13px; color: var(--dim); }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  .disclaimer { font-size: 12.5px; color: var(--dim); margin-top: 22px; opacity: .8; }
+  .hide { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <a class="back" href="../../">← Ateeq Morshed</a>
+    <span class="badge">🚗 Free · No sign-up</span>
+  </div>
+
+  <section id="start">
+    <h1>Ontario G1 <em>Practice Test</em></h1>
+    <p class="lead">Rules of the road and road signs, in the real G1 style: two 20-question sections on the actual exam, 16 correct needed in each. This mock gives you 20 mixed questions — aim for 16+.</p>
+    <div class="card">
+      <div class="meta">
+        <div><b id="bankCount">—</b> questions in bank</div>
+        <div><b>20</b> per mock test</div>
+        <div><b>80%</b> to pass</div>
+        <div><b id="best">—</b> your best score</div>
+      </div>
+      <button class="btn" id="beginBtn">Start mock test</button>
+    </div>
+    <p class="disclaimer">Unofficial study aid based on the Official MTO Driver's Handbook. Always study the official handbook — it is the source for the real test.</p>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="qbar"><span id="qNum">Question 1 / 20</span><span id="qScore">0 correct</span></div>
+    <div class="track"><i id="qTrack"></i></div>
+    <div class="card">
+      <p class="qcat" id="qCat"></p>
+      <p class="qtext" id="qText"></p>
+      <div class="opts" id="qOpts"></div>
+      <div class="explain hide" id="qExplain"></div>
+      <div class="next-row"><button class="btn hide" id="nextBtn">Next question →</button></div>
+    </div>
+  </section>
+
+  <section id="results" class="hide">
+    <div class="card" style="text-align:center">
+      <div class="score-big" id="rScore"></div>
+      <div class="verdict" id="rVerdict"></div>
+      <button class="btn" id="againBtn">Try another test</button>
+      <button class="btn ghost" id="reviewBtn" style="margin-left:8px">Review mistakes</button>
+    </div>
+    <div class="review hide" id="reviewList"></div>
+  </section>
+</main>
+<footer>Built by <a href="../../">Ateeq Morshed</a> — also try the <a href="../citizenship-test/">citizenship practice test</a>. Need an app? <a href="mailto:ateeqmorshed@gmail.com">Get in touch</a></footer>
+
+<script>
+(() => {
+"use strict";
+/* [category, question, options, answerIndex, explanation] — facts from the Official MTO Driver's Handbook */
+const BANK = [
+  ["Rules", "What does a flashing green light (or green arrow) at an intersection mean?", ["You may turn left, go through or turn right — oncoming traffic is stopped", "Slow down and proceed with caution", "The light is about to turn red", "Pedestrians have priority"], 0, "A flashing green light means you may turn left, go straight or turn right because oncoming traffic faces a red light (advance green)."],
+  ["Rules", "When must you use your headlights?", ["Between half an hour before sunset and half an hour after sunrise, and when visibility is under 150 m", "Only when it is completely dark", "Only on highways", "Whenever it rains, day or night only"], 0, "Headlights are required from half an hour before sunset to half an hour after sunrise, and whenever you cannot see clearly for 150 m."],
+  ["Rules", "What is the speed limit in cities and towns unless posted otherwise?", ["50 km/h", "40 km/h", "60 km/h", "30 km/h"], 0, "Where there are no posted signs, the limit is 50 km/h in cities, towns and villages, and 80 km/h elsewhere."],
+  ["Rules", "When a school bus has its upper red lights flashing, you must…", ["Stop at least 20 metres behind it (both directions on undivided roads)", "Pass slowly at 20 km/h", "Honk and proceed", "Stop only if children are visible"], 0, "Stop at least 20 m behind a stopped school bus with flashing red lights; traffic in both directions must stop on roads without a median."],
+  ["Rules", "What must you do when an emergency vehicle approaches with lights and siren on?", ["Pull to the right and stop", "Speed up and clear the road", "Stop exactly where you are, even in an intersection", "Pull to the left"], 0, "Pull as near as possible to the right edge of the road, clear of intersections, and stop."],
+  ["Rules", "What does a solid line beside your lane mean?", ["Do not cross — stay in your lane", "Passing is allowed with caution", "Parking is prohibited", "Bus lane only"], 0, "A solid line at the left of your lane means it is unsafe to pass; broken lines permit passing when safe."],
+  ["Rules", "At an intersection with stop signs at all four corners, who goes first?", ["The first vehicle to come to a full stop; if two stop together, the one on the right", "The largest vehicle", "The vehicle turning left", "The vehicle on the busiest road"], 0, "First to stop, first to go. If two vehicles stop at the same time, the vehicle on the right goes first."],
+  ["Rules", "How closely may you park to a fire hydrant?", ["No closer than 3 metres", "1 metre", "5 metres", "10 metres"], 0, "You must not park within 3 m of a fire hydrant."],
+  ["Rules", "What does the two-second rule help you judge?", ["A safe following distance behind the vehicle ahead", "Time to cross an intersection", "How long to signal before turning", "Braking time on ice"], 0, "Pick a marker; when the vehicle ahead passes it, you should not reach it for at least two seconds — more in poor conditions."],
+  ["Rules", "As a G1 driver, your blood alcohol level must be…", ["Zero", "Under 0.05", "Under 0.08", "Under 0.02"], 0, "Novice drivers (G1, G2) and drivers 21 or under must have a blood alcohol level of zero."],
+  ["Rules", "A G1 driver must be accompanied by…", ["A fully licensed driver with at least 4 years of experience, in the front seat", "Any licensed driver", "A driving instructor only", "A family member over 18"], 0, "Your accompanying driver must hold a full G licence with at least four years of driving experience and be your only front-seat passenger."],
+  ["Rules", "When are G1 drivers not allowed to drive?", ["Between midnight and 5 a.m.", "After 9 p.m.", "On weekends", "During rush hour"], 0, "G1 drivers must not drive between midnight and 5 a.m., and not on 400-series highways or high-speed expressways (unless with an instructor)."],
+  ["Rules", "Before turning left at an intersection you should…", ["Signal, move into the far left lane for your direction, and yield to oncoming traffic and pedestrians", "Honk to warn oncoming traffic", "Speed up to clear the turn quickly", "Turn from any lane if clear"], 0, "Signal well before, position correctly, and complete the turn only when oncoming traffic and pedestrians are clear."],
+  ["Rules", "If your right wheels drift off the pavement onto the shoulder, you should…", ["Ease off the gas, grip the wheel, and steer back gradually when safe", "Brake hard immediately", "Swerve back onto the road quickly", "Accelerate to regain control"], 0, "Don't brake hard or jerk the wheel — slow down gradually and steer back gently."],
+  ["Rules", "Overtaking is prohibited when…", ["Approaching a curve or the crest of a hill where you can't see oncoming traffic", "On any two-lane road", "Within 500 m of any intersection", "Whenever another car is behind you"], 0, "Never pass where your view of oncoming traffic is blocked — hills, curves, bridges, or near intersections and railway crossings."],
+  ["Rules", "What should you do in a skid?", ["Look and steer where you want to go, easing off brakes or gas", "Brake as hard as possible", "Turn opposite to the skid and hold", "Shift to neutral and close your eyes"], 0, "Ease off the pedals and steer smoothly in the direction you want the front of the car to go."],
+  ["Rules", "Seat belts are required for…", ["The driver and every passenger — the driver is responsible for passengers under 16", "Front-seat occupants only", "Adults only", "Highway driving only"], 0, "Everyone must be buckled up; the driver is responsible for ensuring passengers under 16 are properly secured."],
+  ["Rules", "When parking facing downhill, turn your front wheels…", ["Toward the curb", "Away from the curb", "Straight ahead", "It doesn't matter"], 0, "Downhill: wheels toward the curb. Uphill with a curb: wheels away from the curb, letting the car rest against it."],
+  ["Rules", "What does a pedestrian crossover with flashing lights require?", ["Stop and yield the whole roadway to pedestrians; don't pass within 30 m of the crossover", "Slow to 30 km/h and continue", "Yield only to pedestrians on your half", "Honk before proceeding"], 0, "Drivers must stop and yield until pedestrians completely cross, and may not overtake within 30 m of a crossover."],
+  ["Rules", "Streetcar stopped ahead with doors open and no safety island — you must…", ["Stop at least 2 metres behind the rear doors until passengers are clear", "Pass slowly on the left", "Pass at 10 km/h on the right", "Honk and proceed"], 0, "Stop at least 2 m behind the rear door of a stopped streetcar and wait for passengers to reach the sidewalk."],
+  ["Signs", "A red octagonal (eight-sided) sign means…", ["Come to a complete stop, then proceed when safe", "Slow down and yield", "No entry", "Railway crossing ahead"], 0, "The octagon is the stop sign — full stop at the stop line or before the crosswalk/intersection."],
+  ["Signs", "A downward-pointing red and white triangle means…", ["Yield the right-of-way", "Stop completely", "Construction zone", "Divided highway begins"], 0, "The inverted triangle is the yield sign — let traffic and pedestrians go before you enter."],
+  ["Signs", "Diamond-shaped yellow signs are used for…", ["Warnings — changes in the road ahead", "Regulations you must obey", "Construction zones", "Tourist directions"], 0, "Yellow diamonds warn of hazards or changes: curves, hills, merging traffic, pedestrian areas."],
+  ["Signs", "Orange diamond-shaped signs indicate…", ["Construction or maintenance zones ahead", "School zones", "Hospital zones", "No passing zones"], 0, "Orange signs mark construction/work zones — slow down and obey posted limits and flag persons."],
+  ["Signs", "A five-sided (pentagon) blue and white sign with two figures means…", ["School zone ahead", "Playground", "Hospital", "Community centre"], 0, "The pentagon marks a school zone — watch for children and obey lower limits when flashing."],
+  ["Signs", "An X-shaped sign (crossbuck) at road level marks…", ["A railway crossing", "No parking", "An intersection ahead", "A dead end"], 0, "The X-shaped crossbuck marks a railway crossing — slow down, look both ways, and never race a train."],
+  ["Signs", "A red circle with a slash over a symbol means…", ["That action is not permitted", "The action is permitted with caution", "Warning of danger", "End of restriction"], 0, "A red circle-and-slash prohibits whatever the symbol shows — e.g., no left turn, no parking."],
+  ["Signs", "A green circle around a symbol means…", ["That action is permitted", "That action is prohibited", "Environmental zone", "Slow-moving vehicles only"], 0, "A green circle means the activity shown is allowed — e.g., bicycles permitted."],
+  ["Signs", "An orange triangle with red border on the back of a vehicle means…", ["Slow-moving vehicle (under 40 km/h)", "Wide load", "Student driver", "Farm equipment must yield"], 0, "The slow-moving-vehicle sign marks vehicles travelling under 40 km/h — be ready to slow down well in advance."],
+  ["Signs", "A yellow sign showing two arrows, one curving left and one straight, warns of…", ["An intersection or option where traffic may turn or go through ahead", "One-way traffic", "Divided highway ends", "Roundabout ahead"], 0, "Yellow arrow combinations warn how the road or traffic movement changes ahead — read them early and choose your lane."],
+  ["Signs", "What does a flashing red beacon over an intersection mean?", ["Treat it as a stop sign — stop fully, then go when safe", "Yield only", "The signal is broken; proceed normally", "Police control ahead"], 0, "Flashing red = stop sign. Flashing yellow = slow down and proceed with caution."],
+  ["Signs", "A white rectangular sign with black letters shows…", ["A regulation you must obey (e.g., maximum speed)", "A warning", "Directions to services", "Construction detour"], 0, "Vertical white rectangles are regulatory: speed limits, lane use, turn rules."],
+  ["Signs", "The sign 'Maximum 40 when flashing' applies…", ["In school zones during the times the beacon flashes", "At night only", "On highways in fog", "Near hospitals at all times"], 0, "School-zone speed limits apply when the yellow beacons are flashing — obey the reduced limit."],
+  ["Rules", "You may not turn right on a red light when…", ["A sign prohibits it, or pedestrians/vehicles are in your path", "Ever — right on red is illegal in Ontario", "The intersection has a bike lane", "It is raining"], 0, "Right turn on red is allowed in Ontario after a full stop, unless a sign prohibits it and only when the way is clear."],
+  ["Rules", "What does 'right-of-way' mean at an uncontrolled intersection?", ["Yield to the vehicle approaching from the right", "The faster vehicle goes first", "The vehicle on the wider road goes first", "Trucks always go first"], 0, "Where there are no signs or lights, yield to traffic approaching from your right."],
+  ["Rules", "In a roundabout you should…", ["Yield to traffic already circulating, then enter to the right and travel counter-clockwise", "Enter without stopping — you have priority", "Travel clockwise", "Stop fully before entering, always"], 0, "Slow down, yield to traffic in the roundabout, enter when clear and keep right (counter-clockwise)."],
+  ["Rules", "When passing a stopped emergency vehicle or tow truck with flashing lights on a multi-lane road, you must…", ["Slow down and move over one lane if it can be done safely", "Stop behind it", "Continue at the same speed in your lane", "Flash your headlights"], 0, "Ontario's Move Over law: slow down, pass with caution, and move over a lane where possible — fines are heavy."],
+  ["Rules", "Using a hand-held phone while driving is…", ["Illegal — hands-free only, and G1/G2 drivers face licence suspensions", "Legal below 50 km/h", "Legal at red lights", "Legal for navigation only"], 0, "Hand-held devices are banned for all drivers; novice drivers face suspensions even for a first conviction."],
+];
+
+const $ = (id) => document.getElementById(id);
+const KEY = "g1-best";
+let order = [], idx = 0, score = 0, wrong = [];
+
+$("bankCount").textContent = BANK.length;
+const best = localStorage.getItem(KEY);
+$("best").textContent = best ? `${best} / 20` : "—";
+
+const show = (id) => ["start", "quiz", "results"].forEach((s) => $(s).classList.toggle("hide", s !== id));
+const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+function begin() {
+  order = shuffle([...BANK.keys()]).slice(0, 20);
+  idx = 0; score = 0; wrong = [];
+  show("quiz");
+  render();
+}
+
+function render() {
+  const [cat, q, opts] = BANK[order[idx]];
+  $("qNum").textContent = `Question ${idx + 1} / 20`;
+  $("qScore").textContent = `${score} correct`;
+  $("qTrack").style.width = `${(idx / 20) * 100}%`;
+  $("qCat").textContent = cat === "Signs" ? "🚧 Road signs" : "📖 Rules of the road";
+  $("qText").textContent = q;
+  $("qExplain").classList.add("hide");
+  $("nextBtn").classList.add("hide");
+  const box = $("qOpts");
+  box.innerHTML = "";
+  const mapped = shuffle(opts.map((t, i) => ({ t, correct: i === BANK[order[idx]][3] })));
+  mapped.forEach((o) => {
+    const b = document.createElement("button");
+    b.className = "opt"; b.type = "button"; b.textContent = o.t;
+    b.onclick = () => pick(b, o.correct, mapped);
+    box.appendChild(b);
+  });
+}
+
+function pick(btn, correct, mapped) {
+  const buttons = [...$("qOpts").children];
+  buttons.forEach((b, i) => { b.disabled = true; if (mapped[i].correct) b.classList.add("correct"); });
+  if (!correct) {
+    btn.classList.add("wrong");
+    const [, q, opts, ans, why] = BANK[order[idx]];
+    wrong.push({ q, right: opts[ans], picked: btn.textContent });
+    $("qExplain").innerHTML = `<b>Correct answer:</b> ${opts[ans]}. ${why}`;
+    $("qExplain").classList.remove("hide");
+  } else {
+    score += 1;
+    $("qScore").textContent = `${score} correct`;
+  }
+  $("nextBtn").textContent = idx === 19 ? "See results →" : "Next question →";
+  $("nextBtn").classList.remove("hide");
+}
+
+function next() { idx += 1; idx >= 20 ? finish() : render(); }
+
+function finish() {
+  show("results");
+  const pass = score >= 16;
+  $("rScore").textContent = `${score} / 20`;
+  $("rScore").className = `score-big ${pass ? "pass" : "fail"}`;
+  $("rVerdict").textContent = pass
+    ? "You passed! The real G1 needs 16/20 in each section — you're there."
+    : `Not yet — the real test needs 16/20 per section. Review your ${wrong.length} mistake${wrong.length === 1 ? "" : "s"} and go again.`;
+  const prev = Number(localStorage.getItem(KEY) || 0);
+  if (score > prev) localStorage.setItem(KEY, score);
+  $("best").textContent = `${Math.max(score, prev)} / 20`;
+  const list = $("reviewList");
+  list.classList.add("hide");
+  list.innerHTML = wrong.length
+    ? wrong.map((w) => `<div class="item"><div class="q">${w.q}</div><div class="w">You picked: ${w.picked}</div><div class="a">Correct: ${w.right}</div></div>`).join("")
+    : `<div class="item">Perfect run — nothing to review. 🎉</div>`;
+}
+
+$("beginBtn").onclick = begin;
+$("nextBtn").onclick = next;
+$("againBtn").onclick = begin;
+$("reviewBtn").onclick = () => $("reviewList").classList.toggle("hide");
+})();
+</script>
+</body>
+</html>
