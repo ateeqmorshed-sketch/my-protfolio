@@ -36,6 +36,22 @@ The tools are traffic assets. Realistic revenue paths, in order of effort:
    version via Stripe payment link — only after free traffic proves demand.
 Rule: never fake reviews/urgency; keep disclaimers on regulated topics.
 
+## Done (v3)
+
+- [x] Three restaurant business tools: `apps/qr-menu/`, `apps/table-booking/`, `apps/food-cost/`
+- [x] **Bow & Ember** (`apps/bow-ember/`) — full concept restaurant for Calgary; Mountain-Time
+  aware (live open-now status, auto brunch/lunch/dinner menu), WhatsApp reservations
+- [x] GitHub Pages deploy workflow (`.github/workflows/pages.yml`) — fires when owner merges to main
+
+## How to publish (owner action — one time)
+
+1. Open https://github.com/ateeqmorshed-sketch/my-protfolio → "Compare & pull request"
+   for branch `claude/portfolio-project-sdr6a3` → merge it into `main` (create main if prompted).
+2. The Pages workflow deploys automatically → site at
+   https://ateeqmorshed-sketch.github.io/my-protfolio/
+   (check Actions tab for the run; first run may need Settings → Pages → Source: GitHub Actions).
+3. Alternative/parallel: vercel.com/new → import the repo → deploy (preset: Other).
+
 ## Next (in priority order)
 
 1. **Deploy**: merge to `main`, import repo on Vercel (preset "Other"). Needs Ateeq's go-ahead.
