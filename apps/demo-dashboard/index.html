@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owner Dashboard — Live Demo by Ateeq Morshed</title>
+<meta name="description" content="A live demo of the business dashboards Ateeq Morshed builds — revenue chart, orders, top sellers and staff view. Switch between barbershop, restaurant and retail modes. Seeded demo data.">
+<meta name="theme-color" content="#0f1216">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<link rel="canonical" href="https://ateeqmorshed-sketch.github.io/my-protfolio/apps/demo-dashboard/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Owner Dashboard — Live Demo by Ateeq Morshed">
+<meta property="og:description" content="The business dashboards I build, running live — revenue, orders, top sellers, staff. Switch business type and watch it adapt.">
+<meta property="og:locale" content="en_CA">
+<style>
+  :root {
+    --bg: #0f1216; --panel: #151a21; --panel2: #1a212b; --line: rgba(226, 232, 240, 0.09);
+    --ink: #e6ecf4; --dim: #8b97a8; --blue: #4f7cff; --blue-soft: #86a5ff;
+    --ok: #34c98e; --warn: #e8b04b; --bad: #e0524f;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  .frame { max-width: 1180px; margin: 0 auto; padding: 20px clamp(14px, 3vw, 28px) 60px; }
+
+  .demo-strip {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 18px; margin-bottom: 18px; font-size: 13px; color: var(--dim);
+  }
+  .demo-strip b { color: var(--ink); }
+  .demo-strip a { color: var(--blue-soft); text-decoration: none; font-weight: 600; }
+
+  .topbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+  .brand { display: flex; align-items: center; gap: 11px; margin-right: auto; }
+  .brand-mark { width: 38px; height: 38px; border-radius: 10px; background: var(--blue); display: grid; place-items: center; font-weight: 800; font-size: 15px; color: #fff; }
+  .brand b { display: block; font-size: 15.5px; }
+  .brand span { display: block; font-size: 12px; color: var(--dim); }
+  .biz-switch { display: flex; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 5px; }
+  .biz-switch button {
+    background: transparent; border: 0; color: var(--dim); cursor: pointer;
+    font-weight: 600; font-size: 13.5px; padding: 8px 14px; border-radius: 7px;
+    transition: all .2s; font-family: inherit;
+  }
+  .biz-switch button.on { background: var(--blue); color: #fff; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 900px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+  .kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
+  .kpi .lbl { font-size: 12px; color: var(--dim); letter-spacing: .04em; }
+  .kpi .val { font-size: clamp(21px, 2.4vw, 28px); font-weight: 800; font-variant-numeric: tabular-nums; margin: 2px 0 6px; }
+  .kpi .delta { font-size: 12px; font-weight: 700; }
+  .kpi .delta.up { color: var(--ok); }
+  .kpi .delta.down { color: var(--bad); }
+  .spark { display: flex; align-items: flex-end; gap: 3px; height: 26px; margin-top: 8px; }
+  .spark i { flex: 1; background: rgba(79, 124, 255, 0.35); border-radius: 2px 2px 0 0; min-height: 3px; }
+  .spark i:last-child { background: var(--blue); }
+
+  .grid { display: grid; grid-template-columns: 1.65fr 1fr; gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-head b { font-size: 14.5px; }
+  .ranges { display: flex; gap: 4px; }
+  .ranges button { background: transparent; border: 1px solid var(--line); color: var(--dim); font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 999px; cursor: pointer; font-family: inherit; }
+  .ranges button.on { background: rgba(79, 124, 255, 0.15); border-color: var(--blue); color: var(--blue-soft); }
+  #chart { width: 100%; height: 220px; display: block; }
+  .chart-tip { position: absolute; pointer-events: none; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 12px; font-variant-numeric: tabular-nums; display: none; z-index: 5; }
+  .chart-wrap { position: relative; }
+
+  .toplist { display: grid; gap: 10px; }
+  .topitem { display: grid; grid-template-columns: 20px 1fr auto; gap: 10px; align-items: center; font-size: 13.5px; }
+  .topitem .n { color: var(--dim); font-variant-numeric: tabular-nums; }
+  .topitem .bar { position: relative; height: 22px; border-radius: 6px; background: var(--panel2); overflow: hidden; }
+  .topitem .bar i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--blue), var(--blue-soft)); border-radius: 6px; opacity: .8; }
+  .topitem .bar span { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-weight: 600; font-size: 12.5px; }
+  .topitem .amt { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding: 8px 8px; border-bottom: 1px solid var(--line); }
+  td { padding: 10px 8px; border-bottom: 1px solid rgba(226, 232, 240, 0.05); font-variant-numeric: tabular-nums; }
+  td:last-child, th:last-child { text-align: right; }
+  .pill { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; }
+  .pill.done { background: rgba(52, 201, 142, 0.15); color: var(--ok); }
+  .pill.prog { background: rgba(232, 176, 75, 0.15); color: var(--warn); }
+  .pill.new { background: rgba(79, 124, 255, 0.16); color: var(--blue-soft); }
+
+  .staff { display: grid; gap: 10px; }
+  .staffrow { display: flex; align-items: center; gap: 12px; background: var(--panel2); border-radius: 10px; padding: 11px 14px; font-size: 13.5px; }
+  .ava { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 12px; color: #fff; flex: none; }
+  .staffrow b { flex: 1; }
+  .staffrow .st { font-size: 12px; font-weight: 700; }
+  .st.in { color: var(--ok); } .st.off { color: var(--dim); }
+  .staffrow .amt { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .tablewrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="demo-strip">
+    <span>📊 <b>Live demo</b> — this is the kind of owner dashboard I build into business systems. Data is seeded for the demo; yours would be real.</span>
+    <a href="mailto:ateeqmorshed@gmail.com">Want one for your business? →</a>
+  </div>
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark" id="bMark">N</div>
+      <div><b id="bName">North &amp; Fade Barber Co.</b><span id="bSub">Owner dashboard · Calgary</span></div>
+    </div>
+    <div class="biz-switch" id="bizSwitch"></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <b>Revenue</b>
+        <div class="ranges" id="ranges"></div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart"></canvas>
+        <div class="chart-tip" id="tip"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><b id="topLabel">Top services</b><span style="font-size:12px;color:var(--dim)">last 30 days</span></div>
+      <div class="toplist" id="toplist"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-head"><b id="ordersLabel">Recent bookings</b><span style="font-size:12px;color:var(--dim)">live feed</span></div>
+      <div class="tablewrap"><table>
+        <thead><tr><th id="colWho">Client</th><th id="colWhat">Service</th><th>Time</th><th>Status</th><th>Amount</th></tr></thead>
+        <tbody id="orders"></tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><b>Staff today</b><span style="font-size:12px;color:var(--dim)" id="staffSub">3 on shift</span></div>
+      <div class="staff" id="staff"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+
+/* seeded PRNG so the demo is stable run-to-run */
+function mulberry32(a) {
+  return () => {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const BIZ = {
+  barber: {
+    name: "North & Fade Barber Co.", mark: "N", seed: 7, base: 620, spread: 420, weekendBoost: 1.5,
+    topLabel: "Top services", ordersLabel: "Recent bookings", colWho: "Client", colWhat: "Service",
+    top: ["Skin fade", "Cut + beard", "Classic cut", "Beard line-up", "Kids cut"],
+    who: ["Jordan M.", "Ali R.", "Chris T.", "Devon K.", "Noah B.", "Ty W."],
+    what: ["Skin fade", "Cut + beard", "Classic cut", "Beard line-up"],
+    amounts: [40, 60, 35, 28],
+    staff: [["MA", "Marcus", "#4f7cff"], ["DE", "Dee", "#9a6fd4"], ["SA", "Sam", "#34a0c9"]],
+  },
+  resto: {
+    name: "Spice Garden Restaurant", mark: "S", seed: 21, base: 2400, spread: 1600, weekendBoost: 1.9,
+    topLabel: "Top dishes", ordersLabel: "Recent orders", colWho: "Table / order", colWhat: "Items",
+    top: ["Beef bhuna", "Butter chicken", "Biryani (goat)", "Garlic naan", "Mango lassi"],
+    who: ["Table 4", "Pickup #218", "Table 11", "Delivery #219", "Table 2", "Pickup #220"],
+    what: ["2× mains, naan", "Family platter", "3× mains, rice", "Biryani + lassi"],
+    amounts: [64, 89, 112, 38],
+    staff: [["RK", "Rahim — kitchen", "#e0524f"], ["FS", "Farhana — floor", "#4f7cff"], ["JT", "Jay — delivery", "#34c98e"]],
+  },
+  retail: {
+    name: "Kensington Corner Store", mark: "K", seed: 42, base: 1500, spread: 900, weekendBoost: 1.3,
+    topLabel: "Top products", ordersLabel: "Recent sales", colWho: "Sale", colWhat: "Items",
+    top: ["Coffee beans 1kg", "Fresh samosas", "Phone accessories", "Greeting cards", "Local honey"],
+    who: ["#1041", "#1042", "#1043", "#1044", "#1045", "#1046"],
+    what: ["3 items", "1 item", "6 items", "2 items"],
+    amounts: [24, 9, 63, 18],
+    staff: [["AN", "Anika — till", "#4f7cff"], ["MO", "Mo — stock", "#e8b04b"], ["PR", "Priya — till", "#9a6fd4"]],
+  },
+};
+
+let biz = "barber";
+let range = 30;
+let days = [];
+
+function genDays(cfg) {
+  const rnd = mulberry32(cfg.seed);
+  const out = [];
+  for (let i = 89; i >= 0; i--) {
+    const dow = (7 + 3 - (i % 7)) % 7; // stable pseudo weekday
+    const weekend = dow === 5 || dow === 6;
+    let v = cfg.base + rnd() * cfg.spread;
+    if (weekend) v *= cfg.weekendBoost;
+    if (dow === 0) v *= 0.4; // slow day
+    out.push(Math.round(v));
+  }
+  return out;
+}
+
+const money = (n) => "$" + Math.round(n).toLocaleString("en-CA");
+
+function renderKpis(cfg) {
+  const cur = days.slice(-range);
+  const prev = days.slice(-range * 2, -range);
+  const sum = (a) => a.reduce((x, y) => x + y, 0);
+  const total = sum(cur), prevTotal = sum(prev) || 1;
+  const delta = ((total - prevTotal) / prevTotal) * 100;
+  const today = days[days.length - 1];
+  const orders = Math.round(total / (cfg.amounts.reduce((a, b) => a + b, 0) / cfg.amounts.length));
+  const avg = total / orders;
+  const spark = days.slice(-14);
+  const max = Math.max(...spark);
+  const kpis = [
+    [`Revenue · ${range}d`, money(total), `${delta >= 0 ? "▲" : "▼"} ${Math.abs(delta).toFixed(1)}% vs prev`, delta >= 0],
+    ["Today so far", money(today * 0.72), "▲ on pace", true],
+    [`Orders · ${range}d`, orders.toLocaleString(), `avg ${money(avg)} each`, true],
+    ["Best day", money(Math.max(...cur)), "last " + range + " days", true],
+  ];
+  $("kpis").innerHTML = kpis.map(([l, v, d, up], i) => `
+    <div class="kpi">
+      <div class="lbl">${l}</div>
+      <div class="val">${v}</div>
+      <div class="delta ${up ? "up" : "down"}">${d}</div>
+      ${i === 0 ? `<div class="spark">${spark.map((s) => `<i style="height:${Math.max(10, (s / max) * 100)}%"></i>`).join("")}</div>` : ""}
+    </div>`).join("");
+}
+
+/* canvas line chart with hover */
+let pts = [];
+function renderChart() {
+  const c = $("chart");
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const w = c.offsetWidth, h = 220;
+  c.width = w * dpr; c.height = h * dpr;
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  const data = days.slice(-range);
+  const max = Math.max(...data) * 1.15, min = Math.min(...data) * 0.8;
+  const px = (i) => 8 + (i / (data.length - 1)) * (w - 16);
+  const py = (v) => h - 24 - ((v - min) / (max - min)) * (h - 40);
+  /* grid */
+  ctx.strokeStyle = "rgba(226,232,240,.06)";
+  ctx.lineWidth = 1;
+  for (let g = 0; g < 4; g++) {
+    const y = 12 + (g / 3) * (h - 40);
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+  }
+  /* area */
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, "rgba(79,124,255,.32)");
+  grad.addColorStop(1, "rgba(79,124,255,0)");
+  ctx.beginPath();
+  data.forEach((v, i) => i ? ctx.lineTo(px(i), py(v)) : ctx.moveTo(px(i), py(v)));
+  ctx.lineTo(px(data.length - 1), h); ctx.lineTo(px(0), h); ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+  /* line */
+  ctx.beginPath();
+  data.forEach((v, i) => i ? ctx.lineTo(px(i), py(v)) : ctx.moveTo(px(i), py(v)));
+  ctx.strokeStyle = "#4f7cff"; ctx.lineWidth = 2.2; ctx.lineJoin = "round"; ctx.stroke();
+  /* endpoint */
+  ctx.beginPath(); ctx.arc(px(data.length - 1), py(data[data.length - 1]), 4, 0, Math.PI * 2);
+  ctx.fillStyle = "#86a5ff"; ctx.fill();
+  pts = data.map((v, i) => ({ x: px(i), y: py(v), v, d: data.length - 1 - i }));
+}
+$("chart").addEventListener("pointermove", (e) => {
+  const r = $("chart").getBoundingClientRect();
+  const x = e.clientX - r.left;
+  let best = null;
+  for (const p of pts) if (!best || Math.abs(p.x - x) < Math.abs(best.x - x)) best = p;
+  if (!best) return;
+  const tip = $("tip");
+  tip.style.display = "block";
+  tip.style.left = Math.min(best.x + 10, r.width - 110) + "px";
+  tip.style.top = best.y - 14 + "px";
+  tip.innerHTML = `<b>${money(best.v)}</b> · ${best.d === 0 ? "today" : best.d + "d ago"}`;
+});
+$("chart").addEventListener("pointerleave", () => ($("tip").style.display = "none"));
+
+function renderTop(cfg) {
+  const rnd = mulberry32(cfg.seed + 5);
+  const vals = cfg.top.map((_, i) => Math.round((1 - i * 0.16) * (800 + rnd() * 900)));
+  const max = vals[0];
+  $("toplist").innerHTML = cfg.top.map((name, i) => `
+    <div class="topitem">
+      <span class="n">${i + 1}</span>
+      <div class="bar"><i style="width:${(vals[i] / max) * 100}%"></i><span>${name}</span></div>
+      <span class="amt">${money(vals[i])}</span>
+    </div>`).join("");
+}
+
+function renderOrders(cfg) {
+  const rnd = mulberry32(cfg.seed + 9);
+  const states = [["done", "Done"], ["done", "Done"], ["prog", "In progress"], ["new", "New"]];
+  const rows = cfg.who.slice(0, 6).map((who, i) => {
+    const what = cfg.what[Math.floor(rnd() * cfg.what.length)];
+    const amt = cfg.amounts[Math.floor(rnd() * cfg.amounts.length)];
+    const [cls, label] = states[Math.min(3, Math.floor(rnd() * 4.4))];
+    const mins = 8 + Math.floor(rnd() * 170);
+    return `<tr><td>${who}</td><td>${what}</td><td>${mins}m ago</td><td><span class="pill ${cls}">${label}</span></td><td>${money(amt)}</td></tr>`;
+  });
+  $("orders").innerHTML = rows.join("");
+}
+
+function renderStaff(cfg) {
+  const rnd = mulberry32(cfg.seed + 13);
+  $("staff").innerHTML = cfg.staff.map(([ini, name, color], i) => {
+    const onShift = i < 2 || rnd() > 0.4;
+    const take = Math.round(200 + rnd() * 700);
+    return `<div class="staffrow"><span class="ava" style="background:${color}">${ini}</span><b>${name}</b><span class="st ${onShift ? "in" : "off"}">${onShift ? "● On shift" : "Off today"}</span><span class="amt">${onShift ? money(take) : "—"}</span></div>`;
+  }).join("");
+  $("staffSub").textContent = `${cfg.staff.length} staff`;
+}
+
+function renderAll() {
+  const cfg = BIZ[biz];
+  days = genDays(cfg);
+  $("bName").textContent = cfg.name;
+  $("bMark").textContent = cfg.mark;
+  $("topLabel").textContent = cfg.topLabel;
+  $("ordersLabel").textContent = cfg.ordersLabel;
+  $("colWho").textContent = cfg.colWho;
+  $("colWhat").textContent = cfg.colWhat;
+  renderKpis(cfg);
+  renderChart();
+  renderTop(cfg);
+  renderOrders(cfg);
+  renderStaff(cfg);
+}
+
+/* switchers */
+const BTN = [["barber", "💈 Barbershop"], ["resto", "🍽 Restaurant"], ["retail", "🛍 Retail"]];
+BTN.forEach(([key, label]) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.textContent = label;
+  b.classList.toggle("on", key === biz);
+  b.onclick = () => { biz = key; [...$("bizSwitch").children].forEach((c) => c.classList.toggle("on", c === b)); renderAll(); };
+  $("bizSwitch").appendChild(b);
+});
+[7, 30, 90].forEach((r) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.textContent = r + "d";
+  b.classList.toggle("on", r === range);
+  b.onclick = () => { range = r; [...$("ranges").children].forEach((c) => c.classList.toggle("on", c === b)); renderKpis(BIZ[biz]); renderChart(); };
+  $("ranges").appendChild(b);
+});
+
+addEventListener("resize", renderChart);
+renderAll();
+})();
+</script>
+</body>
+</html>

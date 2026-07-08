@@ -1248,3 +1248,5 @@ section[id] { scroll-margin-top: 82px; }
 
 .tool-flagship.flag-mint { border-color: #5f8a6b; background: linear-gradient(120deg, rgba(127, 174, 138, 0.1), transparent 55%), var(--panel); }
 .tool-flagship.flag-mint .tool-go { color: #5f8a6b; }
+
+.tool-flagship.flag-blue { border-color: #2b3fd6; }
