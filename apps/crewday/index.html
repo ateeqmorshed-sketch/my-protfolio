@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrewDay — Field Job App for Trades Crews (Live Demo)</title>
+<meta name="description" content="CrewDay is a demo field app by Ateeq Morshed for trades crews — today's route, job checklists, photo slots and one-tap job completion that notifies the office. Try it live.">
+<meta name="theme-color" content="#101318">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
+<link rel="canonical" href="https://ateeqmorshed-sketch.github.io/my-protfolio/apps/crewday/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CrewDay — Field Job App for Trades Crews (Live Demo)">
+<meta property="og:description" content="A demo field app for trades crews — today's route, job checklists, photos, one-tap completion. Try it live.">
+<meta property="og:locale" content="en_CA">
+<style>
+  :root {
+    --bg: #101318; --panel: #171c24; --panel2: #1e2530; --line: rgba(230, 237, 246, 0.1);
+    --ink: #e8eef6; --dim: #8d9aac; --orange: #ff8a3d; --orange-soft: #ffb180;
+    --ok: #34c98e; --blue: #5b8def;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+
+  .stage { max-width: 480px; margin: 0 auto; padding: 18px 14px 60px; }
+  .demo-strip {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 11px 15px; margin-bottom: 16px; font-size: 12.5px; color: var(--dim);
+  }
+  .demo-strip b { color: var(--ink); }
+  .demo-strip a { color: var(--orange-soft); text-decoration: none; font-weight: 600; }
+
+  .apphead { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .mark { width: 40px; height: 40px; border-radius: 12px; background: var(--orange); color: #241203; display: grid; place-items: center; font-weight: 900; font-size: 17px; }
+  .apphead b { display: block; font-size: 16px; }
+  .apphead span { display: block; font-size: 12.5px; color: var(--dim); }
+  .daybar { display: flex; justify-content: space-between; align-items: center; margin: 14px 0; }
+  .daybar b { font-size: 14px; }
+  .progress-pill { font-size: 12px; font-weight: 700; color: var(--ok); background: rgba(52, 201, 142, 0.13); border-radius: 999px; padding: 5px 12px; font-variant-numeric: tabular-nums; }
+
+  .job {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 16px; margin-bottom: 12px; cursor: pointer;
+    transition: border-color .2s;
+  }
+  .job:hover { border-color: rgba(255, 138, 61, 0.4); }
+  .job.open { border-color: var(--orange); }
+  .job-top { display: flex; align-items: center; gap: 12px; }
+  .job-time { font-family: var(--mono); font-size: 12.5px; color: var(--orange-soft); width: 52px; flex: none; font-variant-numeric: tabular-nums; }
+  .job-info { flex: 1; min-width: 0; }
+  .job-info b { display: block; font-size: 15px; }
+  .job-info span { display: block; font-size: 12.5px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .job-st { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .st-done { background: rgba(52, 201, 142, 0.15); color: var(--ok); }
+  .st-now { background: rgba(255, 138, 61, 0.16); color: var(--orange-soft); }
+  .st-next { background: rgba(91, 141, 239, 0.15); color: var(--blue); }
+
+  .job-body { display: none; margin-top: 14px; border-top: 1px dashed var(--line); padding-top: 14px; }
+  .job.open .job-body { display: block; }
+  .kv { display: flex; justify-content: space-between; font-size: 13px; color: var(--dim); padding: 5px 0; }
+  .kv b { color: var(--ink); }
+  .checks { display: grid; gap: 8px; margin: 12px 0; }
+  .check {
+    display: flex; align-items: center; gap: 11px;
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 11px 13px; font-size: 13.5px; cursor: pointer;
+    transition: all .2s;
+  }
+  .check i { font-style: normal; width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--dim); display: grid; place-items: center; font-size: 12px; color: transparent; flex: none; transition: all .2s; }
+  .check.on { border-color: rgba(52, 201, 142, 0.4); }
+  .check.on i { background: var(--ok); border-color: var(--ok); color: #06281b; }
+  .photos { display: flex; gap: 8px; margin: 4px 0 14px; }
+  .photo {
+    width: 64px; height: 64px; border-radius: 10px;
+    border: 2px dashed var(--line); display: grid; place-items: center;
+    font-size: 20px; color: var(--dim); cursor: pointer; background: var(--panel2);
+    transition: all .2s;
+  }
+  .photo.snap { border-style: solid; border-color: var(--blue); background: linear-gradient(135deg, #2a3648, #1c2534); }
+  .done-btn {
+    width: 100%; border: 0; cursor: pointer;
+    background: var(--ok); color: #06281b;
+    font-weight: 800; font-size: 15px; padding: 14px; border-radius: 12px;
+    font-family: inherit;
+    transition: transform .15s;
+  }
+  .done-btn:hover { transform: translateY(-1px); }
+  .done-btn:disabled { background: var(--panel2); color: var(--dim); cursor: default; transform: none; }
+  .done-note { font-size: 12px; color: var(--dim); text-align: center; margin-top: 8px; }
+
+  .officeband {
+    margin-top: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px;
+    font-size: 13px; color: var(--dim);
+  }
+  .officeband b { color: var(--ink); }
+  .feed { margin-top: 10px; display: grid; gap: 7px; }
+  .feed div { font-family: var(--mono); font-size: 11.5px; color: var(--dim); border-left: 2px solid var(--orange); padding-left: 10px; }
+  .feed div.ok { border-color: var(--ok); color: var(--ok); }
+
+  footer { max-width: 480px; margin: 0 auto; border-top: 1px solid var(--line); padding: 16px; text-align: center; font-size: 12.5px; color: var(--dim); }
+  footer a { color: var(--orange-soft); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="demo-strip">🧰 <b>Live demo</b> — a field app for trades crews. Tap a job, tick the checklist, mark it done — the office sees everything instantly. <a href="../../">By Ateeq Morshed</a></div>
+
+  <div class="apphead">
+    <div class="mark">C</div>
+    <div><b>CrewDay · Summit P&amp;H</b><span id="crewLine">Truck 2 — Sam &amp; Dee</span></div>
+  </div>
+
+  <div class="daybar">
+    <b id="dayLabel">Today's route</b>
+    <span class="progress-pill" id="dayProg">1 / 4 done</span>
+  </div>
+
+  <div id="jobs"></div>
+
+  <div class="officeband">
+    <b>What the office sees</b> — every action lands in the owner dashboard in real time:
+    <div class="feed" id="feed">
+      <div class="ok">08:04 · Job #1 completed — 2 photos, invoice sent</div>
+    </div>
+  </div>
+</div>
+
+<footer>CrewDay is a concept demo. Want a field app for your crew? <a href="mailto:ateeqmorshed@gmail.com">Talk to Ateeq Morshed</a> · <a href="../demo-dashboard/">See the owner dashboard →</a></footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+
+const JOBS = [
+  { t: "8:00", name: "Hot water tank swap", addr: "Tuscany NW — 22 Tuscarora Way", st: "done", pay: "$1,480", notes: "40-gal tank, permit on file", checks: ["Old tank drained & removed", "New tank installed & tested", "Area cleaned, photos taken"], photos: 2 },
+  { t: "10:30", name: "Kitchen drain clog", addr: "Bowness NW — 6412 33 Ave", st: "now", pay: "$189", notes: "Recurring clog, camera if needed", checks: ["Snake the line", "Camera inspection", "Advise on grease trap"], photos: 0 },
+  { t: "13:30", name: "Furnace no-heat call", addr: "Airdrie — 118 Bayside Cres", st: "next", pay: "$225 diag", notes: "2009 Lennox, intermittent", checks: ["Diagnose fault", "Quote repair on site", "Photo of serial plate"], photos: 0 },
+  { t: "16:00", name: "Poly-B assessment", addr: "Cochrane — 33 West Terrace", st: "next", pay: "free quote", notes: "Full-house assessment, measure runs", checks: ["Walk-through & photos", "Measure pipe runs", "Book follow-up quote"], photos: 0 },
+];
+
+let doneCount = 1;
+const box = $("jobs");
+
+function stPill(st) {
+  return st === "done" ? '<span class="job-st st-done">✓ Done</span>'
+    : st === "now" ? '<span class="job-st st-now">● On site</span>'
+    : '<span class="job-st st-next">Up next</span>';
+}
+
+JOBS.forEach((job, ji) => {
+  const el = document.createElement("div");
+  el.className = "job" + (job.st === "now" ? " open" : "");
+  el.innerHTML = `
+    <div class="job-top">
+      <span class="job-time">${job.t}</span>
+      <div class="job-info"><b>${job.name}</b><span>${job.addr}</span></div>
+      ${stPill(job.st)}
+    </div>
+    <div class="job-body">
+      <div class="kv"><span>Job value</span><b>${job.pay}</b></div>
+      <div class="kv"><span>Notes from office</span><b>${job.notes}</b></div>
+      <div class="checks">${job.checks.map((c, i) => `<div class="check${job.st === "done" ? " on" : ""}" data-c="${i}"><i>✓</i>${c}</div>`).join("")}</div>
+      <div class="photos">${[0, 1, 2].map((i) => `<div class="photo${job.st === "done" && i < job.photos ? " snap" : ""}" data-p="${i}">${job.st === "done" && i < job.photos ? "🖼" : "📷"}</div>`).join("")}</div>
+      <button class="done-btn" type="button" ${job.st === "done" ? "disabled" : ""}>${job.st === "done" ? "Completed ✓" : "Mark job done → notify office"}</button>
+      <p class="done-note">${job.st === "done" ? "Invoice sent automatically." : "Checklist + at least one photo required."}</p>
+    </div>`;
+
+  el.querySelector(".job-top").addEventListener("click", () => {
+    document.querySelectorAll(".job").forEach((j) => j !== el && j.classList.remove("open"));
+    el.classList.toggle("open");
+  });
+
+  const checks = [...el.querySelectorAll(".check")];
+  const photos = [...el.querySelectorAll(".photo")];
+  const doneBtn = el.querySelector(".done-btn");
+  const note = el.querySelector(".done-note");
+
+  checks.forEach((c) => c.addEventListener("click", () => job.st !== "done" && c.classList.toggle("on")));
+  photos.forEach((p) => p.addEventListener("click", () => {
+    if (job.st === "done") return;
+    p.classList.add("snap"); p.textContent = "🖼";
+  }));
+
+  doneBtn.addEventListener("click", () => {
+    if (job.st === "done") return;
+    const allChecked = checks.every((c) => c.classList.contains("on"));
+    const hasPhoto = photos.some((p) => p.classList.contains("snap"));
+    if (!allChecked || !hasPhoto) {
+      note.textContent = !allChecked ? "⚠ Finish the checklist first." : "⚠ Snap at least one photo (tap a 📷).";
+      return;
+    }
+    job.st = "done";
+    doneCount += 1;
+    el.querySelector(".job-st").outerHTML = stPill("done");
+    doneBtn.disabled = true;
+    doneBtn.textContent = "Completed ✓";
+    note.textContent = "Invoice sent automatically.";
+    $("dayProg").textContent = `${doneCount} / ${JOBS.length} done`;
+    const now = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Edmonton", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
+    const d = document.createElement("div");
+    d.className = "ok";
+    d.textContent = `${now} · ${job.name} completed — photos attached, invoice sent`;
+    $("feed").prepend(d);
+  });
+
+  box.appendChild(el);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Summit Plumbing &amp; Heating — Calgary Trades Website (Concept Demo)</title>
+<meta name="description" content="Summit is a concept website for a Calgary plumbing & heating company by Ateeq Morshed — call-now emergency banner, services with honest pricing, quote requests by WhatsApp. Your trades business could look like this.">
+<meta name="theme-color" content="#0f1a2b">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+<link rel="canonical" href="https://ateeqmorshed-sketch.github.io/my-protfolio/apps/summit-trades/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Summit Plumbing &amp; Heating — Calgary Trades Website (Concept Demo)">
+<meta property="og:description" content="A concept trades website — emergency call banner, honest service pricing, WhatsApp quote requests. Your trades business could look like this.">
+<meta property="og:locale" content="en_CA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Karla:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1a2b; --navy2: #16233a; --line: rgba(226, 236, 248, 0.12);
+    --paper: #f2f5f9; --ink: #eef3fa; --dim: #93a3b8;
+    --safety: #ffc422; --safety-ink: #1a1608; --call: #2fae6b;
+    --head: "Archivo", system-ui, sans-serif;
+    --sans: "Karla", system-ui, sans-serif;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--ink); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+  ::selection { background: var(--safety); color: var(--safety-ink); }
+  a { color: inherit; text-decoration: none; }
+
+  .demo-banner { background: var(--safety); color: var(--safety-ink); text-align: center; font-size: 13px; font-weight: 700; padding: 8px 16px; }
+  .demo-banner a { text-decoration: underline; }
+
+  .nav {
+    position: sticky; top: 0; z-index: 60;
+    display: flex; align-items: center; gap: 20px;
+    padding: 13px clamp(18px, 5vw, 56px);
+    background: rgba(15, 26, 43, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .logo { font-family: var(--head); font-weight: 900; font-size: 18px; letter-spacing: .02em; margin-right: auto; display: flex; align-items: center; gap: 10px; }
+  .logo i { font-style: normal; width: 34px; height: 34px; border-radius: 9px; background: var(--safety); color: var(--safety-ink); display: grid; place-items: center; font-size: 17px; }
+  .logo em { font-style: normal; color: var(--safety); }
+  .nav a:not(.logo):not(.call-btn) { font-weight: 600; font-size: 14px; color: var(--dim); }
+  .nav a:hover { color: var(--ink); }
+  .call-btn { background: var(--call); color: #fff; font-family: var(--head); font-weight: 700; font-size: 14px; padding: 11px 20px; border-radius: 10px; white-space: nowrap; }
+  .num-short { display: none; }
+  @media (max-width: 760px) { .nav a:not(.logo):not(.call-btn) { display: none; } }
+  @media (max-width: 480px) {
+    .num-full { display: none; }
+    .num-short { display: inline; }
+    .logo span.word { display: none; }
+  }
+
+  .hero { max-width: 1100px; margin: 0 auto; padding: 80px clamp(18px, 5vw, 56px) 60px; display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(24px, 5vw, 60px); align-items: center; }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
+  .kick { font-family: var(--head); font-weight: 700; font-size: 12.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--safety); margin-bottom: 16px; }
+  .hero h1 { font-family: var(--head); font-weight: 900; font-size: clamp(38px, 6.5vw, 72px); line-height: 1.02; letter-spacing: -.02em; margin-bottom: 20px; }
+  .hero h1 em { font-style: normal; color: var(--safety); }
+  .hero .sub { color: var(--dim); font-size: clamp(16px, 1.7vw, 18.5px); max-width: 48ch; margin-bottom: 28px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; background: var(--safety); color: var(--safety-ink); font-family: var(--head); font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 12px; border: 0; cursor: pointer; transition: transform .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.green { background: var(--call); color: #fff; }
+  .trust { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 24px; font-size: 13px; color: var(--dim); }
+  .trust b { color: var(--ink); }
+
+  .van {
+    background: var(--navy2); border: 1px solid var(--line); border-radius: 18px; padding: 22px;
+  }
+  .van h3 { font-family: var(--head); font-weight: 700; font-size: 15px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .van h3 i { font-style: normal; width: 9px; height: 9px; border-radius: 50%; background: var(--call); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(47,174,107,.5); } 70% { box-shadow: 0 0 0 10px rgba(47,174,107,0); } 100% { box-shadow: 0 0 0 0 rgba(47,174,107,0); } }
+  .slot { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--line); padding: 11px 2px; font-size: 14px; color: var(--dim); }
+  .slot b { color: var(--ink); }
+  .slot .ok { color: var(--call); font-weight: 700; font-size: 12.5px; }
+  .van .note { font-size: 12px; color: var(--dim); margin-top: 12px; }
+
+  section { max-width: 1100px; margin: 0 auto; padding: 80px clamp(18px, 5vw, 56px); }
+  .title { font-family: var(--head); font-weight: 900; font-size: clamp(28px, 4.4vw, 46px); letter-spacing: -.015em; margin-bottom: 12px; }
+  .title em { font-style: normal; color: var(--safety); }
+  .lead { color: var(--dim); max-width: 56ch; }
+
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 36px; }
+  @media (max-width: 860px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .svc-grid { grid-template-columns: 1fr; } }
+  .svc { background: var(--navy2); border: 1px solid var(--line); border-radius: 14px; padding: 22px; transition: transform .25s var(--ease), border-color .25s; }
+  .svc:hover { transform: translateY(-4px); border-color: rgba(255, 196, 34, .5); }
+  .svc i { font-style: normal; font-size: 26px; display: block; margin-bottom: 10px; }
+  .svc b { font-family: var(--head); font-weight: 700; font-size: 16.5px; display: block; margin-bottom: 5px; }
+  .svc p { font-size: 13.5px; color: var(--dim); margin-bottom: 10px; }
+  .svc s { text-decoration: none; font-family: var(--head); font-weight: 700; color: var(--safety); font-size: 14px; }
+
+  .quote-wrap { background: var(--navy2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 60px); align-items: start; }
+  @media (max-width: 820px) { .quote-grid { grid-template-columns: 1fr; } }
+  .steps { display: grid; gap: 12px; margin-top: 24px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step i { font-style: normal; width: 30px; height: 30px; border-radius: 9px; background: var(--safety); color: var(--safety-ink); font-family: var(--head); font-weight: 900; font-size: 14px; display: grid; place-items: center; flex: none; }
+  .step b { display: block; font-size: 15px; }
+  .step span { font-size: 13.5px; color: var(--dim); }
+  .qform { background: var(--navy); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .qform h3 { font-family: var(--head); font-weight: 700; font-size: 17px; margin-bottom: 14px; }
+  label { display: block; font-size: 13px; color: var(--dim); margin-bottom: 5px; }
+  input, select, textarea { width: 100%; background: var(--navy2); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 15px; font-family: var(--sans); margin-bottom: 14px; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--safety); }
+  .qnote { font-size: 12.5px; color: var(--dim); margin-top: 10px; }
+
+  footer.site { border-top: 1px solid var(--line); padding: 26px clamp(18px, 5vw, 56px); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--dim); }
+  footer.site a { color: var(--safety); font-weight: 700; }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .van h3 i { animation: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">CONCEPT DEMO — a showcase website by <a href="../../">Ateeq Morshed</a>. Your Calgary trades business could look like this.</div>
+
+<nav class="nav">
+  <a href="#top" class="logo"><i>🔧</i> Summit <em>P&amp;H</em></a>
+  <a href="#services">Services</a>
+  <a href="#quote">Get a quote</a>
+  <a href="tel:+14035550123" class="call-btn">📞 <span class="num-full">(403) 555-0123 · 24/7</span><span class="num-short">Call 24/7</span></a>
+</nav>
+
+<header class="hero" id="top">
+  <div>
+    <p class="kick">Plumbing · Heating · Furnaces — Calgary &amp; area (demo)</p>
+    <h1>Burst pipe at 2 a.m.?<br><em>We pick up.</em></h1>
+    <p class="sub">Licensed, insured, and honest about pricing before the truck leaves the shop. Serving Calgary, Airdrie, Cochrane and Okotoks.</p>
+    <div class="cta-row">
+      <a href="tel:+14035550123" class="btn green">📞 Call now — 24/7</a>
+      <a href="#quote" class="btn">Get a free quote</a>
+    </div>
+    <div class="trust">
+      <span><b>Licensed &amp; insured</b> · Alberta</span>
+      <span><b>Upfront pricing</b> · no meter running</span>
+      <span><b>Same-week</b> non-emergency slots</span>
+    </div>
+  </div>
+  <div class="van reveal">
+    <h3><i></i> Next available slots</h3>
+    <div class="slot"><span>Emergency (burst / no heat)</span><b class="ok">Now — dispatch</b></div>
+    <div class="slot"><span>Today</span><b id="slotToday">—</b></div>
+    <div class="slot"><span>Tomorrow</span><b>9:00 &amp; 13:30</b></div>
+    <div class="slot"><span>Furnace tune-up season</span><b>Booking ahead</b></div>
+    <p class="note">Slots shown live on the real site — synced with the crew calendar.</p>
+  </div>
+</header>
+
+<section id="services">
+  <h2 class="title reveal">Straight answers, <em>straight prices.</em></h2>
+  <p class="lead reveal">Diagnostic fee credited toward the repair. If we can't fix it, you don't pay the fee.</p>
+  <div class="svc-grid">
+    <div class="svc reveal"><i>🚿</i><b>Drain &amp; pipe repair</b><p>Clogs, leaks, burst lines — camera inspection included.</p><s>from $149</s></div>
+    <div class="svc reveal"><i>🔥</i><b>Furnace repair</b><p>No heat? Priority dispatch October–March.</p><s>from $189</s></div>
+    <div class="svc reveal"><i>💧</i><b>Hot water tanks</b><p>Repair or same-day replacement, tank &amp; tankless.</p><s>from $225</s></div>
+    <div class="svc reveal"><i>🚽</i><b>Fixtures &amp; toilets</b><p>Install and repair — supplied or your own hardware.</p><s>from $119</s></div>
+    <div class="svc reveal"><i>❄️</i><b>Poly-B replacement</b><p>Calgary's classic problem pipe — free assessment.</p><s>quoted</s></div>
+    <div class="svc reveal"><i>🧰</i><b>Renovation rough-ins</b><p>Basements and kitchens, permit-ready work.</p><s>quoted</s></div>
+  </div>
+</section>
+
+<div class="quote-wrap">
+<section id="quote">
+  <div class="quote-grid">
+    <div>
+      <h2 class="title reveal" style="font-size:clamp(26px,3.6vw,38px)">Photo → quote,<br>in <em>under an hour.</em></h2>
+      <div class="steps">
+        <div class="step reveal"><i>1</i><div><b>Describe it &amp; snap a photo</b><span>The form opens WhatsApp with everything attached.</span></div></div>
+        <div class="step reveal"><i>2</i><div><b>Get a real price</b><span>A fixed quote back within the hour, working hours.</span></div></div>
+        <div class="step reveal"><i>3</i><div><b>Book the slot</b><span>Pick a time — the crew's calendar does the rest.</span></div></div>
+      </div>
+    </div>
+    <div class="qform reveal">
+      <h3>Free quote request</h3>
+      <label for="qWhat">What's the problem?</label>
+      <select id="qWhat">
+        <option>Leaking pipe / fixture</option>
+        <option>Clogged drain</option>
+        <option>No heat / furnace issue</option>
+        <option>Hot water tank</option>
+        <option>Renovation work</option>
+        <option>Something else</option>
+      </select>
+      <label for="qWhere">Neighbourhood</label>
+      <input id="qWhere" placeholder="e.g. Tuscany, NW Calgary">
+      <label for="qDesc">Quick description</label>
+      <textarea id="qDesc" rows="3" placeholder="e.g. Kitchen sink leaking underneath, started yesterday"></textarea>
+      <button class="btn green" id="sendQuote" type="button" style="width:100%;justify-content:center">Send via WhatsApp — attach photos there</button>
+      <p class="qnote" id="qNote">Demo mode: WhatsApp opens with your request pre-written — a real company receives it directly.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer class="site">
+  <span>Summit Plumbing &amp; Heating is a fictional concept — a design demo for trades businesses.</span>
+  <span>Want this for your real company? <a href="mailto:ateeqmorshed@gmail.com">Talk to Ateeq Morshed</a> · <a href="../../">See more work</a></span>
+</footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+
+/* today slot from Calgary time */
+const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Edmonton", hour: "numeric", hour12: false }).formatToParts(new Date());
+const hour = Number(parts.find((p) => p.type === "hour").value) % 24;
+$("slotToday").textContent = hour < 11 ? "14:00 & 16:30" : hour < 15 ? "16:30" : "Fully booked — see tomorrow";
+
+$("sendQuote").onclick = () => {
+  if (!$("qDesc").value.trim()) { $("qNote").textContent = "Add a quick description so the quote is accurate."; return; }
+  const msg = `🔧 Quote request — Summit P&H (DEMO)\nIssue: ${$("qWhat").value}\nArea: ${$("qWhere").value || "Calgary"}\n${$("qDesc").value.trim()}\n(photos coming in next message)`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+  $("qNote").textContent = "Demo: WhatsApp opens with the request — attach photos and send.";
+};
+
+const obs = new IntersectionObserver((es) => {
+  es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); obs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+})();
+</script>
+</body>
+</html>

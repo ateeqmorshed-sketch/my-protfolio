@@ -178,6 +178,15 @@ const BIZ = {
     amounts: [64, 89, 112, 38],
     staff: [["RK", "Rahim — kitchen", "#e0524f"], ["FS", "Farhana — floor", "#4f7cff"], ["JT", "Jay — delivery", "#34c98e"]],
   },
+  trades: {
+    name: "Summit Plumbing & Heating", mark: "S", seed: 33, base: 1900, spread: 1400, weekendBoost: 0.7,
+    topLabel: "Top job types", ordersLabel: "Today's jobs", colWho: "Job / address", colWhat: "Crew",
+    top: ["Hot water tanks", "Furnace repair", "Drain & pipe", "Poly-B replacement", "Fixtures"],
+    who: ["Tank swap — Tuscany", "No-heat — Airdrie", "Drain — Bowness", "Poly-B — Cochrane", "Reno rough-in — Beltline", "Leak — Okotoks"],
+    what: ["Truck 1 — Marcus", "Truck 2 — Sam & Dee", "Truck 3 — Jay"],
+    amounts: [1480, 225, 189, 3200],
+    staff: [["T1", "Truck 1 — Marcus", "#ff8a3d"], ["T2", "Truck 2 — Sam & Dee", "#5b8def"], ["T3", "Truck 3 — Jay", "#34c98e"]],
+  },
   retail: {
     name: "Kensington Corner Store", mark: "K", seed: 42, base: 1500, spread: 900, weekendBoost: 1.3,
     topLabel: "Top products", ordersLabel: "Recent sales", colWho: "Sale", colWhat: "Items",
@@ -339,7 +348,7 @@ function renderAll() {
 }
 
 /* switchers */
-const BTN = [["barber", "💈 Barbershop"], ["resto", "🍽 Restaurant"], ["retail", "🛍 Retail"]];
+const BTN = [["barber", "💈 Barbershop"], ["resto", "🍽 Restaurant"], ["trades", "🔧 Trades"], ["retail", "🛍 Retail"]];
 BTN.forEach(([key, label]) => {
   const b = document.createElement("button");
   b.type = "button"; b.textContent = label;
